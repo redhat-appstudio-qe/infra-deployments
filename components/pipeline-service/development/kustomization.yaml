@@ -55,3 +55,8 @@ patches:
     target:
       kind: TektonConfig
       name: config
+  - path: update-results-watcher-performance.yaml
+    target:
+      kind: Deployment
+      namespace: tekton-results
+      name: tekton-results-watcher
