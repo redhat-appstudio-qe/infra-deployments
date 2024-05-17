@@ -41,7 +41,7 @@ patches:
       kind: Deployment
       namespace: tekton-results
       name: tekton-results-watcher
-  - path: increase-results-pruner-gracePeriod.yaml
+  - path: update-results-watcher-args.yaml
     target:
       kind: Deployment
       namespace: tekton-results
@@ -55,8 +55,8 @@ patches:
     target:
       kind: TektonConfig
       name: config
-  - path: update-results-watcher-performance.yaml
-    target:
-      kind: Deployment
-      namespace: tekton-results
-      name: tekton-results-watcher
+#  - path: update-results-watcher-performance.yaml
+#    target:
+#      kind: Deployment
+#      namespace: tekton-results
+#      name: tekton-results-watcher
