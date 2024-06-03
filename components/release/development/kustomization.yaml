@@ -2,11 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/konflux-ci/release-service/config/default?ref=aaf11b05c47af248a392612700b87d29107479b2
-
+  - https://github.com/theflockers/release-service/config/default?ref=474720f3d1a341427f35757e73afec90a627a547
 images:
   - name: quay.io/redhat-appstudio/release-service
-    newName: quay.io/redhat-appstudio/release-service
-    newTag: efb1d778b69d5111c6dee7b5dde6d69b4cb21d17
-
+    newName: registry.build03.ci.openshift.org/ci-op-5d62rz22/pipeline
+    newTag: redhat-appstudio-release-service-image
 namespace: release-service
