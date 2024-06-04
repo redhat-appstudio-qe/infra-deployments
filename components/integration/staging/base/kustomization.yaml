@@ -3,13 +3,13 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/integration-service/config/default?ref=6ebd87075fe3e22640ba5f86b4dcfdf412394109
-- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=6ebd87075fe3e22640ba5f86b4dcfdf412394109
+- https://github.com/konflux-ci/integration-service/config/default?ref=ab4ec5ef0df76adebcf7388d9684d0d3ff1383d2
+- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=ab4ec5ef0df76adebcf7388d9684d0d3ff1383d2
 
 images:
 - name: quay.io/redhat-appstudio/integration-service
   newName: quay.io/redhat-appstudio/integration-service
-  newTag: 6ebd87075fe3e22640ba5f86b4dcfdf412394109
+  newTag: ab4ec5ef0df76adebcf7388d9684d0d3ff1383d2
 
 configMapGenerator:
 - name: console-url
