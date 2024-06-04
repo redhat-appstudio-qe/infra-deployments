@@ -8,6 +8,6 @@ data:
     default-pipeline-name: docker-build
     pipelines:
     - name: fbc-builder
-      bundle: quay.io/redhat-appstudio-tekton-catalog/pipeline-fbc-builder:13ecd03ec9f7de811f837a5460c41105231c911a
+      bundle: quay.io/redhat-appstudio-tekton-catalog/pipeline-fbc-builder:6c7207d1e853f45398181bd110cf366b32719326
     - name: docker-build
-      bundle: quay.io/redhat-appstudio-tekton-catalog/pipeline-docker-build:13ecd03ec9f7de811f837a5460c41105231c911a
+      bundle: quay.io/redhat-appstudio-tekton-catalog/pipeline-docker-build:6c7207d1e853f45398181bd110cf366b32719326
