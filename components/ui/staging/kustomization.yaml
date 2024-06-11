@@ -19,7 +19,7 @@ images:
   # hac-dev
   - name: quay.io/cloudservices/hac-dev-frontend
     newName: quay.io/cloudservices/hac-dev-frontend
-    newTag: 69fab83
+    newTag: d317a04
 
 configMapGenerator:
   - name: fed-modules
