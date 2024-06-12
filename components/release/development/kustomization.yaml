@@ -5,8 +5,8 @@ resources:
   - https://github.com/konflux-ci/release-service/config/default?ref=758a1d48d0020e8d9356c63924507d970411ebea
 
 images:
-  - name: quay.io/redhat-appstudio/release-service
-    newName: quay.io/redhat-appstudio/release-service
+  - name: quay.io/konflux-ci/release-service
+    newName: quay.io/konflux-ci/release-service
     newTag: 758a1d48d0020e8d9356c63924507d970411ebea
 
 namespace: release-service
