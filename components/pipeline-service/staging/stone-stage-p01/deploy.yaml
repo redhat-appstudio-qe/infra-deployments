@@ -903,8 +903,8 @@ data:
     DB_HOST=
     DB_PORT=5432
     DB_NAME=
-    DB_SSLMODE=disable
-    DB_SSLROOTCERT=
+    DB_SSLMODE=verify-full
+    DB_SSLROOTCERT=/etc/tls/db/tekton-results-db-ca.pem
     DB_ENABLE_AUTO_MIGRATION=true
     SERVER_PORT=8080
     PROMETHEUS_PORT=9090
@@ -1376,6 +1376,9 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 10
         volumeMounts:
+        - mountPath: /etc/tls/db
+          name: db-tls-ca
+          readOnly: true
         - mountPath: /etc/tekton/results
           name: config
           readOnly: true
@@ -1384,6 +1387,9 @@ spec:
           readOnly: true
       serviceAccountName: tekton-results-api
       volumes:
+      - configMap:
+          name: rds-root-crt
+        name: db-tls-ca
       - configMap:
           name: tekton-results-api-config
         name: config
@@ -1635,7 +1641,7 @@ spec:
             )" \
             --dry-run=client \
             -o yaml | kubectl apply -f -
-        image: quay.io/konflux-ci/appstudio-utils:ab6b0b8e40e440158e7288c73aff1cf83a2cc8a9@sha256:24179f0efd06c65d16868c2d7eb82573cce8e43533de6cea14fec3b7446e0b14
+        image: quay.io/redhat-appstudio/appstudio-utils:dbbdd82734232e6289e8fbae5b4c858481a7c057
         imagePullPolicy: Always
         name: chains-secret-generation
         resources:
