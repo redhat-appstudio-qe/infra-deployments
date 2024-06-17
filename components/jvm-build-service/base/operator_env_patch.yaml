@@ -2,10 +2,18 @@
 - op: add
   path: /spec/template/spec/containers/0/env
   value:
-  - name: IMAGE_TAG
-    value: cac2c46771e4ce11554e7032b90aab221d928645
+    - name: IMAGE_TAG
+      value: ""
+    - name: JVM_BUILD_SERVICE_CACHE_IMAGE
+      value: registry.build02.ci.openshift.org/ci-op-tzpqfv89/pipeline@sha256:5a712b7fe1b3bdd69078c3b2e0314ebb9a8f348a8b49323822f123007aa35584
+    - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
+      value: registry.build02.ci.openshift.org/ci-op-tzpqfv89/pipeline@sha256:d7ba8ad98859c119780b49d566aa61b5686e2e0d3ad8568add69fa374ec8e8a0
 - op: add
   path: /spec/template/spec/containers/0/env
   value:
-  - name: "USE_IMAGE_SPI"
-    value: "true"
+    - name: "USE_IMAGE_SPI"
+      value: "true"
+    - name: JVM_BUILD_SERVICE_CACHE_IMAGE
+      value: registry.build02.ci.openshift.org/ci-op-tzpqfv89/pipeline@sha256:5a712b7fe1b3bdd69078c3b2e0314ebb9a8f348a8b49323822f123007aa35584
+    - name: JVM_BUILD_SERVICE_REQPROCESSOR_IMAGE
+      value: registry.build02.ci.openshift.org/ci-op-tzpqfv89/pipeline@sha256:d7ba8ad98859c119780b49d566aa61b5686e2e0d3ad8568add69fa374ec8e8a0
