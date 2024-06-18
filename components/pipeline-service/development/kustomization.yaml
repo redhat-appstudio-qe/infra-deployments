@@ -8,8 +8,8 @@ commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 
 resources:
-  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service?ref=3ed2e97d4eacb0252b153edd2d6006637acb528e
-  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service-storage?ref=3ed2e97d4eacb0252b153edd2d6006637acb528e
+  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service?ref=c00239645bb299dc10dd38f35036058b787e340a
+  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service-storage?ref=c00239645bb299dc10dd38f35036058b787e340a
   - ../base/rbac
 
 # generate a new configmap with updated values (logs api, db ssl mode) and replace the default one
