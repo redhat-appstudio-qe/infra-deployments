@@ -1,0 +1,85 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../crd
+- ../rbac
+- ../server
+- ../network
+namePrefix: workspaces-
+
+configMapGenerator:
+- literals:
+  - toolchain_namespace=toolchain-host-operator
+  name: rest-api-server-cm
+  options:
+    disableNameSuffixHash: true
+- behavior: replace
+  literals:
+  - log.level=0
+  - kubesaw.namespace=toolchain-host-operator
+  name: rest-api-server-config
+
+      # create Role and RoleBinding to read SpaceBinding into toolchain-host-operator
+      # create Role and RoleBinding to read UserSignups into toolchain-host-operator
+      # RoleBinding to read SpaceBinding should target the ServiceAccount in workspaces-system
+      # RoleBinding to read UserSignups should target the ServiceAccount in workspaces-system
+replacements:
+- source:
+    fieldPath: data.toolchain_namespace
+    kind: ConfigMap
+    name: rest-api-server-cm
+    options:
+      create: true
+  targets:
+  - fieldPaths:
+    - metadata.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+      name: rest-api-server:spacebinding-reader
+  - fieldPaths:
+    - metadata.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: Role
+      name: spacebinding-reader
+  - fieldPaths:
+    - metadata.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+      name: rest-api-server:usersignup-reader
+  - fieldPaths:
+    - metadata.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: Role
+      name: usersignup-reader
+- source:
+    fieldPath: metadata.namespace
+    kind: ServiceAccount
+    name: rest-api-server
+  targets:
+  - fieldPaths:
+    - subjects.0.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+      name: rest-api-server:spacebinding-reader
+  - fieldPaths:
+    - subjects.0.namespace
+    options: {}
+    select:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+      name: rest-api-server:usersignup-reader
+namespace: workspaces-system
+images:
+- name: workspaces/rest-api
+  newName: quay.io/konflux-workspaces/workspaces-server
+  newTag: v0.1.0-alpha1
