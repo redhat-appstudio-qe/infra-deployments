@@ -8,11 +8,6 @@ $SCRIPTDIR/setup-namespace.sh
 
 oc delete --ignore-not-found -f $SCRIPTDIR/templates/application.yaml
 oc create -f $SCRIPTDIR/templates/application.yaml
-if ! oc wait --for=condition=Created application/test-application; then
-  echo "Application was not created sucessfully, check:"
-  echo "oc get applications test-application -o yaml"
-  exit 1
-fi
 
 function create-component {
   GIT_URL=$1
