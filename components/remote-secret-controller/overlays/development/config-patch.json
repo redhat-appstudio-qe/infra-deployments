@@ -2,7 +2,7 @@
   {
     "op": "replace",
     "path": "/data/VAULTHOST",
-    "value": "https://vault-spi-vault.apps-crc.testing"
+    "value": "https://vault-spi-vault.apps.ci-op-j6297tm2-92ef3.ci.stonesoupengineering.com"
   },
   {
     "op": "add",
