@@ -33,28 +33,32 @@ replacements:
   targets:
   - fieldPaths:
     - metadata.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: RoleBinding
       name: rest-api-server:spacebinding-reader
   - fieldPaths:
     - metadata.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: Role
       name: spacebinding-reader
   - fieldPaths:
     - metadata.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: RoleBinding
       name: rest-api-server:usersignup-reader
   - fieldPaths:
     - metadata.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: Role
@@ -66,14 +70,16 @@ replacements:
   targets:
   - fieldPaths:
     - subjects.0.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: RoleBinding
       name: rest-api-server:spacebinding-reader
   - fieldPaths:
     - subjects.0.namespace
-    options: {}
+    options:
+      create: true
     select:
       group: rbac.authorization.k8s.io
       kind: RoleBinding
