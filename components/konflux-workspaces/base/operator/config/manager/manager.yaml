@@ -15,7 +15,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller-manager
-  namespace: system
   labels:
     control-plane: controller-manager
     app.kubernetes.io/name: deployment
@@ -65,6 +64,7 @@ spec:
               fieldPath: metadata.namespace
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
           capabilities:
             drop:
               - "ALL"
@@ -89,6 +89,9 @@ spec:
           requests:
             cpu: 10m
             memory: 64Mi
+        ports:
+        - containerPort: 8081
+          name: http
       serviceAccountName: controller-manager
       terminationGracePeriodSeconds: 10
 ---
