@@ -1,15 +1,9 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: system
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: rest-api-server
   name: rest-api-server
-  namespace: system
 spec:
   replicas: 1
   selector:
@@ -33,6 +27,15 @@ spec:
           mountPath: "/etc/traefik/dynamic"
         - name: "traefik-plugin-storage"
           mountPath: "/plugins-storage" 
+        securityContext:
+          readOnlyRootFilesystem: true
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
       - image: workspaces/rest-api:latest
         name: rest-api
         imagePullPolicy: IfNotPresent
@@ -53,6 +56,7 @@ spec:
               fieldPath: metadata.namespace
         securityContext:
           allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
           capabilities:
             drop:
               - "ALL"
