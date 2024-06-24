@@ -4,6 +4,7 @@ metadata:
   labels:
     app: rest-api-server
   name: rest-api-server
+  namespace: system
 spec:
   replicas: 1
   selector:
