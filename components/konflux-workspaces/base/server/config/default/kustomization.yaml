@@ -81,5 +81,5 @@ replacements:
 namespace: workspaces-system
 images:
 - name: workspaces/rest-api
-  newName: quay.io/konflux-workspaces/workspaces-server
-  newTag: v0.1.0-alpha1
+  newName: workspaces/rest-api
+  newTag: latest
