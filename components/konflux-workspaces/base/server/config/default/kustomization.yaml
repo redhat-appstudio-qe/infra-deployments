@@ -84,7 +84,3 @@ replacements:
       kind: RoleBinding
       name: rest-api-server:usersignup-reader
 namespace: workspaces-system
-images:
-- name: workspaces/rest-api
-  newName: workspaces/rest-api
-  newTag: latest
