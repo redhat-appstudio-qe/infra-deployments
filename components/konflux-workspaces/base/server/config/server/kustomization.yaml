@@ -19,5 +19,5 @@ configMapGenerator:
     disableNameSuffixHash: true
 images:
 - name: workspaces/rest-api
-  newName: quay.io/konflux-workspaces/workspaces-server
+  newName: quay.io/konflux-workspaces/workspaces-operator
   newTag: v0.1.0-alpha2
