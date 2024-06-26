@@ -1632,7 +1632,7 @@ spec:
           value: tekton-results-api-service.tekton-pipelines.svc.cluster.local:8080
         - name: AUTH_MODE
           value: token
-        image: quay.io/redhat-appstudio/tekton-results-watcher:bae7851ff584423503af324200f52cd28ca99116
+        image: quay.io/redhat-appstudio/tekton-results-watcher:ff0d9a44b87348d8fbc0dcfde45f910aa11c09d1
         name: watcher
         ports:
         - containerPort: 9090
