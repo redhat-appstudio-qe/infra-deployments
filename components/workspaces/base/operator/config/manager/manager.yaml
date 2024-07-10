@@ -4,18 +4,18 @@ metadata:
   labels:
     control-plane: controller-manager
     app.kubernetes.io/name: namespace
-    app.kubernetes.io/instance: system
+    app.kubernetes.io/instance: konflux-workspaces 
     app.kubernetes.io/component: manager
     app.kubernetes.io/created-by: workspaces
     app.kubernetes.io/part-of: workspaces
     app.kubernetes.io/managed-by: kustomize
-  name: system
+  name: konflux-workspaces
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: controller-manager
-  namespace: system
+  namespace: konflux-workspaces
   labels:
     control-plane: controller-manager
     app.kubernetes.io/name: deployment
