@@ -1,5 +1,7 @@
 config:
   exporters:
+    otlphttp:
+      endpoint: tempo-tempo-jaegerui:4317
     debug:
       verbosity: basic
   extensions:
@@ -42,6 +44,7 @@ config:
       traces:
         exporters:
           - debug
+          - otlphttp
         processors:
           - memory_limiter
           - attributes/collector-info
