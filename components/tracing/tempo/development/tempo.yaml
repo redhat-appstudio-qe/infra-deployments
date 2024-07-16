@@ -3,12 +3,32 @@ kind: TempoMonolithic
 metadata:
   name: tempo
   namespace: tempo-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   storage:
     traces:
       backend: pv
       size: 10Gi
+  ingestion:
+    otlp:
+      grpc:
+        enabled: true
+        tls:
+          enabled: false
+          caName: ""
+          certName: ""
+          minVersions: ""
+    http:
+      enabled: true
+      tls:
+        enabled: false
+        caName: ""
+        certName: ""
+        minVersions: ""
   jaegerui:
     enabled: true
     route:
+      enabled: true
+    ingress:
       enabled: true
