@@ -3,6 +3,8 @@ kind: TempoMonolithic
 metadata:
   name: tempo
   namespace: tempo-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   storage:
     traces:
@@ -11,4 +13,6 @@ spec:
   jaegerui:
     enabled: true
     route:
+      enabled: true
+    ingress:
       enabled: true

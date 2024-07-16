@@ -3,6 +3,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: tempo-nfs-storage
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 provisioner: storage.io/nfs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -12,6 +14,8 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: tempo-pv
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   capacity:
     storage: 15Gi
@@ -34,6 +38,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: tempo-pvc
   namespace: tempo-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   storageClassName: tempo-nfs-storage
   volumeName: tempo-pv
