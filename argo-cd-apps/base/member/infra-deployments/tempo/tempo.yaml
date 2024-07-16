@@ -21,9 +21,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/redhat-appstudio/infra-deployments.git
-        targetRevision: main
         path: '{{values.sourceRoot}}/{{values.environment}}/{{values.clusterDir}}'
+        repoURL: https://github.com/raks-tt/infra-deployments.git
+        targetRevision: grafana-tempo-operator
       destination:
         namespace: tempo-operator
         server: '{{server}}'
