@@ -1,7 +1,9 @@
 config:
   exporters:
     otlphttp:
-      endpoint: tempo-tempo-jaegerui:4318
+      endpoint: tempo-tempo.tempo-operator.svc.cluster.local:4318
+      tls:
+        insecure: true
     debug:
       verbosity: basic
   extensions:
