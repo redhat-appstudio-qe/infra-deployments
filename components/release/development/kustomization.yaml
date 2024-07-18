@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+  - ../base/monitor/development
   - https://github.com/konflux-ci/release-service/config/default?ref=0b2badbef3eb6a31df27b324a15007949aa78354
 
 images:
