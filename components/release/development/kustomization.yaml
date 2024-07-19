@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ../base
   - ../base/monitor/development
-  - https://github.com/konflux-ci/release-service/config/default?ref=de77be7febeb76a2c80fdc07d51cd468ed95e72a
+  - https://github.com/konflux-ci/release-service/config/default?ref=45ee93b55e60a4250db6f5e3e96b8694761c40f8
 
 images:
   - name: quay.io/konflux-ci/release-service
