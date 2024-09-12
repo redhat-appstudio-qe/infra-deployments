@@ -3,14 +3,14 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/build-service/config/default?ref=79459b95c0ac8cf110a870507db739e4218fedef
+- https://github.com/konflux-ci/build-service/config/default?ref=e4989d296010d37192fdbf459007dd5a1a73d775
 
 namespace: build-service
 
 images:
 - name: quay.io/konflux-ci/build-service
   newName: quay.io/konflux-ci/build-service
-  newTag: 79459b95c0ac8cf110a870507db739e4218fedef
+  newTag: e4989d296010d37192fdbf459007dd5a1a73d775
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
