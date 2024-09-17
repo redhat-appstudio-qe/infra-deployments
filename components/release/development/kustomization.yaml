@@ -3,11 +3,9 @@ kind: Kustomization
 resources:
   - ../base
   - ../base/monitor/development
-  - https://github.com/konflux-ci/release-service/config/default?ref=fc6a118e31cd80e5a094af3a19bbef4b5bc6c6b1
-
+  - https://github.com/johnbieren/release-service/config/default?ref=2c63a00a1f81cc693527c29fdd377843c0d05823
 images:
   - name: quay.io/konflux-ci/release-service
-    newName: quay.io/konflux-ci/release-service
-    newTag: fc6a118e31cd80e5a094af3a19bbef4b5bc6c6b1
-
+    newName: registry.build02.ci.openshift.org/ci-op-d4iwil44/pipeline
+    newTag: redhat-appstudio-release-service-image
 namespace: release-service
