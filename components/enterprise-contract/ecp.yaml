@@ -108,4 +108,4 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-task-policy:git-f80804c@sha256:1b3f60d3a16b6c48e975dfb4abbc3489b211f9c5b0e164b430314319339c8054
+        - oci::quay.io/enterprise-contract/ec-task-policy:git-80be7f0@sha256:72e2acdb58596dafa98913ce03ffbc6aa65e7a6b8bec53ab2c008dab1b845b3d
