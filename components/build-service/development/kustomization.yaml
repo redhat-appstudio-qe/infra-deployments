@@ -1,19 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base
-- https://github.com/konflux-ci/build-service/config/default?ref=726d465ca7c49ecf94dc9dff6828617766fd3b71
-
+  - ../base
+  - https://github.com/pavolloffay/build-service/config/default?ref=e51ed1d63db37e76689e9fac73197f48ce12631c
 namespace: build-service
-
 images:
-- name: quay.io/konflux-ci/build-service
-  newName: quay.io/konflux-ci/build-service
-  newTag: 726d465ca7c49ecf94dc9dff6828617766fd3b71
-
+  - name: quay.io/konflux-ci/build-service
+    newName: registry.build02.ci.openshift.org/ci-op-ck113tz2/pipeline
+    newTag: redhat-appstudio-build-service-image
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-
 patches:
   - target:
       group: apps
@@ -33,6 +29,5 @@ patches:
       kind: Deployment
       name: build-service-controller-manager
     path: pac-webhook-insecure-ssl-patch.yaml
-
 components:
   - ../components/rh-certs
