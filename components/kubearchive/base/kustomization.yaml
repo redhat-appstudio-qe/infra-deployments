@@ -1,0 +1,7 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://github.com/kubearchive/kubearchive/releases/download/v0.1.0/kubearchive.yaml?timeout=90
+- rbac.yaml
+namespace: kubearchive

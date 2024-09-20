@@ -1,0 +1,30 @@
+---
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "kubearchive-api-server-certificate"
+---
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "kubearchive-ca"
+---
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: "kubearchive-ca"
+---
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: "kubearchive"
+---
+$patch: delete
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "kubearchive-operator-certificate"

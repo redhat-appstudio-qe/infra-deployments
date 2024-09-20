@@ -6,7 +6,7 @@ namespace: multi-platform-controller
 resources:
 - common
 - https://github.com/konflux-ci/multi-platform-controller/deploy/operator?ref=0c76279a9c1e2192059d597e0951c8ec10f6b33e
-- https://github.com/konflux-ci/multi-platform-controller/deploy/otp?ref=0c76279a9c1e2192059d597e0951c8ec10f6b33e
+- https://github.com/konflux-ci/multi-platform-controller/deploy/otp?ref=0c76279a9c1e2192059d597e0951c8ec10f6b33e&timeout=90s
 
 
 images:
