@@ -6,7 +6,7 @@ resources:
 
 images:
 - name: konflux-project-controller
-  newName: quay.io/redhat-appstudio/project-controller
+  newName: quay.io/konflux-ci/project-controller
   newTag: 6773b77f353cc019166754ecd4d563035968019c
 
 namespace: project-controller
