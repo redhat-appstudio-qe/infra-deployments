@@ -21,5 +21,6 @@ resources:
   - tracing-workload-otel-collector
   - tempo
   - notification-controller
+  - kubearchive
 components:
   - ../../../k-components/inject-infra-deployments-repo-details
