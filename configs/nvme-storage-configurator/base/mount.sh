@@ -3,7 +3,8 @@
 # Enable debugging
 set -eux
 
-DEVICE="$( ls /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_* | sort | head -n1 )"
+# DEVICE="$( ls /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_* | sort | head -n1 )"
+export DEVICE="/dev/nvme1n1"
 echo "Going to use device $DEVICE"
 
 export MOUNT_POINT="/var/home/nvme"
