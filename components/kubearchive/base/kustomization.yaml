@@ -4,11 +4,73 @@ kind: Kustomization
 resources:
 - https://github.com/kubearchive/kubearchive/releases/download/v0.1.0/kubearchive.yaml?timeout=90
 - rbac.yaml
-namespace: kubearchive
+
+# ROSA does not support namespaces starting with `kube`
+namespace: product-kubearchive
+
+
+patches:
+- patch: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: kubearchive-operator-leader-election
+    subjects:
+    - kind: ServiceAccount
+      name: kubearchive-operator
+      namespace: product-kubearchive
+- patch: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: kubearchive-api-server
+    subjects:
+    - kind: ServiceAccount
+      name: kubearchive-api-server
+      namespace: product-kubearchive
+- patch: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: kubearchive-operator
+    subjects:
+    - kind: ServiceAccount
+      name: kubearchive-operator
+      namespace: product-kubearchive
+- patch: |-
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: kubearchive-operator-proxy
+    subjects:
+    - kind: ServiceAccount
+      name: kubearchive-operator
+      namespace: product-kubearchive
+- patch: |-
+    apiVersion: admissionregistration.k8s.io/v1
+    kind: MutatingWebhookConfiguration
+    metadata:
+      name: kubearchive-mutating-webhook-configuration
+    webhooks:
+    - name: mkubearchiveconfig.kb.io
+      clientConfig:
+        service:
+          name: kubearchive-operator-webhooks
+          namespace: product-kubearchive
+- patch: |-
+    apiVersion: admissionregistration.k8s.io/v1
+    kind: ValidatingWebhookConfiguration
+    metadata:
+      name: kubearchive-validating-webhook-configuration
+    webhooks:
+    - name: vkubearchiveconfig.kb.io
+      clientConfig:
+        service:
+          name: kubearchive-operator-webhooks
+          namespace: product-kubearchive
 
 # These patches add an annotation so an OpenShift service
 # creates the TLS secrets instead of Cert Manager
-patches:
 - patch: |-
     apiVersion: v1
     kind: Service
@@ -16,7 +78,6 @@ patches:
       name: kubearchive-api-server
       annotations:
         service.beta.openshift.io/serving-cert-secret-name: kubearchive-api-server-tls
-
 - patch: |-
     apiVersion: v1
     kind: Service
@@ -25,6 +86,7 @@ patches:
       annotations:
         service.beta.openshift.io/serving-cert-secret-name: kubearchive-operator-tls
 
+# Solve Kube Linter problems
 - patch: |-
     apiVersion: apps/v1
     kind: Deployment
@@ -45,7 +107,6 @@ patches:
               securityContext:
                 readOnlyRootFilesystem: true
                 runAsNonRoot: true
-
 - patch: |-
     apiVersion: apps/v1
     kind: Deployment
@@ -65,7 +126,6 @@ patches:
               securityContext:
                 readOnlyRootFilesystem: true
                 runAsNonRoot: true
-
 - patch: |-
     apiVersion: apps/v1
     kind: Deployment
