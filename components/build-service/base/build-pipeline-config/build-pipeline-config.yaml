@@ -8,10 +8,10 @@ data:
     default-pipeline-name: docker-build-oci-ta
     pipelines:
     - name: fbc-builder
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:0ea2f673d9099e431e25ea14dc270087bb4b434a
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:d66d95d3a479c018ef606f9575eb5a18df4c9f96
     - name: docker-build
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:0ea2f673d9099e431e25ea14dc270087bb4b434a
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:d66d95d3a479c018ef606f9575eb5a18df4c9f96
     - name: docker-build-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:0ea2f673d9099e431e25ea14dc270087bb4b434a
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:d66d95d3a479c018ef606f9575eb5a18df4c9f96
     - name: docker-build-multi-platform-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:0ea2f673d9099e431e25ea14dc270087bb4b434a
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:d66d95d3a479c018ef606f9575eb5a18df4c9f96
