@@ -23,5 +23,6 @@ resources:
   - tempo
   - notification-controller
   - kubearchive
+  - proactive-scaler
 components:
   - ../../../k-components/inject-infra-deployments-repo-details
