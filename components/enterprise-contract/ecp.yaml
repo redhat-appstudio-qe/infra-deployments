@@ -23,7 +23,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-75c36c3@sha256:5ab1e5a7314bb5a782fea919369a324e0f288bb3b1a9e39172f5204392c34dc0
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-b0f9edd@sha256:523c476d9fd1964c564c57215fb994a3fbaa3c5f9904cb64a54a401291de4cfc
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -46,7 +46,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-75c36c3@sha256:5ab1e5a7314bb5a782fea919369a324e0f288bb3b1a9e39172f5204392c34dc0
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-b0f9edd@sha256:523c476d9fd1964c564c57215fb994a3fbaa3c5f9904cb64a54a401291de4cfc
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -67,7 +67,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-75c36c3@sha256:5ab1e5a7314bb5a782fea919369a324e0f288bb3b1a9e39172f5204392c34dc0
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-b0f9edd@sha256:523c476d9fd1964c564c57215fb994a3fbaa3c5f9904cb64a54a401291de4cfc
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -89,7 +89,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-75c36c3@sha256:5ab1e5a7314bb5a782fea919369a324e0f288bb3b1a9e39172f5204392c34dc0
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-b0f9edd@sha256:523c476d9fd1964c564c57215fb994a3fbaa3c5f9904cb64a54a401291de4cfc
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -108,4 +108,4 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-task-policy:git-75c36c3@sha256:bd183554f8bb3e9c54f1d5ab8845760e317030538258021de4abc4511fe0284a
+        - oci::quay.io/enterprise-contract/ec-task-policy:git-d2ac82d@sha256:f197c119abe0801f671df5a83ab64ec26c0ecf4726271a32609bfa7257341e1c
