@@ -924,7 +924,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   displayName: custom-operators
-  image: quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index@sha256:8c7ba9a4cddfaba38872c5d93c5d9c88db36dd0eef44c6531d4246ff62c93d6e
+  image: quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index@sha256:22dcc73d26b1a7f98ad6733c9980c81750eddc521e78d914ecf5e2f9e290ebc5
   sourceType: grpc
   updateStrategy:
     registryPoll:
