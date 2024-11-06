@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: crossplane-control-plane
+  labels:
+    noSourceTransform: "true"
+spec:
+  generators:
+    - merge:
+        mergeKeys:
+          - nameNormalized
+        generators:
+          - clusters:
+              values:
+                sourceRoot: components/crossplane-control-plane
+                environment: development
+                clusterDir: ""
+          - list:
+              elements: []
+  template:
+    metadata:
+      name: crossplane-control-plane-{{nameNormalized}}
+    spec:
+      project: default
+      source:
+        chart: crossplane
+        repoURL: https://charts.crossplane.io/stable
+        targetRevision: 1.18.0
+        helm:
+          values: |
+            securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1001100001
+            runAsUser: 1001100001
+      destination:
+        namespace: crossplane-system
+        server: '{{server}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m
