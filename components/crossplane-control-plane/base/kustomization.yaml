@@ -1,0 +1,5 @@
+resources:
+- https://github.com/konflux-ci/crossplane-control-plane/config/ocp?ref=24ad6a647835817289754b01bebaba3d8ac0bb37
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
