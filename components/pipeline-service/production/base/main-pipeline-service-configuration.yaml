@@ -1330,8 +1330,8 @@ spec:
                 cpu: 200m
                 memory: 200Mi
               requests:
-                cpu: 10m
-                memory: 10Mi
+                cpu: 200m
+                memory: 200Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -1566,8 +1566,8 @@ spec:
                       cpu: "1"
                       memory: 1Gi
                     requests:
-                      cpu: 200m
-                      memory: 200Mi
+                      cpu: 400m
+                      memory: 1Gi
         tekton-pipelines-controller:
           spec:
             template:
@@ -1576,10 +1576,10 @@ spec:
                   - name: tekton-pipelines-controller
                     resources:
                       requests:
-                        memory: 6Gi
+                        memory: 12Gi
                         cpu: "1"
                       limits:
-                        memory: 8Gi
+                        memory: 12Gi
                 topologySpreadConstraints:
                   - maxSkew: 1
                     topologyKey: topology.kubernetes.io/zone
