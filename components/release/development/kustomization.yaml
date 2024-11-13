@@ -3,11 +3,9 @@ kind: Kustomization
 resources:
   - ../base
   - ../base/monitor/development
-  - https://github.com/konflux-ci/release-service/config/default?ref=6a89738bc38398d16ceacbb35f179e2b213c8131
-
+  - https://github.com/konflux-ci/release-service/config/default?ref=1ebb933d2467892e60bc72f5c887647387c1e7c9
 images:
   - name: quay.io/konflux-ci/release-service
-    newName: quay.io/konflux-ci/release-service
-    newTag: 6a89738bc38398d16ceacbb35f179e2b213c8131
-
+    newName: quay.io/redhat-user-workloads/rhtap-release-2-tenant/release-service/release-service
+    newTag: on-pr-1ebb933d2467892e60bc72f5c887647387c1e7c9
 namespace: release-service
