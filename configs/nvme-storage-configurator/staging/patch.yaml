@@ -1,0 +1,13 @@
+---
+- op: replace
+  path: "/spec/template/spec/nodeSelector"
+  value:
+    konflux-ci.dev/workload: konflux-tenants
+
+- op: replace
+  path: "/spec/template/spec/tolerations/0"
+  value:
+    key: konflux-ci.dev/workload
+    operator: Equal
+    value: konflux-tenants
+    effect: NoSchedule
