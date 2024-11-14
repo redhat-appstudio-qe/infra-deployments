@@ -3,3 +3,10 @@ kind: Kustomization
 namespace: nvme-storage-config
 resources:
   - ../base
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: DaemonSet
+      name: nvme-storage-configurator
+    path: patch.yaml
