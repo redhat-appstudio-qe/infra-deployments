@@ -23,7 +23,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-ebd561c@sha256:5b06819240f95f9df09912c69dcfec570761f0c1f49271ebdfd86c8a555278ba
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-82bea42@sha256:2c2469c22963fd48e58d9a0fc39ea47a607665355de371e92fcba008e8b0c071
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -46,7 +46,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-ebd561c@sha256:5b06819240f95f9df09912c69dcfec570761f0c1f49271ebdfd86c8a555278ba
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-82bea42@sha256:2c2469c22963fd48e58d9a0fc39ea47a607665355de371e92fcba008e8b0c071
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -67,7 +67,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-ebd561c@sha256:5b06819240f95f9df09912c69dcfec570761f0c1f49271ebdfd86c8a555278ba
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-82bea42@sha256:2c2469c22963fd48e58d9a0fc39ea47a607665355de371e92fcba008e8b0c071
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -89,7 +89,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:git-ebd561c@sha256:5b06819240f95f9df09912c69dcfec570761f0c1f49271ebdfd86c8a555278ba
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-82bea42@sha256:2c2469c22963fd48e58d9a0fc39ea47a607665355de371e92fcba008e8b0c071
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
