@@ -1684,6 +1684,7 @@ spec:
       kube-api-qps: 50
       replicas: 2
       threads-per-controller: 32
+      statefulset-ordinals: true
   platforms:
     openshift:
       pipelinesAsCode:
