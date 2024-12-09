@@ -4,7 +4,7 @@ resources:
 - internal_service_request_service_account.yaml
 - internal_service_service_account_token.yaml
 - internal-services.yaml
-- https://github.com/konflux-ci/internal-services/config/crd?ref=76d6f4a06be38811c5161ebbe7909ecdf44eea51
+- https://github.com/konflux-ci/internal-services/config/crd?ref=ae1e252f11274d148647fe1be326480561385f9d
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
