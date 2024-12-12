@@ -13,10 +13,12 @@ resources:
 - tiertemplate-appstudio-clusterresources-593233715-593233715.yaml
 - tiertemplate-appstudio-clusterresources-809836689-809836689.yaml
 - tiertemplate-appstudio-contributor-1817914940-1817914940.yaml
+- tiertemplate-appstudio-contributor-3265408548-3265408548.yaml
 - tiertemplate-appstudio-contributor-829105171-829105171.yaml
 - tiertemplate-appstudio-maintainer-1904354742-1904354742.yaml
 - tiertemplate-appstudio-maintainer-293087644-293087644.yaml
 - tiertemplate-appstudio-maintainer-474752551-474752551.yaml
+- tiertemplate-appstudio-maintainer-834439883-834439883.yaml
 - tiertemplate-appstudio-tenant-1361763024-1361763024.yaml
 - tiertemplate-appstudio-tenant-199961605-199961605.yaml
 - tiertemplate-appstudio-tenant-2246724155-2246724155.yaml
@@ -24,5 +26,6 @@ resources:
 - tiertemplate-appstudio-tenant-3815075241-3815075241.yaml
 - tiertemplate-appstudio-tenant-4121561789-4121561789.yaml
 - tiertemplate-appstudio-tenant-649666048-649666048.yaml
+- tiertemplate-appstudio-viewer-3768244154-3768244154.yaml
 - tiertemplate-appstudio-viewer-4059797645-4059797645.yaml
 - tiertemplate-appstudio-viewer-4256863455-4256863455.yaml

@@ -16,9 +16,9 @@ spec:
     admin:
       templateRef: appstudio-admin-849337768-849337768
     contributor:
-      templateRef: appstudio-contributor-829105171-829105171
+      templateRef: appstudio-contributor-3265408548-3265408548
     maintainer:
-      templateRef: appstudio-maintainer-474752551-474752551
+      templateRef: appstudio-maintainer-834439883-834439883
     viewer:
-      templateRef: appstudio-viewer-4256863455-4256863455
+      templateRef: appstudio-viewer-3768244154-3768244154
 status: {}
