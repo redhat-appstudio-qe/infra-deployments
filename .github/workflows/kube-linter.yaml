@@ -24,6 +24,7 @@ jobs:
 
       - name: Run kustomize build
         run: |
+          rm  -rf components/pipeline-service/base/log-collector/charts && \
           find argo-cd-apps components -name 'kustomization.yaml' \
             ! -path '*/k-components/*' \
             ! -path 'components/repository-validator/staging/*' \
