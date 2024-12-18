@@ -4,3 +4,7 @@ cosign.pub
 .tmp/
 tmp
 .idea/*
+components/pipeline-service/base/log-collector/charts/*
+components/pipeline-service/staging/stone-stage-p01/log-collector/charts/*
+components/pipeline-service/staging/stone-stg-rh01/log-collector/charts/*
+components/pipeline-service/development/log-collector/charts/*
