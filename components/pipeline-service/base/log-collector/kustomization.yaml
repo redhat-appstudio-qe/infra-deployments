@@ -1,14 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: tekton-logging
 # Skip applying the Tekton/PaC operands while the Tekton/PaC operator is being installed.
 # See more information about this option, here:
 # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
 commonAnnotations:
-  argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  argocd.argoproj.io/sync-wave: "-1"
+
+generators:
+  - vector-helm-generator.yaml
 
 resources:
-  - main-pipeline-service-configuration.yaml
-  - dev-only-pipeline-service-storage-configuration.yaml
-  - ../base/rbac
-  - ../base/log-collector
+  - vector-pre.yaml
+
