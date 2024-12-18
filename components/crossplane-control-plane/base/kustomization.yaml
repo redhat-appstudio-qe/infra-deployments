@@ -1,6 +1,9 @@
 resources:
-- https://github.com/konflux-ci/crossplane-control-plane/crossplane?ref=5d6c42730c1c9f66b5d3567bdf04d587832ceac1
-- https://github.com/konflux-ci/crossplane-control-plane/config?ref=5d6c42730c1c9f66b5d3567bdf04d587832ceac1
+- https://github.com/konflux-ci/crossplane-control-plane/crossplane?ref=f61fa6c74ed6e7ac1a913c35612498157b37549d
+- https://github.com/konflux-ci/crossplane-control-plane/config?ref=f61fa6c74ed6e7ac1a913c35612498157b37549d
+- rbac.yaml
+- cronjob.yaml
+- namespace-claim-configmap.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
