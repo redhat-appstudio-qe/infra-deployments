@@ -4,3 +4,5 @@ cosign.pub
 .tmp/
 tmp
 .idea/*
+components/pipeline-service/staging/base/vector/charts/*
+components/pipeline-service/development/base/vector/charts/*
