@@ -15,4 +15,3 @@ resources:
   - ../../base/testing
   - ../../base/rbac
   - ../../base/certificates
-  - ../../base/log-collector
