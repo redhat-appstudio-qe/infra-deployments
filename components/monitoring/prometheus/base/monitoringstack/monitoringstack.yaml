@@ -131,6 +131,7 @@ spec:
         - '{__name__="kube_deployment_status_replicas_ready", namespace="gitops-service-argocd"}'
         - '{__name__="kube_deployment_spec_replicas", namespace=~"gitops-service-argocd|smee.*"}'
         - '{__name__="kube_deployment_status_replicas_available", namespace=~"smee.*"}'
+        - '{__name__="kube_deployment_status_replicas_available", namespace="project-controller"}'
         - '{__name__="argocd_app_reconcile_bucket", namespace="gitops-service-argocd"}'
         - '{__name__="argocd_app_info", namespace="gitops-service-argocd"}'
         - '{__name__="container_cpu_usage_seconds_total", namespace="release-service"}'
