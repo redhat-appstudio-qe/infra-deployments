@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: quay.io/redhat-appstudio-qe/postgres:14
+          image: bitnami/postgresql:16.4.0
           ports:
             - containerPort: 5432
           resources:
