@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: quay.io/enterprisedb/postgresql:16.6-3.4-postgis-multiarch
+          image: quay.io/redhat-appstudio-qe/postgres:14
           ports:
             - containerPort: 5432
           resources:
