@@ -6,7 +6,7 @@ resources:
   - https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=2ee36477881be36c109f4238928186df7b298cc2
 images:
   - name: quay.io/konflux-ci/integration-service
-    newName: quay.io/redhat-user-workloads/rhtap-integration-tenant/integration-service/integration-service:on-pr-2ee36477881be36c109f4238928186df7b298cc2-sealights
+    newName: quay.io/redhat-user-workloads/rhtap-integration-tenant/integration-service/integration-service
     newTag: on-pr-2ee36477881be36c109f4238928186df7b298cc2
 configMapGenerator:
   - name: integration-config
