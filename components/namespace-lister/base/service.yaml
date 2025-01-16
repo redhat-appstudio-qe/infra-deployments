@@ -5,9 +5,9 @@ metadata:
   namespace: namespace-lister
 spec:
   selector:
-    app: namespace-lister-proxy
+    apps: namespace-lister
   type: ClusterIP
   ports:
   - name: http
     targetPort: 8080
-    port: 12000
+    port: 8080
