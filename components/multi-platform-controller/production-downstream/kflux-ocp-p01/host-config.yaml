@@ -45,7 +45,7 @@ data:
     linux/ppc64le,\
     linux-largecpu/ppc64le\
     linux-d200/ppc64le,\
-    linux-large/ppc64le\
+    linux-large/ppc64le,\
     linux-d200-large/ppc64le\
     "
   instance-tag: rhtap-prod
