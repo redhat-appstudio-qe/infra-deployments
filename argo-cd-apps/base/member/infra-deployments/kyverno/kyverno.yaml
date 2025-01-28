@@ -30,14 +30,28 @@ spec:
             values: |
               admissionController:
                 replicas: 3
+                initContainer:
+                  securityContext: null
+                container:
+                  securityContext: null
               backgroundController:
                 replicas: 3
+                securityContext: null
               cleanupController:
                 replicas: 3
+                securityContext: null
               reportsController:
                 replicas: 3
+                securityContext: null
               policyReportsCleanup:
                 securityContext: null
+              webhooksCleanup:
+                securityContext: null
+              test:
+                securityContext: null
+              crds:
+                migration:
+                  securityContext: null
       destination:
         namespace: konflux-kyverno
         server: '{{server}}'
