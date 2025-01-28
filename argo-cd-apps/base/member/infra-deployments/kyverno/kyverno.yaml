@@ -28,6 +28,8 @@ spec:
           targetRevision: 3.3.4
           helm:
             values: |
+              fullnameOverride: konflux-kyverno
+              namespaceOverride: konflux-kyverno
               admissionController:
                 replicas: 3
               backgroundController:
