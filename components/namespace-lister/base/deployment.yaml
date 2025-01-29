@@ -26,7 +26,11 @@ spec:
           matchLabels:
             apps: namespace-lister
       containers:
-      - image: namespace-lister:foo
+      - args:
+        - -enable-tls
+        - -cert-path=/var/tls/tls.crt
+        - -key-path=/var/tls/tls.key
+        image: namespace-lister:foo
         name: namespace-lister
         args:
         - "-enable-tls=false"
@@ -50,4 +54,12 @@ spec:
           capabilities:
             drop:
             - "ALL"
+        volumeMounts:
+        - name: tls
+          mountPath: /var/tls
+          readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: namespace-lister-tls
       terminationGracePeriodSeconds: 60
