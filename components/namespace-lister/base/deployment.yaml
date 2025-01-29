@@ -32,6 +32,8 @@ spec:
         - -key-path=/var/tls/tls.key
         image: namespace-lister:foo
         name: namespace-lister
+        args:
+        - "-enable-tls=false"
         env:
         - name: LOG_LEVEL
           value: "0"
@@ -40,8 +42,8 @@ spec:
             cpu: 500m
             memory: 128Mi
           requests:
-            cpu: 10m
-            memory: 64Mi
+            cpu: 500m
+            memory: 128Mi
         ports:
         - containerPort: 8080
           name: http

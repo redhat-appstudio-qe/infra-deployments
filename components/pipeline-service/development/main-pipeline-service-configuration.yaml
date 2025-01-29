@@ -1704,6 +1704,41 @@ spec:
                       requests:
                         cpu: 200m
                         memory: 200Mi
+      statefulSets:
+        tekton-pipelines-controller:
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: tekton-pipelines-controller
+                    resources:
+                      limits:
+                        memory: 2Gi
+                        cpu: "1"
+                      requests:
+                        cpu: 500m
+                        memory: 1Gi
+                topologySpreadConstraints:
+                  - maxSkew: 1
+                    topologyKey: topology.kubernetes.io/zone
+                    whenUnsatisfiable: DoNotSchedule
+                    labelSelector:
+                      matchLabels:
+                        app: tekton-pipelines-controller
+        tekton-pipelines-remote-resolvers:
+          spec:
+            replicas: 2
+            template:
+              spec:
+                containers:
+                  - name: controller
+                    resources:
+                      limits:
+                        memory: 1Gi
+                        cpu: 500m
+                      requests:
+                        cpu: 200m
+                        memory: 500Mi
       disabled: false
       horizontalPodAutoscalers:
         tekton-operator-proxy-webhook:
@@ -1808,7 +1843,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   displayName: custom-operators
-  image: quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index@sha256:41e3a30346050886e0cf7a17d65140415f028f8c8d511915387ec68a1dab7f75
+  image: quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index@sha256:63f934e04d88cc1fa2af49efc07b406eb88e04a622be25762a931168deeefb79
   sourceType: grpc
   updateStrategy:
     registryPoll:
