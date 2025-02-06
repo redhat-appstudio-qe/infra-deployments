@@ -1,16 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base
-- https://github.com/konflux-ci/image-controller/config/default?ref=387356aef3c6391ce345ef3fa2d373cced9a2959
-
+  - ../base
+  - https://github.com/konflux-ci/image-controller/config/default?ref=409ed338888e48f6effabcf516d78735e031a5ff
 images:
-- name: quay.io/konflux-ci/image-controller
-  newName: quay.io/konflux-ci/image-controller
-  newTag: 387356aef3c6391ce345ef3fa2d373cced9a2959
-
+  - name: quay.io/konflux-ci/image-controller
+    newName: quay.io/redhat-user-workloads/rhtap-build-tenant/image-controller/image-controller
+    newTag: on-pr-409ed338888e48f6effabcf516d78735e031a5ff
 namespace: image-controller
-
 patches:
   - path: ./manager_resources_patch.yaml
   - target:
