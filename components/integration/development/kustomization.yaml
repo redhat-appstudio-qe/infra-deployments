@@ -1,29 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base
-- https://github.com/konflux-ci/integration-service/config/default?ref=7fb9a573f69a977564f695336198cdc712e7fd53
-- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=7fb9a573f69a977564f695336198cdc712e7fd53
-
+  - ../base
+  - https://github.com/konflux-ci/integration-service/config/default?ref=bb648ff6f82761fb787f2c64d2330febf7452d96
+  - https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=bb648ff6f82761fb787f2c64d2330febf7452d96
 images:
-- name: quay.io/konflux-ci/integration-service
-  newName: quay.io/konflux-ci/integration-service
-  newTag: 7fb9a573f69a977564f695336198cdc712e7fd53
-
+  - name: quay.io/konflux-ci/integration-service
+    newName: quay.io/redhat-user-workloads/konflux-qe-team-tenant/integration-service
+    newTag: on-pr-bb648ff6f82761fb787f2c64d2330febf7452d96
 configMapGenerator:
-- name: integration-config
-  literals:
-    - CONSOLE_NAME="Konflux Dev version"
-    - CONSOLE_URL=""
-    - CONSOLE_URL_TASKLOG=""
-- name: pipelinerun-options
-  literals:
-    - PIPELINE_TIMEOUT="6h"
-    - TASKS_TIMEOUT="4h"
-    - FINALLY_TIMEOUT="2h"
-
+  - name: integration-config
+    literals:
+      - CONSOLE_NAME="Konflux Dev version"
+      - CONSOLE_URL=""
+      - CONSOLE_URL_TASKLOG=""
+  - name: pipelinerun-options
+    literals:
+      - PIPELINE_TIMEOUT="6h"
+      - TASKS_TIMEOUT="4h"
+      - FINALLY_TIMEOUT="2h"
 namespace: integration-service
-
 patches:
   - path: manager_resources_patch.yaml
   - path: snapshotgc_inputs_patch.yaml
