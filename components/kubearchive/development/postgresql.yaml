@@ -25,7 +25,7 @@ spec:
             defaultMode: 384
       containers:
         - name: postgresql
-          image: quay.io/kubearchive/postgresql:16.4.0
+          image: quay.io/kubearchive/postgresql:16.6.0
           volumeMounts:
             - name: ssl
               mountPath: /mount/ssl-postgres/
@@ -46,7 +46,7 @@ spec:
             - name: POSTGRESQL_PASSWORD
               value: password  # notsecret
             - name: POSTGRESQL_REPLICATION_USE_PASSFILE # https://github.com/bitnami/containers/issues/74788
-              value: no
+              value: "no"
             - name: POSTGRESQL_ENABLE_TLS
               value: yes
             - name: POSTGRESQL_TLS_CERT_FILE
