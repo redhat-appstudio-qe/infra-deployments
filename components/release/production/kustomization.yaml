@@ -4,6 +4,7 @@ resources:
   - ../base
   - ../base/monitor/production
   - https://github.com/konflux-ci/release-service/config/default?ref=6edf44528b6f2918b7625080d2cf888c6a040376
+  - release_service_config.yaml
 
 components:
   - ../k-components/manager-resources-patch
