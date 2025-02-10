@@ -5,6 +5,7 @@ resources:
   - ../base/monitor/staging
   - external-secrets/release-monitor-secret.yaml
   - https://github.com/konflux-ci/release-service/config/default?ref=5954f10a8c86134fca5f70fc1d9898254ee1f082
+  - release_service_config.yaml
 
 patches:
   - path: kubearchive-config-patch.yaml
@@ -23,4 +24,3 @@ images:
     newTag: 5954f10a8c86134fca5f70fc1d9898254ee1f082
 
 namespace: release-service
-

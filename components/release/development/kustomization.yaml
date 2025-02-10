@@ -4,6 +4,7 @@ resources:
   - ../base
   - ../base/monitor/development
   - https://github.com/konflux-ci/release-service/config/default?ref=5954f10a8c86134fca5f70fc1d9898254ee1f082
+  - release_service_config.yaml
 
 images:
   - name: quay.io/konflux-ci/release-service
