@@ -23,7 +23,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:konflux
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-6297abe@sha256:a15efd34a19cb47b7f24eb7b5051aff28d7367f5424301c13b60821f3f3cfe6f
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -46,7 +46,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:konflux
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-6297abe@sha256:a15efd34a19cb47b7f24eb7b5051aff28d7367f5424301c13b60821f3f3cfe6f
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -67,7 +67,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:konflux
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-6297abe@sha256:a15efd34a19cb47b7f24eb7b5051aff28d7367f5424301c13b60821f3f3cfe6f
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -89,7 +89,7 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-release-policy:konflux
+        - oci::quay.io/enterprise-contract/ec-release-policy:git-6297abe@sha256:a15efd34a19cb47b7f24eb7b5051aff28d7367f5424301c13b60821f3f3cfe6f
 ---
 apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
@@ -108,4 +108,4 @@ spec:
         - github.com/release-engineering/rhtap-ec-policy//data
       name: Default
       policy:
-        - oci::quay.io/enterprise-contract/ec-task-policy:git-7176fde@sha256:096940bbf69280d615bdfe90a86ffdfcf6b2a0c810389e9d35243b7292d03062
+        - oci::quay.io/enterprise-contract/ec-task-policy:git-55f0742@sha256:967ea1d402f0f8fb66c8ae62cc2249cf94d5c3f6b33908a585aac4004bedccf9
