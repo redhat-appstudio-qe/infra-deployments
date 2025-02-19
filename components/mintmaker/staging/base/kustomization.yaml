@@ -3,8 +3,8 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/mintmaker/config/default?ref=68052519f16c5045eec5f9316db2a43e5065d52b
-- https://github.com/konflux-ci/mintmaker/config/renovate?ref=68052519f16c5045eec5f9316db2a43e5065d52b
+- https://github.com/konflux-ci/mintmaker/config/default?ref=98884caf1feaf7095118d55e181f2c757686bf02
+- https://github.com/konflux-ci/mintmaker/config/renovate?ref=98884caf1feaf7095118d55e181f2c757686bf02
 
 namespace: mintmaker
 
