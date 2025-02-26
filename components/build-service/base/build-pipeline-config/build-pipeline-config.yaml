@@ -8,18 +8,18 @@ data:
     default-pipeline-name: docker-build-oci-ta
     pipelines:
     - name: fbc-builder
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
       additional-params:
       - build-platforms
     - name: docker-build
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
     - name: docker-build-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
     - name: docker-build-multi-platform-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
       additional-params:
       - build-platforms
     - name: maven-zip-build
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
     - name: maven-zip-build-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build-oci-ta:ae07564b518a8e99c56415d612f7d89bb01b0a9b
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build-oci-ta:dc0e4db1e5ff839a77c78414e43e7b2b1af3a508
