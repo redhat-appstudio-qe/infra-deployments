@@ -16,7 +16,7 @@ spec:
           app: openshift-kube-apiserver
       namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: openshift-kube-system
+          kubernetes.io/metadata.name: openshift-kube-apiserver
     ports:
     - port: 6443
       protocol: TCP
