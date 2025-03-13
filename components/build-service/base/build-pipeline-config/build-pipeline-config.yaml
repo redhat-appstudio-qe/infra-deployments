@@ -8,20 +8,20 @@ data:
     default-pipeline-name: docker-build-oci-ta
     pipelines:
     - name: fbc-builder
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-fbc-builder:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
       additional-params:
       - build-platforms
     - name: docker-build
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
     - name: docker-build-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-oci-ta:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
     - name: docker-build-multi-platform-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-docker-build-multi-platform-oci-ta:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
       additional-params:
       - build-platforms
     - name: maven-zip-build
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
     - name: maven-zip-build-oci-ta
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build-oci-ta:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-maven-zip-build-oci-ta:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
     - name: tekton-bundle-builder
-      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-tekton-bundle-builder:8a14fbc4ba92c0abd9eda2b41da00822a3481109
+      bundle: quay.io/konflux-ci/tekton-catalog/pipeline-tekton-bundle-builder:a7771c2fa9c48c4791f057b1f762eb8b36c530ae
