@@ -3,13 +3,13 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/integration-service/config/default?ref=d504e5ede6dbcf46d94e5fe7959b67ccb82b1285
-- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=d504e5ede6dbcf46d94e5fe7959b67ccb82b1285
+- https://github.com/konflux-ci/integration-service/config/default?ref=5da31cd9d309325a21508679961353acc56d10f0
+- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=5da31cd9d309325a21508679961353acc56d10f0
 
 images:
 - name: quay.io/konflux-ci/integration-service
   newName: quay.io/konflux-ci/integration-service
-  newTag: d504e5ede6dbcf46d94e5fe7959b67ccb82b1285
+  newTag: 5da31cd9d309325a21508679961353acc56d10f0
 
 configMapGenerator:
 - name: integration-config
