@@ -1,0 +1,25 @@
+apiVersion: test.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: label-pods-from-namespace
+spec:
+  policies:
+    - policy.yaml
+  resources:
+    - resources/namespace-matching.yaml
+    - resources/pod-matching.yaml
+    - resources/pod-nonmatching.yaml
+  rresults:
+    - kind: Pod
+      name: demo-pod
+      namespace: demo-tenant
+      policy: propagate-cost-center-from-namespace
+      rule: propagate-cost-center-from-namespace
+      result: pass
+      patchedResource: resources/expected-pod-matching.yaml
+    - kind: Pod
+      name: random-pod
+      namespace: random-ns
+      policy: propagate-cost-center-from-namespace
+      rule: propagate-cost-center-from-namespace
+      result: skip
