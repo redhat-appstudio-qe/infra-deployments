@@ -1,0 +1,36 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: label-pods-from-namespace
+spec:
+  steps:
+    - name: Create-namespace and add policy for-demo-tenant
+      try:
+        - apply:
+            file: ./resources/namespace-matching.yaml
+        - apply:
+            file: ./resources/namespace-nonmatching.yaml
+    - name: Apply permission on namespaces
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: create pods for testing
+      try:
+        - apply:
+            file: ./resources/pod-matching.yaml
+        - apply:
+            file: ./resources/pod-nonmatching.yaml
+    - name: Apply kyverno Cluster Policy for pods
+      try:
+        - apply:
+            file: ../update_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml
+    - name: assert pods are labeled
+      try:
+        - assert:
+            file: ./resources/expected-pod-matching.yaml
+    - name: assert pods are not labeled
+      try:
+        - assert:
+            file: ./resources/pod-nonmatching.yaml
