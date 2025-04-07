@@ -1,0 +1,38 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: propagate-cost-center-from-namespace
+  annotations:
+    policies.kyverno.io/title: Propagate Cost-Center from Namespace
+    policies.kyverno.io/category: Cost Management
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/subject: Pod, Namespace
+    policies.kyverno.io/description: >-
+      This policy ensures that the cost-center label from a Namespace is propagated
+      to all Pods within that Namespace. It applies only to Namespaces with the
+      konflux-ci.dev/type: tenant label and ensures that the cost-center label exists
+      in the Namespace before applying the mutation.
+spec:
+  rules:
+    - name: propagate-cost-center-from-namespace
+      match:
+        any:
+          - resources:
+              kinds:
+              - Pod
+              namespaceSelector:
+                matchLabels:
+                  konflux-ci.dev/type: tenant
+      preconditions: # ensures that the cost-center label exists in the Namespace
+        all:
+          - key: "{{ lookup('v1', 'Namespace', request.namespace).metadata.labels.cost-center }}"
+            operator: NotEquals
+            value: ""
+      mutate:
+        mutateExistingOnPolicyUpdate: true
+        patchStrategicMerge:
+          metadata:
+            labels:
+              cost-center: "{{ lookup('v1', 'Namespace', request.namespace).metadata.labels.cost-center }}"
+              insights_cost_management_optimizations: "true"
