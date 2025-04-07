@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-pod
+  namespace: random-ns
+  labels:
+    app: random-app
+spec:
+  containers:
+    - name: random-container
+      image: nginx
