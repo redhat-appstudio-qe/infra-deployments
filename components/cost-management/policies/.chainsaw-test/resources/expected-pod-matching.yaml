@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-pod
+  namespace: demo-tenant
+  labels:
+    cost-center: "team"
+    insights_cost_management_optimizations: "true"
