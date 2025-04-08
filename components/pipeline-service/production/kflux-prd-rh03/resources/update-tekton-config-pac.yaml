@@ -1,0 +1,9 @@
+---
+- op: add
+  path: /spec/platforms/openshift/pipelinesAsCode/settings
+  value:
+    application-name: Konflux kflux-prd-rh03
+    custom-console-name: Konflux kflux-prd-rh03
+    custom-console-url: https://konflux-ui.RH03INGRESSDOMAIN
+    custom-console-url-pr-details: https://konflux-ui.RH03INGRESSDOMAIN/ns/{{ namespace }}/pipelinerun/{{ pr }}
+    custom-console-url-pr-tasklog: https://konflux-ui.RH03INGRESSDOMAIN/ns/{{ namespace }}/pipelinerun/{{ pr }}/logs/{{ task }}
