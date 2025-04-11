@@ -1,0 +1,7 @@
+---
+fullnameOverride: konflux-kyverno
+namespaceOverride: konflux-kyverno
+admissionController:
+  replicas: 1
+backgroundController:
+  replicas: 1
