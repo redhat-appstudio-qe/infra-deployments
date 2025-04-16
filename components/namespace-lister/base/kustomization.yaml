@@ -13,7 +13,7 @@ namespace: namespace-lister
 images:
 - name: namespace-lister
   newName: quay.io/konflux-ci/namespace-lister
-  newTag: 7f96fde10f2612c324fdafe4b1d73b6949ccbcba
+  newTag: f3404f190e3ecb9686542aae6efe4fc0a7384a0e
 patches:
 - path: ./patches/with_cachenamespacelabelselector.yaml
   target:
