@@ -1,4 +1,4 @@
 ---
 - op: add
   path: /spec/host
-  value: konflux-ui.apps.kflux-prd-rh02.0fk9.p1.openshiftapps.com
+  value: konflux-ui.apps.kflux-prd-rh03.nnv1.p1.openshiftapps.com
