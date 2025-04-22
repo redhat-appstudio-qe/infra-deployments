@@ -505,7 +505,7 @@ data:
 
   # S390X 2vCPU / 8GB RAM / 100GB disk
   dynamic.linux-s390x.type: ibmz
-  dynamic.linux-s390x.ssh-secret: "ibm-ssh-key"
+  dynamic.linux-s390x.ssh-secret: "ibm-s390x-ssh-key"
   dynamic.linux-s390x.secret: "ibm-api-key"
   dynamic.linux-s390x.vpc: "konflux-prod-multi-rh03"
   dynamic.linux-s390x.key: "konflux-s390x-root"
@@ -521,7 +521,7 @@ data:
 
   # S390X 4vCPU / 16GB RAM / 100GB disk
   dynamic.linux-large-s390x.type: ibmz
-  dynamic.linux-large-s390x.ssh-secret: "ibm-ssh-key"
+  dynamic.linux-large-s390x.ssh-secret: "ibm-s390x-ssh-key"
   dynamic.linux-large-s390x.secret: "ibm-api-key"
   dynamic.linux-large-s390x.vpc: "konflux-prod-multi-rh03"
   dynamic.linux-large-s390x.key: "konflux-s390x-root"
@@ -537,7 +537,7 @@ data:
 
   # S390X 2vCPU / 8GB RAM / 200GB disk
   dynamic.linux-d200-s390x.type: ibmz
-  dynamic.linux-d200-s390x.ssh-secret: "ibm-ssh-key"
+  dynamic.linux-d200-s390x.ssh-secret: "ibm-s390x-ssh-key"
   dynamic.linux-d200-s390x.secret: "ibm-api-key"
   dynamic.linux-d200-s390x.vpc: "konflux-prod-multi-rh03"
   dynamic.linux-d200-s390x.key: "konflux-s390x-root"
@@ -554,7 +554,7 @@ data:
 
   # S390X 4vCPU / 16GB RAM / 200GB disk
   dynamic.linux-d200-large-s390x.type: ibmz
-  dynamic.linux-d200-large-s390x.ssh-secret: "ibm-ssh-key"
+  dynamic.linux-d200-large-s390x.ssh-secret: "ibm-s390x-ssh-key"
   dynamic.linux-d200-large-s390x.secret: "ibm-api-key"
   dynamic.linux-d200-large-s390x.vpc: "konflux-prod-multi-rh03"
   dynamic.linux-d200-large-s390x.key: "konflux-s390x-root"
@@ -571,7 +571,7 @@ data:
 
   # PPC64LE 2vCPU / 8GB RAM / 100GB disk
   dynamic.linux-ppc64le.type: ibmp
-  dynamic.linux-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-ppc64le.secret: "ibm-api-key"
   dynamic.linux-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -587,7 +587,7 @@ data:
 
   # PPC64LE 4vCPU / 16GB RAM / 100GB disk
   dynamic.linux-large-ppc64le.type: ibmp
-  dynamic.linux-large-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-large-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-large-ppc64le.secret: "ibm-api-key"
   dynamic.linux-large-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-large-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -603,7 +603,7 @@ data:
 
   # PPC64LE 8vCPU / 32GB RAM / 100GB disk
   dynamic.linux-xlarge-ppc64le.type: ibmp
-  dynamic.linux-xlarge-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-xlarge-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-xlarge-ppc64le.secret: "ibm-api-key"
   dynamic.linux-xlarge-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-xlarge-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -619,7 +619,7 @@ data:
 
   # PPC64LE 16vCPU / 64GB RAM / 100GB disk
   dynamic.linux-2xlarge-ppc64le.type: ibmp
-  dynamic.linux-2xlarge-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-2xlarge-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-2xlarge-ppc64le.secret: "ibm-api-key"
   dynamic.linux-2xlarge-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-2xlarge-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -635,7 +635,7 @@ data:
 
   # PPC64LE 2vCPU / 8GB RAM / 200GB disk
   dynamic.linux-d200-ppc64le.type: ibmp
-  dynamic.linux-d200-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-d200-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-d200-ppc64le.secret: "ibm-api-key"
   dynamic.linux-d200-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-d200-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -652,7 +652,7 @@ data:
 
   # PPC64LE 4vCPU / 16GB RAM / 200GB disk
   dynamic.linux-d200-large-ppc64le.type: ibmp
-  dynamic.linux-d200-large-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-d200-large-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-d200-large-ppc64le.secret: "ibm-api-key"
   dynamic.linux-d200-large-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-d200-large-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -669,7 +669,7 @@ data:
 
   # PPC64LE 8vCPU / 32GB RAM / 200GB disk
   dynamic.linux-d200-xlarge-ppc64le.type: ibmp
-  dynamic.linux-d200-xlarge-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-d200-xlarge-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-d200-xlarge-ppc64le.secret: "ibm-api-key"
   dynamic.linux-d200-xlarge-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-d200-xlarge-ppc64le.image: "kflux-ppc-base-04-feb-2025"
@@ -686,7 +686,7 @@ data:
 
   # PPC64LE 16vCPU / 64GB RAM / 200GB disk
   dynamic.linux-d200-2xlarge-ppc64le.type: ibmp
-  dynamic.linux-d200-2xlarge-ppc64le.ssh-secret: "ibm-production-ppc64le-ssh-key"
+  dynamic.linux-d200-2xlarge-ppc64le.ssh-secret: "ibm-ppc64le-ssh-key"
   dynamic.linux-d200-2xlarge-ppc64le.secret: "ibm-api-key"
   dynamic.linux-d200-2xlarge-ppc64le.key: "prod-konflux-infra-external"
   dynamic.linux-d200-2xlarge-ppc64le.image: "kflux-ppc-base-04-feb-2025"
