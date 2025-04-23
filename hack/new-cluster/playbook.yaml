@@ -1,0 +1,127 @@
+---
+# This ansible playbook will locally write out configuration overlays for a new cluster based on templates.
+
+# TODO -
+#   * Create backup s3 bucket via app-interface
+#   * Vault: Populate s3 bucket token into {{ env }}/platform/terraform/generated/{{ shortname }}/backup-bucket
+#     Or, at least confirm its there.
+#
+#   * Create github app
+#   * Vault: Populate github app token into {{ env }}/pipeline-service/{{ shortname }}/github-app
+#
+#   APIs:
+#     https://api.github.com/apps/red-hat-konflux
+#     https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-a-github-app-from-a-manifest
+#     NOTE - you can only retrieve the client secret, webhook secret, and rsa private key if you are creating the app via the API.
+#            the most basic flow is: confirm that it exists and stop the user if it doesnt
+#             * confirm it exists in github and move on
+#             * confirm it exists in vault and move on
+#             If it doesn't exist in either github or vault, then create it in github and populate vault.
+#
+#   * Other pipeline service secrets:
+#     * {{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret
+#
+#   * Create MPC aws ssh key and populate {{ env }}/build/multi-platform-controller/{{ shortname }}-ssh-key
+#   * Create MPC aws account and populate {{ env }}/build/multi-platform-controller/{{ shortname }}-aws-account
+#   * Create MPC ibm api key and populate {{ env }}/build/multi-platform-controller/{{cuteenv}}-{{cutename}}-ibm-api-key
+#   * Simply make sure that ibm power ssh key is in vault: {{ env }}/build/multi-platform-controller/ibm-{{ env }}-ppc64le-ssh-key
+#
+#   TODO - sort out MPC:
+#     * AWS security-group-id and subnet-id
+#     * IBM s390 subnet
+#     * IBM ppc64le network
+#
+#   * integrations-output/external-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-rds
+#   * integrations-output/terraform-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-s3
+#
+#
+- name: Create and patch YAML files
+  hosts: localhost
+  gather_facts: no
+
+  vars_prompt:
+    - name: cutename
+      prompt: "Cute name of the cluster (like rh09)"
+      private: false
+    - name: shortname
+      prompt: "Short name of the cluster (like kflux-prd-rh09)"
+      private: false
+    - name: longname
+      prompt: "Long name of the cluster (like kflux-prd-rh09.1bz7)"
+      private: false
+    - name: env
+      prompt: "What environment (one of {{allowed_envs}})"
+      private: false
+
+  vars:
+    dst: "{{ lookup('env', 'PWD') }}"
+    github_application: "red-hat-konflux-{{ shortname }}"
+    required_vars:
+      - shortname
+      - longname
+      - env
+    controlplane_cluster: appsrep09ue1
+    allowed_envs:
+      - production
+      - staging
+    templated_components:
+      - backup
+      - build-service
+      - integration
+      - konflux-info
+      - konflux-rbac
+      - konflux-ui
+      - kyverno
+      - mintmaker
+      - monitoring/logging
+      - monitoring/prometheus
+      - multi-platform-controller
+      - namespace-lister
+      - pipeline-service
+    argo_cd_app_files:
+      - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-logging/monitoring-workload-logging.yaml"
+      - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-prometheus/monitoring-workload-prometheus.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/build-service/build-service.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/integration/integration.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/konflux-info/konflux-info.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/konflux-rbac/konflux-rbac.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/konflux-ui/konflux-ui.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/kyverno/kyverno.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/mintmaker/mintmaker.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/multi-platform-controller/multi-platform-controller.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/namespace-lister/namespace-lister.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/pipeline-service/pipeline-service.yaml"
+
+  pre_tasks:
+    - name: Ensure required variables are defined
+      fail:
+        msg: "Required variable {{ item }} has not been provided"
+      when: "vars[item] is undefined or vars[item] == ''"
+      loop: "{{ required_vars }}"
+    - name: Make sure env is sane
+      fail:
+        msg: "Variable env must be one of {{allowed_envs}}, not {{env}}"
+      when: "vars['env'] not in vars['allowed_envs']"
+    - name: Setup cute variants of the environment name (for prod)
+      set_fact:
+        cuteenv: prod
+        cutestenv: prd
+      when: "vars['env'] == 'production'"
+    - name: Setup cute variants of the environment name (for staging)
+      set_fact:
+        cuteenv: stage
+        cutestenv: stg
+      when: "vars['env'] == 'staging'"
+
+  tasks:
+    - name: Patch ApplicationSet files to include new cluster reference
+      include_tasks: tasks/insert-cluster-reference.yaml
+      loop: "{{ argo_cd_app_files }}"
+      loop_control:
+        loop_var: filename
+
+    - name: Copy cluster-specific component manifests
+      include_tasks: tasks/copy-cluster-specific-component-manifests.yaml
+      loop: "{{ templated_components }}"
+      loop_control:
+        loop_var: component
