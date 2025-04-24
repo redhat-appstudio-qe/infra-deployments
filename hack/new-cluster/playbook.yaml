@@ -182,14 +182,14 @@
 
     - name: Patch ApplicationSet files to include new cluster reference
       tags: [applicationsets]
-      include_tasks: tasks/insert-cluster-reference.yaml
+      include_tasks: tasks/applicationsets.yaml
       loop: "{{ argo_cd_app_files }}"
       loop_control:
         loop_var: filename
 
     - name: Copy cluster-specific component manifests
       tags: [components]
-      include_tasks: tasks/copy-cluster-specific-component-manifests.yaml
+      include_tasks: tasks/components.yaml
       loop: "{{ templated_components }}"
       loop_control:
         loop_var: component
