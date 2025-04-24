@@ -2052,7 +2052,7 @@ metadata:
 spec:
   data:
   - remoteRef:
-      key: {{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret
+      key: {{ env }}/platform/ansible/generated/{{ shortname }}/chains-signing-secret
       property: cosign.pub
     secretKey: cosign.pub
   refreshInterval: 5m
@@ -2078,7 +2078,7 @@ metadata:
 spec:
   dataFrom:
   - extract:
-      key: {{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret
+      key: {{ env }}/platform/ansible/generated/{{ shortname }}/chains-signing-secret
   refreshInterval: 5m
   secretStoreRef:
     kind: ClusterSecretStore

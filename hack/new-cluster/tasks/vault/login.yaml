@@ -1,5 +1,5 @@
 - name: Perform Vault OIDC login
-  tags: [vault]
+  tags: [vault, chains, github]
   ansible.builtin.command: >
     vault login -format=json -method=oidc
   register: vault_login
@@ -8,6 +8,6 @@
   changed_when: false
 
 - name: Extract Vault token from login response
-  tags: [vault]
+  tags: [vault, chains, github]
   ansible.builtin.set_fact:
     vault_token: "{{ vault_login.stdout | from_json | dict2items | selectattr('key', 'equalto', 'auth') | map(attribute='value.client_token') | first }}"
