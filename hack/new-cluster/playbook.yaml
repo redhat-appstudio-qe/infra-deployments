@@ -2,10 +2,6 @@
 # This ansible playbook will locally write out configuration overlays for a new cluster based on templates.
 
 # TODO -
-#   * Create backup s3 bucket via app-interface
-#   * Vault: Populate s3 bucket token into {{ env }}/platform/terraform/generated/{{ shortname }}/backup-bucket
-#     Or, at least confirm its there.
-#
 #   * Create github app
 #   * Vault: Populate github app token into {{ env }}/pipeline-service/{{ shortname }}/github-app
 #
@@ -20,19 +16,6 @@
 #
 #   * Other pipeline service secrets:
 #     * {{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret
-#
-#   * Create MPC aws ssh key and populate {{ env }}/build/multi-platform-controller/{{ shortname }}-ssh-key
-#   * Create MPC aws account and populate {{ env }}/build/multi-platform-controller/{{ shortname }}-aws-account
-#   * Create MPC ibm api key and populate {{ env }}/build/multi-platform-controller/{{cuteenv}}-{{cutename}}-ibm-api-key
-#   * Simply make sure that ibm power ssh key is in vault: {{ env }}/build/multi-platform-controller/ibm-{{ env }}-ppc64le-ssh-key
-#
-#   TODO - sort out MPC:
-#     * AWS security-group-id and subnet-id
-#     * IBM s390 subnet
-#     * IBM ppc64le network
-#
-#   * integrations-output/external-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-rds
-#   * integrations-output/terraform-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-s3
 #
 - name: Create and patch YAML files
   hosts: localhost
