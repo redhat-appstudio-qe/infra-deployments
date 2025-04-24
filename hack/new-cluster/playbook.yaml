@@ -14,9 +14,6 @@
 #             * confirm it exists in vault and move on
 #             If it doesn't exist in either github or vault, then create it in github and populate vault.
 #
-#   * Other pipeline service secrets:
-#     * {{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret
-#
 - name: Create and patch YAML files
   hosts: localhost
   gather_facts: no
@@ -85,7 +82,7 @@
 
     expected_vault_secrets:
       - 'stonesoup/{{ env }}/pipeline-service/{{ shortname }}/github-app'
-      - 'stonesoup/{{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret'
+      - 'stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/chains-signing-secret'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/backup-bucket'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/plnsvc-database'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/tekton-bucket'
@@ -113,10 +110,14 @@
 
   tasks:
     - name: Login to vault
-      tags: [vault]
+      tags: [vault, chains]
       include_tasks: tasks/vault/login.yaml
 
-    - name: Verify vault secrets exist as expected
+    - name: Ensure the chains signing secret exists
+      tags: [vault, chains]
+      include_tasks: tasks/vault/chains.yaml
+
+    - name: Verify all other vault secrets exist as expected
       tags: [vault]
       include_tasks: tasks/vault/verify.yaml
       loop: "{{ expected_vault_secrets }}"
