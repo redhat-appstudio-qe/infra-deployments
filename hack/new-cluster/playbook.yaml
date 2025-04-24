@@ -107,20 +107,24 @@
 
   pre_tasks:
     - name: Ensure required variables are defined
+      tags: [always]
       fail:
         msg: "Required variable {{ item }} has not been provided"
       when: "vars[item] is undefined or vars[item] == ''"
       loop: "{{ required_vars }}"
     - name: Make sure env is sane
+      tags: [always]
       fail:
         msg: "Variable env must be one of {{allowed_envs}}, not {{env}}"
       when: "vars['env'] not in vars['allowed_envs']"
     - name: Setup cute variants of the environment name (for prod)
+      tags: [always]
       set_fact:
         cuteenv: prod
         cutestenv: prd
       when: "vars['env'] == 'production'"
     - name: Setup cute variants of the environment name (for staging)
+      tags: [always]
       set_fact:
         cuteenv: stage
         cutestenv: stg
@@ -128,21 +132,25 @@
 
   tasks:
     - name: Login to vault
+      tags: [vault]
       include_tasks: tasks/vault/login.yaml
 
     - name: Verify vault secrets exist as expected
+      tags: [vault]
       include_tasks: tasks/vault/verify.yaml
       loop: "{{ expected_vault_secrets }}"
       loop_control:
         loop_var: path
 
     - name: Patch ApplicationSet files to include new cluster reference
+      tags: [applicationsets]
       include_tasks: tasks/insert-cluster-reference.yaml
       loop: "{{ argo_cd_app_files }}"
       loop_control:
         loop_var: filename
 
     - name: Copy cluster-specific component manifests
+      tags: [components]
       include_tasks: tasks/copy-cluster-specific-component-manifests.yaml
       loop: "{{ templated_components }}"
       loop_control:

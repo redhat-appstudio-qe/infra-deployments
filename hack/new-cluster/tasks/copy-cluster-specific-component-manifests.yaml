@@ -1,10 +1,12 @@
 - name: "Create the components/{{ component }}/{{ env }}/{{ shortname }}/ directory if it does not exist"
+  tags: [components]
   file:
     path: "{{ dst }}/components/{{ component }}/{{ env }}/{{ shortname }}/"
     state: directory
     mode: '0755'
 
 - name: "Create any subdirectories if we need them"
+  tags: [components]
   file:
     path: "{{ dst }}/components/{{ component }}/{{ env }}/{{ shortname }}/{{ item['path'] }}"
     state: directory
@@ -14,6 +16,7 @@
   when: "item['state'] == 'directory'"
 
 - name: "Create files from template for components/{{ component }}/{{ env }}/{{ shortname }}"
+  tags: [components]
   template:
     src: "{{ item['src'] }}"
     dest: "{{ dst }}/components/{{ component }}/{{ env }}/{{ shortname }}/{{item['path'] }}"
