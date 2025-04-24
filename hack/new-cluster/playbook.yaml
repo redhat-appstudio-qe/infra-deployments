@@ -51,6 +51,9 @@
     - name: env
       prompt: "What environment (one of {{allowed_envs}})"
       private: false
+    - name: network
+      prompt: "What network (one of {{allowed_networks}})"
+      private: false
 
   vars:
     vault_addr: "https://vault.devshift.net"
@@ -65,6 +68,9 @@
     allowed_envs:
       - production
       - staging
+    allowed_networks:
+      - public
+      - private
     templated_components:
       - backup
       - build-service
@@ -129,6 +135,11 @@
       fail:
         msg: "Variable env must be one of {{allowed_envs}}, not {{env}}"
       when: "vars['env'] not in vars['allowed_envs']"
+    - name: Make sure network is sane
+      tags: [always]
+      fail:
+        msg: "Variable network must be one of {{allowed_networks}}, not {{network}}"
+      when: "vars['network'] not in vars['allowed_networks']"
     - name: Setup cute variants of the environment name (for prod)
       tags: [always]
       set_fact:
