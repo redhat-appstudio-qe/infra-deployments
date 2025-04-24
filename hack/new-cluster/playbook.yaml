@@ -152,6 +152,10 @@
         varname: quay_digest_build_definitions
 
   tasks:
+    - name: Verify the github application exists
+      tags: [github]
+      include_tasks: tasks/github/app.yaml
+
     - name: Login to vault
       tags: [vault]
       include_tasks: tasks/vault/login.yaml
