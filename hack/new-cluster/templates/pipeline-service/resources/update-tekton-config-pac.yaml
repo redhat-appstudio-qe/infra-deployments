@@ -9,3 +9,4 @@
 {% endraw %}
     custom-console-url-pr-tasklog: https://konflux-ui.apps.{{ longname }}.p1.openshiftapps.com/ns/{% raw %}{{ namespace }}/pipelinerun/{{ pr }}/logs/{{ task }}
 {% endraw %}
+    remember-ok-to-test: "false"
