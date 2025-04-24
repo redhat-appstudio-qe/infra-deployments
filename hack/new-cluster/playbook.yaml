@@ -92,7 +92,7 @@
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/aws-ssh-key'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/aws-account'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/ibm-api-key'
-
+      # TODO - uncomment these when they're ready
       #- 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/ibm-s390x-ssh-key'
       #- 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/ibm-ppc64le-ssh-key'
 
