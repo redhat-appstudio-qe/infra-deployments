@@ -107,6 +107,16 @@
       #- 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/ibm-s390x-ssh-key'
       #- 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/ibm-ppc64le-ssh-key'
 
+    github_commit_vars:
+      - slug: openshift-pipelines/tektoncd-results-for-konflux
+        varname: commit_id_tektoncd_results_for_konflux
+      - slug: openshift-pipelines/pipeline-service-exporter
+        varname: commit_id_pipeline_service_exporter
+      - slug: konflux-ci/build-definitions
+        varname: commit_id_build_definitions
+      - slug: konflux-ci/multi-platform-controller
+        varname: commit_id_multi_platform_controller
+
   pre_tasks:
     - name: Ensure required variables are defined
       tags: [always]
@@ -131,6 +141,21 @@
         cuteenv: stage
         cutestenv: stg
       when: "vars['env'] == 'staging'"
+    - name: Determine the latest github commits
+      tags: [always]
+      include_tasks: tasks/github/find-latest-commits.yaml
+      loop: "{{ github_commit_vars }}"
+      vars:
+        slug: "{{ item.slug }}"
+        varname: "{{ item.varname }}"
+    - name: Determine quay.io digest
+      tags: [always]
+      include_tasks: tasks/quay/find-digest.yaml
+      vars:
+        registry: quay.io
+        repo: konflux-ci/appstudio-utils
+        tag: "{{ commit_id_build_definitions }}"
+        varname: quay_digest_build_definitions
 
   tasks:
     - name: Login to vault
