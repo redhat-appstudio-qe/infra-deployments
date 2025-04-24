@@ -1,0 +1,9 @@
+- name: Ensure the {{ github_application }} github application already exists
+  tags: [github]
+  uri:
+    url: "https://api.github.com/apps/{{ github_application }}"
+    method: GET
+    return_content: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+  register: github_app
