@@ -10,3 +10,13 @@ patches:
       group: external-secrets.io
       version: v1beta1
       kind: ExternalSecret
+{% if network == "private" %}
+
+configMapGenerator:
+  - name: webhook-config
+    files:
+      - webhook-config.json
+
+components:
+  - ../../components/webhook-config
+{% endif %}
