@@ -1414,7 +1414,7 @@ spec:
       - args:
         - -pprof-address
         - "6060"
-        image: quay.io/konflux-ci/pipeline-service-exporter:9d2439c8a77d2ce0527cc5aea3fc6561b7671b48
+        image: quay.io/konflux-ci/pipeline-service-exporter:{{ commit_id_pipeline_service_exporter }}
         name: pipeline-metrics-exporter
         ports:
         - containerPort: 9117
@@ -1560,7 +1560,7 @@ spec:
             secretKeyRef:
               key: db.name
               name: tekton-results-database
-        image: quay.io/konflux-ci/tekton-results-api:92d20975aaf3a87e1a9a41f39b38d99e0a84e724
+        image: quay.io/konflux-ci/tekton-results-api:{{ commit_id_tektoncd_results_for_konflux }}
         livenessProbe:
           httpGet:
             path: /healthz
@@ -1750,7 +1750,7 @@ spec:
             secretKeyRef:
               key: db.name
               name: tekton-results-database
-        image: quay.io/konflux-ci/tekton-results-api:92d20975aaf3a87e1a9a41f39b38d99e0a84e724
+        image: quay.io/konflux-ci/tekton-results-api:{{ commit_id_tektoncd_results_for_konflux }}
         livenessProbe:
           httpGet:
             path: /healthz
@@ -1855,7 +1855,7 @@ spec:
             secretKeyRef:
               key: POSTGRES_PASSWORD
               name: tekton-results-postgres
-        image: quay.io/konflux-ci/tekton-results-retention-policy-agent:92d20975aaf3a87e1a9a41f39b38d99e0a84e724
+        image: quay.io/konflux-ci/tekton-results-retention-policy-agent:{{ commit_id_tektoncd_results_for_konflux }}
         name: retention-policy-agent
         resources:
           limits:
@@ -1987,7 +1987,7 @@ spec:
           value: tekton-results-api-service-for-watcher.tekton-results.svc.cluster.local:8080
         - name: AUTH_MODE
           value: token
-        image: quay.io/konflux-ci/tekton-results-watcher:92d20975aaf3a87e1a9a41f39b38d99e0a84e724
+        image: quay.io/konflux-ci/tekton-results-watcher:{{ commit_id_tektoncd_results_for_konflux }}
         name: watcher
         ports:
         - containerPort: 9090
