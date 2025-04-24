@@ -1,4 +1,4 @@
 ---
 - op: add
   path: /spec/prometheusConfig/externalLabels/source_cluster
-  value: kflux-prd-rh03
+  value: {{ shortname }}
