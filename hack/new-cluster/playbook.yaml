@@ -34,7 +34,6 @@
 #   * integrations-output/external-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-rds
 #   * integrations-output/terraform-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-s3
 #
-#
 - name: Create and patch YAML files
   hosts: localhost
   gather_facts: no
@@ -54,6 +53,8 @@
       private: false
 
   vars:
+    vault_addr: "https://vault.devshift.net"
+
     dst: "{{ lookup('env', 'PWD') }}"
     github_application: "red-hat-konflux-{{ shortname }}"
     required_vars:
@@ -78,6 +79,7 @@
       - multi-platform-controller
       - namespace-lister
       - pipeline-service
+
     argo_cd_app_files:
       - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-logging/monitoring-workload-logging.yaml"
       - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-prometheus/monitoring-workload-prometheus.yaml"
@@ -91,6 +93,17 @@
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/multi-platform-controller/multi-platform-controller.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/namespace-lister/namespace-lister.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/pipeline-service/pipeline-service.yaml"
+
+    expected_vault_secrets:
+      - 'stonesoup/{{ env }}/pipeline-service/{{ shortname }}/github-app'
+      - 'stonesoup/{{ env }}/pipeline-service/{{ shortname }}/chains-signing-secret'
+      - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/backup-bucket'
+      - 'stonesoup/{{ env }}/build/multi-platform-controller/{{ shortname }}-ssh-key'
+      - 'stonesoup/{{ env }}/build/multi-platform-controller/{{ shortname }}-aws-account'
+      - 'stonesoup/{{ env }}/build/multi-platform-controller/{{cuteenv}}-{{cutename}}-ibm-api-key'
+      - 'stonesoup/{{ env }}/build/multi-platform-controller/ibm-{{ env }}-ppc64le-ssh-key'
+      - 'app-sre/integrations-output/external-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-rds'
+      - 'app-sre/integrations-output/terraform-resources/{{ controlplane_cluster }}/{{ shortname }}/{{ shortname }}-plnsvc-s3'
 
   pre_tasks:
     - name: Ensure required variables are defined
@@ -114,6 +127,15 @@
       when: "vars['env'] == 'staging'"
 
   tasks:
+    - name: Login to vault
+      include_tasks: tasks/vault/login.yaml
+
+    - name: Verify vault secrets exist as expected
+      include_tasks: tasks/vault/verify.yaml
+      loop: "{{ expected_vault_secrets }}"
+      loop_control:
+        loop_var: path
+
     - name: Patch ApplicationSet files to include new cluster reference
       include_tasks: tasks/insert-cluster-reference.yaml
       loop: "{{ argo_cd_app_files }}"
