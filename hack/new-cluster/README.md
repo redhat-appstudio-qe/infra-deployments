@@ -41,7 +41,7 @@ Include a description of steps you took to run and verify the automation in the 
 If you do not want to run all steps, but only a subset **you can use tags** to run only tasks tagged with certain tags. For example, if you do not want to verify the vault settings or generate the applicationset changes, but you only want to generate the component overlays, use the `components` tag, like this:
 
 ```
-❯ ansible-playbook hack/new-cluster/playbook.yaml -t components
+❯ ansible-playbook hack/new-cluster/playbook.yaml --tags components
 ```
 
 If you don't want to specify the variables at prompts, you can **specify variables when invoking the CLI**, like this:
@@ -53,7 +53,7 @@ If you don't want to specify the variables at prompts, you can **specify variabl
 If you are **nervous about drift** between the current application manifests and those produced by this automation, you can inspect the different by running this automation and requesting it to produce the config **for an existing cluster**, and then investigate what changes it may have made by looking at `git diff`, like this.
 
 ```
-❯ ansible-playbook hack/new-cluster/playbook.yaml -e 'cutename=rh03 shortname=kflux-prd-rh03 longname=kflux-prd-rh03.nnv1 env=production network=public'
+❯ ansible-playbook hack/new-cluster/playbook.yaml --skip-tags vault -e 'cutename=rh03 shortname=kflux-prd-rh03 longname=kflux-prd-rh03.nnv1 env=production network=public'
 ❯ git diff
 ```
 
