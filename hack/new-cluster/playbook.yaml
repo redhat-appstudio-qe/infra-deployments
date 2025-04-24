@@ -152,10 +152,6 @@
         varname: quay_digest_build_definitions
 
   tasks:
-    - name: Verify the github application exists
-      tags: [github]
-      include_tasks: tasks/github/app.yaml
-
     - name: Login to vault
       tags: [vault]
       include_tasks: tasks/vault/login.yaml
@@ -166,6 +162,10 @@
       loop: "{{ expected_vault_secrets }}"
       loop_control:
         loop_var: path
+
+    - name: Verify the github application exists
+      tags: [github]
+      include_tasks: tasks/github/app.yaml
 
     - name: Patch ApplicationSet files to include new cluster reference
       tags: [applicationsets]
