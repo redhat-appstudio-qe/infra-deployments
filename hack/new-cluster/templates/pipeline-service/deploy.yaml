@@ -2031,7 +2031,7 @@ metadata:
 spec:
   dataFrom:
   - extract:
-      key: {{ env }}/pipeline-service/{{ shortname }}/github-app
+      key: {{ env }}/platform/ansible/generated/{{ shortname }}/github-app
   refreshInterval: 5m
   secretStoreRef:
     kind: ClusterSecretStore

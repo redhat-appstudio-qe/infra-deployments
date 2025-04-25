@@ -13,6 +13,7 @@ This automation creates yaml files in the infra-deployments repo locally.
 * ansible CLI
 * vault CLI
 * python3-hvac
+* python-requests
 
 3. You have variables that correctly describe the new cluster,
 
