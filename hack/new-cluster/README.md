@@ -54,7 +54,7 @@ If you don't want to specify the variables at prompts, you can **specify variabl
 If you are **nervous about drift** between the current application manifests and those produced by this automation, you can inspect the different by running this automation and requesting it to produce the config **for an existing cluster**, and then investigate what changes it may have made by looking at `git diff`, like this.
 
 ```
-❯ ansible-playbook hack/new-cluster/playbook.yaml --skip-tags vault -e 'cutename=rh03 shortname=kflux-prd-rh03 longname=kflux-prd-rh03.nnv1 env=production network=public'
+❯ ansible-playbook hack/new-cluster/playbook.yaml --skip-tags vault,chains,github -e 'cutename=rh03 shortname=kflux-prd-rh03 longname=kflux-prd-rh03.nnv1 env=production network=public'
 ❯ git diff
 ```
 

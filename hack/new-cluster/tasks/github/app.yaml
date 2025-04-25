@@ -1,5 +1,5 @@
 - name: Check to see if the {{ github_application }} github application exists
-  tags: [github, vault]
+  tags: [github]
   uri:
     url: "https://github.com/apps/{{ github_application }}"
     method: GET
@@ -12,7 +12,7 @@
 # If the app doesn't exist in github, but a key does exist in vault - then
 # we're in a situation that doesn't make any sense. Fail hard.
 - name: "Verify that it is not already in vault. If it is, that's crazy."
-  tags: [github, vault]
+  tags: [github]
   when: exists.status != 200
   command: >
     vault kv metadata get stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/github-app
@@ -25,7 +25,7 @@
 
 # Docs https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest
 - name: Create App Manifest
-  tags: [github, vault]
+  tags: [github]
   when: exists.status != 200
   set_fact:
     app_manifest:
@@ -58,13 +58,13 @@
         - push
 
 - name: Go see your browser and click to create the app. The playbook is now awaiting a redirect from github.com.
-  tags: [github, vault]
+  tags: [github]
   when: exists.status != 200
   script: "github-app-flow.py {{ github_organization }} '{{ app_manifest | to_json | b64encode }}'"
   register: details
 
 - name: Insert that into vault
-  tags: [github, vault]
+  tags: [github]
   when: exists.status != 200
   command: >
     vault kv put stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/github-app
@@ -76,7 +76,7 @@
     VAULT_TOKEN: "{{ vault_token }}"
 
 - name: Verify that we put it in place correctly
-  tags: [github, vault]
+  tags: [github]
   when: exists.status != 200
   command: >
     vault kv metadata get stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/github-app

@@ -104,15 +104,15 @@
 
   tasks:
     - name: Login to vault
-      tags: [vault, chains, github]
+      tags: [vault]
       include_tasks: tasks/vault/login.yaml
 
     - name: Ensure the chains signing secret exists
-      tags: [vault, chains]
+      tags: [chains]
       include_tasks: tasks/vault/chains.yaml
 
     - name: Ensure the github application exists
-      tags: [vault, github]
+      tags: [github]
       include_tasks: tasks/github/app.yaml
 
     - name: Verify all other vault secrets exist as expected
