@@ -1,19 +1,6 @@
 ---
-# This ansible playbook will locally write out configuration overlays for a new cluster based on templates.
+# This ansible playbook will prepare the application-layer for a new cluster.
 
-# TODO -
-#   * Create github app
-#   * Vault: Populate github app token into {{ env }}/pipeline-service/{{ shortname }}/github-app
-#
-#   APIs:
-#     https://api.github.com/apps/red-hat-konflux
-#     https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-a-github-app-from-a-manifest
-#     NOTE - you can only retrieve the client secret, webhook secret, and rsa private key if you are creating the app via the API.
-#            the most basic flow is: confirm that it exists and stop the user if it doesnt
-#             * confirm it exists in github and move on
-#             * confirm it exists in vault and move on
-#             If it doesn't exist in either github or vault, then create it in github and populate vault.
-#
 - name: Create and patch YAML files
   hosts: localhost
   gather_facts: no
@@ -39,6 +26,7 @@
     vault_addr: "https://vault.devshift.net"
 
     dst: "{{ lookup('env', 'PWD') }}"
+    github_organization: "redhat-appstudio"
     github_application: "red-hat-konflux-{{ shortname }}"
     required_vars:
       - shortname
@@ -81,7 +69,7 @@
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/pipeline-service/pipeline-service.yaml"
 
     expected_vault_secrets:
-      - 'stonesoup/{{ env }}/pipeline-service/{{ shortname }}/github-app'
+      - 'stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/github-app'
       - 'stonesoup/{{ env }}/platform/ansible/generated/{{ shortname }}/chains-signing-secret'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/backup-bucket'
       - 'stonesoup/{{ env }}/platform/terraform/generated/{{ shortname }}/plnsvc-database'
@@ -110,12 +98,16 @@
 
   tasks:
     - name: Login to vault
-      tags: [vault, chains]
+      tags: [vault, chains, github]
       include_tasks: tasks/vault/login.yaml
 
     - name: Ensure the chains signing secret exists
       tags: [vault, chains]
       include_tasks: tasks/vault/chains.yaml
+
+    - name: Ensure the github application exists
+      tags: [vault, github]
+      include_tasks: tasks/github/app.yaml
 
     - name: Verify all other vault secrets exist as expected
       tags: [vault]
@@ -123,10 +115,6 @@
       loop: "{{ expected_vault_secrets }}"
       loop_control:
         loop_var: path
-
-    - name: Verify the github application exists
-      tags: [github]
-      include_tasks: tasks/github/app.yaml
 
     - name: Patch ApplicationSet files to include new cluster reference
       tags: [applicationsets]
