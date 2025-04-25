@@ -1,5 +1,11 @@
 ---
 # This ansible playbook will prepare the application-layer for a new cluster.
+#
+# Major steps:
+# * Provision new github application and insert credentials in vault
+# * Provision new chains signing secret and insert credentials in vault
+# * Locally write out configuration overlays for a new cluster based on templates.
+#
 
 - name: Create and patch YAML files
   hosts: localhost
