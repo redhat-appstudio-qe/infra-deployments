@@ -42,8 +42,8 @@ spec:
   description: |
     tests that the a valid RoleBinding can be created in a 
     tenant namespace
-  concurrent: false
-  namespace: 'valid-systemauthenticated-rb-namespace'
+  concurrent: true
+  namespace: 'valid-systemauthenticated-rb-tenant-namespace'
   steps:
   - name: given-kyverno-has-permission-on-resources
     try:
