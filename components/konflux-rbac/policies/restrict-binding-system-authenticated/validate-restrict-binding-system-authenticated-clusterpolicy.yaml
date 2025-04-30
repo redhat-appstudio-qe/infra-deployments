@@ -27,7 +27,7 @@ spec:
     preconditions:
       - key: "{{ request.object.subjects.name }}"
         operator: AnyIn
-        value: system:authenticated"
+        value: "system:authenticated"
       - key: "{{ request.object.roleRef.kind }}"
         operator: Equals
         value: "ClusterRole"
