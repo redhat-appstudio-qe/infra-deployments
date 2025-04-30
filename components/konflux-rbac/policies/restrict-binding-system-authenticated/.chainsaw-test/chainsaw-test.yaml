@@ -8,7 +8,7 @@ spec:
   description: |
     tests that the a invalid RoleBinding can NOT be created
     in a tenant namespace
-  concurrent: false
+  concurrent: true
   namespace: 'invalid-systemauthenticated-rb-namespace'
   steps:
   - name: given-kyverno-has-permission-on-resources
