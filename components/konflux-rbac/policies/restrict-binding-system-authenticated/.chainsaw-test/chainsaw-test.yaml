@@ -59,7 +59,7 @@ spec:
     try:
     - apply:
         file: ./resources/tenant-namespace.yaml
-  - name: then-invalid-rolebinding-can-not-be-created
+  - name: then-valid-rolebinding-can-be-created
     try:
     - apply:
         file: ./resources/valid-systemauthenticated-rolebinding.yaml
