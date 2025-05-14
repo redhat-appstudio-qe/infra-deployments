@@ -1,0 +1,28 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: label-pods-from-namespace
+spec:
+  steps:
+    - name: Create-namespace-for-demo-tenant
+      try:
+        - apply:
+            file: ./resources/namespace-matching.yaml
+    - name: create pod in demo-tenant
+      try:
+        - apply:
+            file: ./resources/pod-matching.yaml
+    - name: create pod in random-ns
+      try:
+        - apply:
+            file: ./resources/pod-nonmatching.yaml
+    - name: given-kyverno-has-permission-on-resources
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: Create policy to propagate cost-center label
+      try:
+        - apply:
+            file: ../update_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml

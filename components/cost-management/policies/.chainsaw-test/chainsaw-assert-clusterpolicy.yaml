@@ -1,0 +1,9 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: assert-policy-installed
+status:
+  conditions:
+  - reason: Succeeded
+    status: "True"
+    type: Ready
