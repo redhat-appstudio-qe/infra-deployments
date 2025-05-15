@@ -1,6 +1,8 @@
 ---
 fullnameOverride: konflux-kyverno
 namespaceOverride: konflux-kyverno
+config:
+  updateRequestThreshold: 5000
 admissionController:
   replicas: 1
   initContainer:
