@@ -1,0 +1,53 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: validate-cost-center-label
+  annotations:
+    policies.kyverno.io/title: Validate Cost-Center label
+    policies.kyverno.io/category: Cost Management
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/subject: Namespace
+    policies.kyverno.io/description: >-
+      This policy tries to that:
+      (1) Propagate the `cost-center` label from non-managed tenant namespaces to pods.
+      (2) Set the `insights_cost_management_optimizations` label is set to `true` on Pods to which the `cost-center` label was propagated.
+      If the webhook fails, the pod will be created without the labels.
+spec:
+  webhookConfiguration:
+    failurePolicy: Ignore
+  rules:
+    - name: validate-cost-center-label
+      match:
+        any:
+          - resources:
+              kinds:
+                - Namespace
+              selector:
+                matchLabels:
+                  konflux-ci.dev/type: tenant
+      validate:
+        message: "Tenant namespaces must have the 'cost-center' label."
+        pattern:
+          metadata:
+            labels:
+              cost-center: "?*"
+
+    - name: validate-cost-center-label-value
+      match:
+        any:
+          - resources:
+              kinds:
+              - Namespace
+              operations:
+              - CREATE
+              - UPDATE
+              selector:
+                matchLabels:
+                  konflux-ci.dev/type: tenant
+                  cost-center: "?*"
+      validate:
+        message: "Tenant namespaces 'cost-center' label can only contain numbers."
+        cel:
+          expressions:
+          - expression: "object.metadata.labels['cost-center'].matches('^[0-9]+$')"
