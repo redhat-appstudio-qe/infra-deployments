@@ -1,0 +1,92 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: propagate-cost-management-labels
+  annotations:
+    policies.kyverno.io/title: Propagate Cost-Center from Namespace
+    policies.kyverno.io/category: Cost Management
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      This policy ensures that:
+      (1) New tenant namespaces have the `cost-center` label.
+      (2) The `cost-center` label value contains only numeric characters.
+      (3) The `cost-center` label is propagated from non-managed tenant namespaces to pods.
+      (4) The `insights_cost_management_optimizations` label is set to `true` on Pods to which the `cost-center` label was propagated.
+spec:
+  validationFailureAction: Audit
+  rules:
+    - name: validate-cost-center-label
+      match:
+        any:
+          - resources:
+              kinds:
+                - Namespace
+              selector:
+                matchLabels:
+                  konflux-ci.dev/type: tenant
+      validate:
+        message: "Tenant namespaces must have the 'cost-center' label."
+        pattern:
+          metadata:
+            labels:
+              cost-center: "?*"
+
+    - name: validate-cost-center-label-value
+      match:
+        any:
+          - resources:
+              kinds:
+              - Namespace
+              operations:
+              - CREATE
+              - UPDATE
+              selector:
+                matchLabels:
+                  konflux-ci.dev/type: tenant
+                  cost-center: "?*"
+      validate:
+        message: "Tenant namespaces 'cost-center' label can only contain numbers."
+        cel:
+          expressions:
+          - expression: "object.metadata.labels['cost-center'].matches('^[0-9]+$')"
+
+    - name: propagate-existing-cost-center-from-namespace
+      match:
+        any:
+        - resources:
+            kinds:
+            - Pod
+            namespaceSelector:
+              matchLabels:
+                konflux-ci.dev/type: tenant
+              matchExpressions:
+                - key: kubernetes.io/metadata.name
+                  operator: NotIn
+                  values:
+                      - rhtap-releng-tenant
+                      - rh-managed-bifrost-tenant
+                      - rh-managed-cnv-fbc-tenant
+                      - rh-managed-mng-s-2-tenant
+                      - rh-managed-red-hat-acm-tenant
+                      - rh-managed-rhtap-ser-tenant
+                      - rhel-on-gitlab-tenant
+                      # managed tenant namespaces
+      context:
+        - name: costcenterLabel
+          apiCall:
+            urlPath: "/api/v1/namespaces/{{ request.object.metadata.namespace }}"
+            method: GET
+            jmesPath: "metadata.labels.\"cost-center\" || '' "
+      preconditions:
+        all:
+          - key: "{{ costcenterLabel }}"
+            operator: NotEquals
+            value: ""
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            labels:
+              cost-center: "{{ costcenterLabel }}"
+              insights_cost_management_optimizations: "true"
