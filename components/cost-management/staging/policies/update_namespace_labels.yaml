@@ -15,7 +15,7 @@ metadata:
       (3) The `cost-center` label is propagated from non-managed tenant namespaces to pods.
       (4) The `insights_cost_management_optimizations` label is set to `true` on Pods to which the `cost-center` label was propagated.
 spec:
-  validationFailureAction: Enforce
+  validationFailureAction: Audit
   rules:
     - name: validate-cost-center-label
       match:
