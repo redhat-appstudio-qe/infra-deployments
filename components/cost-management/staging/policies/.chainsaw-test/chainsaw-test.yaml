@@ -25,9 +25,13 @@ spec:
     - name: Apply kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../propogate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: propagate-cost-management-labels
     - name: create pods in tenant
       try:
         - create:
@@ -68,9 +72,13 @@ spec:
     - name: Apply kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../propogate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: propagate-cost-management-labels
     - name: create pods in random-ns
       try:
         - create:
@@ -106,9 +114,13 @@ spec:
     - name: Apply Kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../validate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: validate-cost-center-label
     - name: Create a tenant namespace with cost-center label
       try:
         - create:
@@ -143,9 +155,13 @@ spec:
     - name: Apply Kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../validate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: validate-cost-center-label
     - name: Create a namespace without tenant label
       try:
         - create:
@@ -182,9 +198,13 @@ spec:
     - name: Apply Kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../propogate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: propagate-cost-management-labels
     - name: Create a pod in the namespace
       try:
         - create:
@@ -230,9 +250,13 @@ spec:
     - name: Apply Kyverno Cluster Policy and assert it exists
       try:
         - apply:
-            file: ../update_namespace_labels.yaml
+            file: ../propogate_namespace_labels.yaml
         - assert:
             file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: propagate-cost-management-labels
     - name: Create a pod in the tenant namespace without cost-center label
       try:
         - create:
@@ -251,105 +275,117 @@ spec:
                 name: demo-pod
                 namespace: tenant-no-cost-center
 
-# ---
-# apiVersion: chainsaw.kyverno.io/v1alpha1
-# kind: Test
-# metadata:
-#   name: deny-namespace-with-empty-cost-center
-# spec:
-#   concurrent: false
-#   description: |
-#     Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
-#     is denied if the `cost-center` label is empty.
-#   steps:
-#     - name: Apply RBAC
-#       try:
-#         - apply:
-#             file: ../kyverno_rbac.yaml
-#     - name: Apply Kyverno Cluster Policy and assert it exists
-#       try:
-#         - apply:
-#             file: ../update_namespace_labels.yaml
-#         - assert:
-#             file: chainsaw-assert-clusterpolicy.yaml
-#     - name: Attempt to create a tenant namespace with empty cost-center label
-#       try:
-#         - create:
-#             file: ./resources/namespace-empty-cost-center.yaml
-#             expect:
-#             - match:
-#                 kind: Namespace
-#               check:
-#                 ($error != null): true
+---
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: deny-namespace-with-empty-cost-center
+spec:
+  concurrent: false
+  description: |
+    Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
+    is denied if the `cost-center` label is empty.
+  steps:
+    - name: Apply RBAC
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: Apply Kyverno Cluster Policy and assert it exists
+      try:
+        - apply:
+            file: ../validate_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: validate-cost-center-label
+    - name: Attempt to create a tenant namespace with empty cost-center label
+      try:
+        - create:
+            file: ./resources/namespace-empty-cost-center.yaml
+            expect:
+            - match:
+                kind: Namespace
+              check:
+                ($error != null): true
 
-# ---
-# apiVersion: chainsaw.kyverno.io/v1alpha1
-# kind: Test
-# metadata:
-#   name: deny-namespace-without-cost-center
-# spec:
-#   concurrent: false
-#   description: |
-#     Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
-#     is denied if it does not have the `cost-center` label.
-#   steps:
-#     - name: Apply RBAC
-#       try:
-#         - apply:
-#             file: ../kyverno_rbac.yaml
-#     - name: Apply Kyverno Cluster Policy and assert it exists
-#       try:
-#         - apply:
-#             file: ../update_namespace_labels.yaml
-#         - assert:
-#             file: chainsaw-assert-clusterpolicy.yaml
-#     - name: Attempt to create a tenant namespace without cost-center label
-#       try:
-#         - create:
-#             file: ./resources/namespace-no-cost-center.yaml
-#             template: true
-#             bindings:
-#               - name: namespace
-#                 value: tenant-no-cost-center
-#             expect:
-#             - match:
-#                 kind: Namespace
-#               check:
-#                 ($error != null): true
+---
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: deny-namespace-without-cost-center
+spec:
+  concurrent: false
+  description: |
+    Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
+    is denied if it does not have the `cost-center` label.
+  steps:
+    - name: Apply RBAC
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: Apply Kyverno Cluster Policy and assert it exists
+      try:
+        - apply:
+            file: ../validate_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: validate-cost-center-label
+    - name: Attempt to create a tenant namespace without cost-center label
+      try:
+        - create:
+            file: ./resources/namespace-no-cost-center.yaml
+            template: true
+            bindings:
+              - name: namespace
+                value: tenant-no-cost-center
+            expect:
+            - match:
+                kind: Namespace
+              check:
+                ($error != null): true
 
-# ---
-# apiVersion: chainsaw.kyverno.io/v1alpha1
-# kind: Test
-# metadata:
-#   name: deny-namespace-with-invalid-cost-center
-# spec:
-#   concurrent: false
-#   description: |
-#     Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
-#     is denied if the `cost-center` label is invalid.
-#   steps:
-#     - name: Apply RBAC
-#       try:
-#         - apply:
-#             file: ../kyverno_rbac.yaml
-#     - name: Apply Kyverno Cluster Policy and assert it exists
-#       try:
-#         - apply:
-#             file: ../update_namespace_labels.yaml
-#         - assert:
-#             file: chainsaw-assert-clusterpolicy.yaml
-#     - name: Attempt to create a tenant namespace with invalid cost-center label
-#       try:
-#         - create:
-#             file: ./resources/namespace-cost-center.yaml
-#             template: true
-#             bindings:
-#               - name: namespace
-#                 value: tenant
-#               - name: cost_center
-#                 value: "invalid-should-be-all-numbers"
-#             expect:
-#             - match:
-#                 kind: Namespace
-#               check:
-#                 ($error != null): true
+---
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: deny-namespace-with-invalid-cost-center
+spec:
+  concurrent: false
+  description: |
+    Tests that a namespace labeled as `konflux-ci.dev/type: tenant`
+    is denied if the `cost-center` label is invalid.
+  steps:
+    - name: Apply RBAC
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: Apply Kyverno Cluster Policy and assert it exists
+      try:
+        - apply:
+            file: ../validate_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: validate-cost-center-label
+    - name: Attempt to create a tenant namespace with invalid cost-center label
+      try:
+        - create:
+            file: ./resources/namespace-cost-center.yaml
+            template: true
+            bindings:
+              - name: namespace
+                value: tenant
+              - name: cost_center
+                value: "invalid-should-be-all-numbers"
+            expect:
+            - match:
+                kind: Namespace
+              check:
+                ($error != null): true
