@@ -5,14 +5,11 @@ resources:
   - ../base/monitor/development
   - https://github.com/konflux-ci/release-service/config/default?ref=bd7503fb78c2156770dc8be5c015c25294158458
   - release_service_config.yaml
-
 images:
   - name: quay.io/konflux-ci/release-service
-    newName: quay.io/konflux-ci/release-service
-    newTag: bd7503fb78c2156770dc8be5c015c25294158458
-
+    newName: quay.io/redhat-user-workloads/rhtap-release-2-tenant/release-service/release-service
+    newTag: on-pr-6fe21acad6aa05a6e5908192094877a21c8a323c.sealights
 namespace: release-service
-
 patches:
   - target:
       group: apps
