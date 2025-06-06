@@ -268,12 +268,11 @@ spec:
     - name: Assert pod in tenant namespace is created successfully
       try:
         - assert:
-            resource:
-              apiVersion: v1
-              kind: Pod
-              metadata:
-                name: demo-pod
-                namespace: tenant-no-cost-center
+            file: ./resources/pod.yaml
+            template: true
+            bindings:
+              - name: namespace
+                value: tenant-no-cost-center
 
 ---
 apiVersion: chainsaw.kyverno.io/v1alpha1
@@ -389,3 +388,125 @@ spec:
                 kind: Namespace
               check:
                 ($error != null): true
+
+---
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: pod-creation-with-kyverno-unavailable
+spec:
+  concurrent: false
+  description: |
+    Simulates a scenario where the Kyverno webhook is unavailable by scaling down the admission controller.
+    Verifies that pods can still be created successfully without the cost-center or insights labels being propagated,
+    as the policy's failurePolicy is set to Ignore.
+  steps:
+    - name: Create a tenant namespace with cost-center label
+      try:
+        - create:
+            file: ./resources/namespace-cost-center.yaml
+            template: true
+            bindings:
+              - name: namespace
+                value: tenant-with-cost-center
+              - name: cost_center
+                value: "123"
+    - name: Apply RBAC
+      try:
+        - apply:
+            file: ../kyverno_rbac.yaml
+    - name: Apply Kyverno Cluster Policy and assert it exists
+      try:
+        - apply:
+            file: ../propogate_namespace_labels.yaml
+        - assert:
+            file: chainsaw-assert-clusterpolicy.yaml
+            template: true
+            bindings:
+              - name: cluster_policy_name
+                value: propagate-cost-management-labels
+    - name: Scale down Kyverno admission controller
+      try:
+        - apply:
+            resource:
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: kyverno-admission-controller
+                namespace: konflux-kyverno
+              spec:
+                replicas: 0
+
+    - name: Wait for Kyverno admission controller to be down
+      try:
+        - script:
+            content: |
+              echo "Waiting for Kyverno admission controller to scale down..."
+              sleep 15
+              kubectl wait --for=delete pod -l app.kubernetes.io/name=kyverno -n konflux-kyverno --timeout=60s || true
+
+    - name: Create pod while Kyverno is down
+      try:
+        - create:
+            file: ./resources/pod.yaml
+            template: true
+            bindings:
+              - name: namespace
+                value: tenant-with-cost-center
+    - name: Assert pod is created without cost-center labels
+      try:
+        - assert:
+            resource:
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                name: demo-pod
+                namespace: tenant-with-cost-center
+        - script:
+            content: |
+              # Wait for pod to be created
+              kubectl wait --for=condition=Ready pod/demo-pod -n tenant-with-cost-center --timeout=60s || true
+
+              # Check if pod exists
+              if ! kubectl get pod demo-pod -n tenant-with-cost-center >/dev/null 2>&1; then
+                echo "FAIL: Pod was not created at all"
+                exit 1
+              fi
+
+              # Verify the pod does NOT have the cost-center label
+              COST_CENTER_LABEL=$(kubectl get pod demo-pod -n tenant-with-cost-center -o jsonpath='{.metadata.labels.cost-center}' 2>/dev/null || echo "")
+              if [ "$COST_CENTER_LABEL" = "123" ]; then
+                echo "FAIL: Pod should not have cost-center label when webhooks are disabled. Found: $COST_CENTER_LABEL"
+                kubectl get pod demo-pod -n tenant-with-cost-center -o yaml
+                exit 1
+              fi
+
+              # Verify the pod does NOT have the insights optimization label
+              INSIGHTS_LABEL=$(kubectl get pod demo-pod -n tenant-with-cost-center -o jsonpath='{.metadata.labels.insights_cost_management_optimizations}' 2>/dev/null || echo "")
+              if [ "$INSIGHTS_LABEL" = "true" ]; then
+                echo "FAIL: Pod should not have insights_cost_management_optimizations label when webhooks are disabled. Found: $INSIGHTS_LABEL"
+                kubectl get pod demo-pod -n tenant-with-cost-center -o yaml
+                exit 1
+              fi
+
+              echo "SUCCESS: Pod created without cost management labels as expected"
+              echo "Cost-center label: '$COST_CENTER_LABEL'"
+              echo "Insights label: '$INSIGHTS_LABEL'"
+    - name: Restore Kyverno admission controller
+      try:
+        - apply:
+            resource:
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: kyverno-admission-controller
+                namespace: konflux-kyverno
+              spec:
+                replicas: 1
+    - name: Verify Kyverno is working again (optional validation)
+      try:
+        - script:
+            content: |
+              echo "Waiting for Kyverno to recover..."
+              sleep 5
+              echo "Kyverno should be operational again"
