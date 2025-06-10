@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: konflux-banner-staging-stone-stage-p01
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/testcara/konflux-banner.git
+    targetRevision: main
+    path: deploy/staging/stone-stage-p01
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: konflux-banner
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

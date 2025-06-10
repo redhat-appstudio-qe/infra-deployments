@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- apps/production-kflux-ocp-p01.yaml
+- apps/production-kflux-prd-rh02.yaml
+- apps/production-stone-prd-rh01.yaml
+- apps/production-stone-prod-p01.yaml
+- apps/production-stone-prod-p02.yaml
+- apps/staging-stone-stage-p01.yaml
+- apps/staging-stone-stg-rh01.yaml
