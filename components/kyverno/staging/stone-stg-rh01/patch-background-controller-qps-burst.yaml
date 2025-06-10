@@ -2,9 +2,8 @@
 - op: add
   path: /spec/template/spec/containers/0/args/-
   value:
-    --clientRateLimitQPS=2000
+    --clientRateLimitQPS=1000
 - op: add
   path: /spec/template/spec/containers/0/args/-
   value:
-    --clientRateLimitBurst=2000
-
+    --clientRateLimitBurst=1000
