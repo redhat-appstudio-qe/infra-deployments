@@ -49,6 +49,11 @@ spec:
         # not specifcy namespace
         namespace: product-kubearchive
         server: "{{server}}"
+      ignoreDifferences:
+        # Secret get modified by ExternalSecrets operator
+        - group: ""
+          kind: Secret
+          name: kubearchive-database-credentials
       syncPolicy:
         automated:
           prune: true
