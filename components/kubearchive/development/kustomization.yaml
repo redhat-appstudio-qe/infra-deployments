@@ -8,8 +8,7 @@ resources:
 
 namespace: product-kubearchive
 secretGenerator:
-  - behavior: merge
-    literals:
+  - literals:
       - DATABASE_KIND=postgresql
       - DATABASE_PORT=5432
       - DATABASE_DB=kubearchive
@@ -24,6 +23,14 @@ commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 
 patches:
+  # We don't need the Secret as it will be created by Kustomization
+  - patch: |-
+      $patch: delete
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: kubearchive-database-credentials
+        namespace: kubearchive
   - patch: |-
       apiVersion: batch/v1
       kind: Job
