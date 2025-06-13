@@ -5,14 +5,11 @@ resources:
   - ../base/monitor/development
   - https://github.com/konflux-ci/release-service/config/default?ref=3e88ba9890ca5a2bb287099f34f434f6138337a2
   - release_service_config.yaml
-
 images:
   - name: quay.io/konflux-ci/release-service
-    newName: quay.io/konflux-ci/release-service
-    newTag: 3e88ba9890ca5a2bb287099f34f434f6138337a2
-
+    newName: registry.build09.ci.openshift.org/ci-op-4lxnyw2b/pipeline
+    newTag: redhat-appstudio-release-service-image
 namespace: release-service
-
 patches:
   - target:
       group: apps
