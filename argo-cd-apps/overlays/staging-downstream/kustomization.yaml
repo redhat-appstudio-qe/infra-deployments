@@ -8,7 +8,6 @@ resources:
   - ../../base/ca-bundle
   - ../../base/keycloak
   - ../../base/repository-validator
-  - ../../base/monitoring-workload-kanary
 patchesStrategicMerge:
   - delete-applications.yaml
 
