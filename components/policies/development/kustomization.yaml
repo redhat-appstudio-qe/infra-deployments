@@ -4,3 +4,4 @@ namespace: konflux-policies
 resources:
 - namespace.yaml
 - kubearchive/
+- kueue/
