@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["info", "warning", "danger"],
+      "description": "The type of banner to display. Can be 'info', 'warning', or 'danger'."
+    },
+    "summary": {
+      "description": "The summary text to display in the banner. Allows only alphanumeric characters, spaces, and specific punctuation marks.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 200,
+      "pattern": "^[a-zA-Z0-9 ,.!?:;\"'()\\[\\]{}@#&*+=\\-_/]*$"
+    }
+  },
+  "required": ["summary", "type"],
+  "additionalProperties": false
+}
