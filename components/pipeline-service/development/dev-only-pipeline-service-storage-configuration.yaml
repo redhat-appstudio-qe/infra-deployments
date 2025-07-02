@@ -60,8 +60,8 @@ spec:
     chart: postgresql
     helm:
       parameters:
-      - name: image.tag
-        value: 13.14.0
+      - name: image.digest
+        value: 17.5.0
       - name: tls.enabled
         value: "true"
       - name: tls.certificatesSecret
