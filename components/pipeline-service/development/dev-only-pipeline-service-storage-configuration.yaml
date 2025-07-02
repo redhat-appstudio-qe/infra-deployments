@@ -60,8 +60,8 @@ spec:
     chart: postgresql
     helm:
       parameters:
-      - name: image.tag
-        value: 13.14.0
+      - name: image.digest
+        value: sha256:ac8dd0d6512c4c5fb146c16b1c5f05862bd5f600d73348506ab4252587e7fcc6
       - name: tls.enabled
         value: "true"
       - name: tls.certificatesSecret
@@ -102,7 +102,7 @@ spec:
         value: "false"
       releaseName: postgres
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 14.0.5
+    targetRevision: 16.7.15
   syncPolicy:
     automated:
       prune: true
