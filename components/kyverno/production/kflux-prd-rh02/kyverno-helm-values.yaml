@@ -84,4 +84,19 @@ crds:
       runAsUser: null
       capabilities:
         drop:
+features:
+  admissionReports:
+    enabled: false
+  aggregateReports:
+    enabled: false
+  policyReports:
+    enabled: false
+  validatingAdmissionPolicyReports:
+    enabled: false
+  reporting:
+    validate: false
+    mutate: false
+    mutateExisting: false
+    imageVerify: false
+    generate: false
         - "ALL"
