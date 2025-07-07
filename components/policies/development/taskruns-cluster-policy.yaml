@@ -52,3 +52,4 @@ spec:
             operator: NotEquals
             value: ""
     name: reduce-tekton-pr-taskrun-resource-requests
+    skipBackgroundRequests: true
