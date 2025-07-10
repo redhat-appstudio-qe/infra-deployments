@@ -1,0 +1,6 @@
+# See the OWNERS docs: https://go.k8s.io/owners
+
+reviewers:
+- amisseta
+- dirgim
+- sonam1412
