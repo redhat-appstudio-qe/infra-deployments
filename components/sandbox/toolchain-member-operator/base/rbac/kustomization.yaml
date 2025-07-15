@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: toolchain-member-operator
 resources:
 - appstudio-pipelines-runner.yaml
+- konflux-integration-runner.yaml
 - register-cluster-extra-member-permissions.yaml
 - sandbox-sre-admins.yaml
