@@ -1,33 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base
-- https://github.com/konflux-ci/integration-service/config/default?ref=ff0d0fa3d588761b5730b937da59657347f26974
-- https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=ff0d0fa3d588761b5730b937da59657347f26974
-
+  - ../base
+  - https://github.com/konflux-ci/integration-service/config/default?ref=6ec9e96effbf2c4cd3c323cb4d0d3106802408a3
+  - https://github.com/konflux-ci/integration-service/config/snapshotgc?ref=6ec9e96effbf2c4cd3c323cb4d0d3106802408a3
 images:
-- name: quay.io/konflux-ci/integration-service
-  newName: quay.io/konflux-ci/integration-service
-  newTag: ff0d0fa3d588761b5730b937da59657347f26974
-
+  - name: quay.io/konflux-ci/integration-service
+    newName: quay.io/redhat-user-workloads/rhtap-integration-tenant/integration-service/integration-service
+    newTag: on-pr-6ec9e96effbf2c4cd3c323cb4d0d3106802408a3
 configMapGenerator:
-- name: integration-config
-  literals:
-    - CONSOLE_NAME="Konflux Dev version"
-    - CONSOLE_URL=""
-    - CONSOLE_URL_TASKLOG=""
-    - INTEGRATION_NS="integration-service"
-    - PAC_SECRET="pipelines-as-code-secret"
-    - GITHUBAPPLICATION_ID="github-application-id"
-    - GITHUBPRIVATE_KEY="github-private-key"
-- name: pipelinerun-options
-  literals:
-    - PIPELINE_TIMEOUT="6h"
-    - TASKS_TIMEOUT="4h"
-    - FINALLY_TIMEOUT="2h"
-
+  - name: integration-config
+    literals:
+      - CONSOLE_NAME="Konflux Dev version"
+      - CONSOLE_URL=""
+      - CONSOLE_URL_TASKLOG=""
+      - INTEGRATION_NS="integration-service"
+      - PAC_SECRET="pipelines-as-code-secret"
+      - GITHUBAPPLICATION_ID="github-application-id"
+      - GITHUBPRIVATE_KEY="github-private-key"
+  - name: pipelinerun-options
+    literals:
+      - PIPELINE_TIMEOUT="6h"
+      - TASKS_TIMEOUT="4h"
+      - FINALLY_TIMEOUT="2h"
 namespace: integration-service
-
 patches:
   - path: manager_resources_patch.yaml
   - path: snapshotgc_inputs_patch.yaml
