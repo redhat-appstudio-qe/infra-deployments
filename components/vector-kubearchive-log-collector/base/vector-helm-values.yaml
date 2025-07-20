@@ -115,7 +115,7 @@ customConfig:
     loki:
       type: loki
       inputs: ["remap_app_logs"]
-      endpoint: "http://loki.product-kubearchive-logging.svc.cluster.local:3100"
+      endpoint: "http://vector-kubearchive-log-collector-loki.product-kubearchive-logging.svc.cluster.local:3100"
       encoding:
         codec: "json"
       auth:

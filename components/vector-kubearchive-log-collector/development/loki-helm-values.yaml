@@ -2,7 +2,7 @@
 loki:
   limits_config:
     max_query_length: 0
-  auth_enabled: false
+  auth_enabled: false  # Keep simple for development but with basic auth
   basic_auth:
     enabled: true
     existingSecret: kubearchive-loki
