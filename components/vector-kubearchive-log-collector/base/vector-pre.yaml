@@ -2,7 +2,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kubearchive-logging
+  name: product-kubearchive-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"  # Create namespace first
 ---
 allowHostDirVolumePlugin: true
 allowHostIPC: false
@@ -23,9 +25,10 @@ groups: []
 kind: SecurityContextConstraints
 metadata:
   name: logging-scc
-  namespace: kubearchive-logging
-priority: null
-readOnlyRootFilesystem: true
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+priority: 10
+readOnlyRootFilesystem: false
 requiredDropCapabilities:
 - CHOWN
 - DAC_OVERRIDE
@@ -45,10 +48,54 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:kubearchive-logging:vector-kubearchive-logs-collector
+- system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector
+- system:serviceaccount:product-kubearchive-logging:loki
+- system:serviceaccount:product-kubearchive-logging:loki-sa
+- system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-grafana
 volumes:
 - configMap
 - emptyDir
 - hostPath
 - projected
 - secret
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vector-scc-user
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+rules:
+- apiGroups:
+  - security.openshift.io
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use
+  resourceNames:
+  - logging-scc
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vector-scc-binding
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: vector-scc-user
+subjects:
+- kind: ServiceAccount
+  name: vector-kubearchive-log-collector
+  namespace: product-kubearchive-logging
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: loki-sa
+  namespace: product-kubearchive-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+    # This annotation links the SA to the AWS IAM Role
+    eks.amazonaws.com/role-arn: "arn:aws:iam::663944276957:role/stone-stg-rh01-loki-bucket-role"
