@@ -16,7 +16,9 @@ admissionController:
         - "ALL"
   container:
     extraArgs:
-      leaderElectionRetryPeriod: 5s
+      leaderElectionLeaseDuration: 137s
+      leaderElectionRenewDeadline: 107s
+      leaderElectionRetryPeriod: 26s
     securityContext:
       allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true
@@ -33,7 +35,9 @@ admissionController:
 backgroundController:
   replicas: 1
   extraArgs:
-    leaderElectionRetryPeriod: 5s
+    leaderElectionLeaseDuration: 137s
+    leaderElectionRenewDeadline: 107s
+    leaderElectionRetryPeriod: 26s
   securityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
@@ -48,7 +52,11 @@ backgroundController:
     # kyverno doesn't seem to support HTTPS on metrics
     secure: false
 cleanupController:
-  enabled: false
+  enabled: true
+  extraArgs:
+    leaderElectionLeaseDuration: 137s
+    leaderElectionRenewDeadline: 107s
+    leaderElectionRetryPeriod: 26s
 reportsController:
   enabled: false
 policyReportsCleanup:
