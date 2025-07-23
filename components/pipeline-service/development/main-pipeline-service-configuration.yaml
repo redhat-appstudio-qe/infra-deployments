@@ -2120,6 +2120,8 @@ spec:
               spec:
                 containers:
                   - name: controller
+                    env:
+                      GIT_SSL_CAINFO=/tekton-custom-certs/ca-bundle.crt
                     resources:
                       limits:
                         memory: 1Gi
