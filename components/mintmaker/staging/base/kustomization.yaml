@@ -14,7 +14,7 @@ images:
   newTag: ba27631752783d5009274c322e19c8d1fa8f52d5
 - name: quay.io/konflux-ci/mintmaker-renovate-image
   newName: quay.io/konflux-ci/mintmaker-renovate-image
-  newTag: 7096bc52cc50584c60735715e0abeac3ca7c2105
+  newTag: 129683465996690eb7d5211d099dd47c26b16c2c
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
