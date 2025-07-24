@@ -1,2 +1,4 @@
+- type: warning
+  summary: Scheduled activity on <strong>25th July, 2025 05:00 AM EST to 08:00 AM EST<strong> will temporarily</strong>impact a subset of Konflux Infrastructure</strong>.
 - type: info
   summary: Want to **display important updates** here? [See how to create a banner](https://github.com/redhat-appstudio/infra-deployments/blob/main/components/konflux-info/README.md).
