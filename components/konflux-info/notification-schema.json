@@ -1,0 +1,30 @@
+{
+  "oneOf": [
+    { "$ref": "#/definitions/notification" },
+    {
+      "type": "array",
+      "items": { "$ref": "#/definitions/notification" }
+    }
+  ],
+  "definitions": {
+    "notification": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Optional. A short heading"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Required. The notification content."
+        },
+        "type": {
+          "type": "string",
+          "description": "Required. The type of notification: 'info', 'warning', or 'danger'."
+        }
+      },
+      "required": ["summary", "type"],
+      "additionalProperties": false
+    }
+  }
+}
