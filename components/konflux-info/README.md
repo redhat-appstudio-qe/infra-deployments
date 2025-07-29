@@ -1,33 +1,51 @@
+_Follow links by Ctrl + click (or Cmd + click on Mac)_
+
+- 1. [📂 Directory Structure](#DirectoryStructure)
+- 2. [📢 Konflux Banner](#KonfluxBanner)
+  - 2.1. [✅ Banner Content Validation](#BannerContentValidation)
+  - 2.2. [✅ Banner Content Specification](#BannerContentSpecification)
+    - 2.2.1. [**Schema**](#Schema)
+    - 2.2.2. [**Required and Optional Fields for Each Banner**](#RequiredandOptionalFieldsforEachBanner)
+  - 2.3. [Usage Scenarios & Examples](#UsageScenariosExamples)
+    - 2.3.1. [✅ **1. Multiple Banners**](#1.MultipleBanners)
+    - 2.3.2. [✅ **2. One-Time Banner**](#2.One-TimeBanner)
+    - 2.3.3. [✅ **3. Weekly Recurring Banner**](#3.WeeklyRecurringBanner)
+    - 2.3.4. [✅ **4. Monthly Recurring Banner**](#4.MonthlyRecurringBanner)
+    - 2.3.5. [✅ **5. Always-On Banner**](#5.Always-OnBanner)
+    - 2.3.6. [✅ **6. Empty Banner**](#6.EmptyBanner)
+  - 2.4. [📝 How to submit a PR for Banner](#HowtosubmitaPRforBanner)
+  - 2.5. [✅ UI Behavior](#UIBehavior)
+  - 2.6. [❓ Frequently Asked Questions](#FrequentlyAskedQuestions)
+
 # 🚀 konflux-info Repository Guide
 
-## 📂 Directory Structure
+## 1. <a name='DirectoryStructure'></a>📂 Directory Structure
 
 The `KONFLUX-INFO` directory contains:
 
 ```bash
 .
-├── auto-alert-schema.json  # JSON shema definition for auto-alert-content.yaml
 ├── base/                   # Common resources (e.g., RBAC)
 ├── production/             # Production cluster configurations
 ├── staging/                # Staging cluster configurations
 ├── banner-schema.json      # JSON schema definition for validating banner-content.yaml files
-
 ```
 
 Each cluster directory contains:
 
 ```bash
 .
-├── auto-alerts # The directory manages auto-generated alerts content shown in the UI
 ├── banner-content.yaml # The banner content shown in the UI
 ├── info.json # Metadata about the cluster
-└── kustomization.yaml # Kustomize configuration for this cluster, including base, auto-alerts, and other configs
+└── kustomization.yaml # Kustomize configuration for this cluster
 
 ```
 
 ---
 
-## ✅ Banner Content Validation
+## 2. <a name='KonfluxBanner'></a>📢 Konflux Banner
+
+### 2.1. <a name='BannerContentValidation'></a>✅ Banner Content Validation
 
 To maintain consistency, a GitHub workflow named **`banner-validate`** automatically validates all `banner-content.yaml` files against the schema defined in [`banner-schema.json`](./banner-schema.json).
 
@@ -47,11 +65,11 @@ To maintain consistency, a GitHub workflow named **`banner-validate`** automatic
 - Review the error message in the PR checks.
 - Compare your changes with the [schema](./banner-schema.json) and [examples in README](#usage-scenarios--examples).
 
-## ✅ Banner Content Specification
+### 2.2. <a name='BannerContentSpecification'></a>✅ Banner Content Specification
 
 The `banner-content.yaml` file defines one or more banners displayed in the Konflux UI. Each cluster has its own `banner-content.yaml` under its directory (e.g., `staging/stone-stage-p01/banner-content.yaml`).
 
-### **Schema**
+#### 2.2.1. <a name='Schema'></a>**Schema**
 
 The schema for banner content is defined in [`banner-schema.json`](./banner-schema.json) and validated automatically by the `banner-validate` GitHub workflow on every PR.
 
@@ -59,14 +77,7 @@ The file must contain a **YAML list** where each item represents a banner config
 
 ---
 
-### **Important Behavior**
-
-- The <strong style="color: red;">UI displays only the first valid active banner</strong> from the list, based on current date, time, and optional recurrence settings.
-- If multiple banners are configured, <strong style="color: red;">order matters</strong>.
-
----
-
-### **Required and Optional Fields for Each Banner**
+#### 2.2.2. <a name='RequiredandOptionalFieldsforEachBanner'></a>**Required and Optional Fields for Each Banner**
 
 📎 For the full schema used in CI validation, see banner-schema.json. This table is a human-friendly reference for banner authors.
 
@@ -86,9 +97,9 @@ The file must contain a **YAML list** where each item represents a banner config
 
 ---
 
-### **Usage Scenarios & Examples**
+### 2.3. <a name='UsageScenariosExamples'></a>Usage Scenarios & Examples
 
-#### ✅ **1. Multiple Banners**
+#### 2.3.1. <a name='1.MultipleBanners'></a>✅ **1. Multiple Banners**
 
 Example of a `banner-content.yaml` with multiple banners (first active one is shown in UI):
 
@@ -110,7 +121,7 @@ Example of a `banner-content.yaml` with multiple banners (first active one is sh
   # No timezone is needed when you expect it's UTC.
 ```
 
-#### ✅ **2. One-Time Banner**
+#### 2.3.2. <a name='2.One-TimeBanner'></a>✅ **2. One-Time Banner**
 
 For a single event on a specific date:
 
@@ -133,7 +144,7 @@ For a single event in today
   endTime: "14:00"
 ```
 
-#### ✅ **2. Weekly Recurring Banner**
+#### 2.3.3. <a name='3.WeeklyRecurringBanner'></a>✅ **3. Weekly Recurring Banner**
 
 For an event that repeats every week:
 
@@ -145,7 +156,7 @@ For an event that repeats every week:
   endTime: "04:00"
 ```
 
-#### ✅ **3. Monthly Recurring Banner**
+#### 2.3.4. <a name='4.MonthlyRecurringBanner'></a>✅ **4. Monthly Recurring Banner**
 
 For an event that happens on the same day each month:
 
@@ -158,7 +169,7 @@ For an event that happens on the same day each month:
   timeZone: "Asia/Shanghai"
 ```
 
-#### ✅ **4. Always-On Banner**
+#### 2.3.5. <a name='5.Always-OnBanner'></a>✅ **5. Always-On Banner**
 
 For an event that requires immediate notification:
 
@@ -167,7 +178,7 @@ For an event that requires immediate notification:
   type: "info"
 ```
 
-#### ✅ **5. Empty Banner**
+#### 2.3.6. <a name='6.EmptyBanner'></a>✅ **6. Empty Banner**
 
 When there are no events to announce:
 
@@ -177,7 +188,7 @@ When there are no events to announce:
 
 ---
 
-## 📝 How to submit a PR for Banner
+### 2.4. <a name='HowtosubmitaPRforBanner'></a>📝 How to submit a PR for Banner
 
 1. Locate the target cluster directory:
 
@@ -225,7 +236,18 @@ When there are no events to announce:
   Purpose: Release announcement for Konflux 1.2
   ```
 
-## ❓ Frequently Asked Questions
+### 2.5. <a name='UIBehavior'></a>✅ UI Behavior
+
+- The <strong style="color: red;">UI displays only the first valid active banner</strong> from the list, based on current date, time, and optional recurrence settings.
+- If multiple banners are configured, <strong style="color: red;">order matters</strong>.
+- <strong style="color: red;">Time-related fields like `startTime` and `endTime` are not displayed in the UI</strong>; they only control when the banner is active.
+
+  <strong>To convey duration or timing details, please include them within the `summary`.</strong>
+
+- <strong style="color: red;">The `type` and `summary` fields are displayed directly in the UI</strong>.
+- We enjoyed leveraging the [PatternFly Banner component (v5)](https://v5-archive.patternfly.org/components/banner/) to implement the UI, following its design principles for clarity and consistency.
+
+### 2.6. <a name='FrequentlyAskedQuestions'></a>❓ Frequently Asked Questions
 
 - Why is only one banner shown even when multiple are configured?
 
@@ -245,41 +267,3 @@ When there are no events to announce:
 
   <strong style="color: red;">📝 If multiple messages need to be shared at the same time, consider combining them into a well-written summary inside a single banner.</strong>
 
-## 📢 Auto Alerts(WIP)
-
-We enables the infrastructure team to automatically surface specific operational issues or warnings in the Konflux UI.
-
-These alerts would be auto-generated from monitoring systems or automation scripts, written as Kubernetes ConfigMaps, and automatically picked up by the Konflux UI to inform users of system-wide conditions.
-
-### ✅ Alert YAML Format
-
-Each file under auto-alerts/ must be a valid Kubernetes ConfigMap, including at minimum:
-
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: konflux-auto-alert-xyz
-  namespace: konflux-info
-  labels:
-    konflux-auto-alert: "true" # Required. UI filter alerts out by this label.
-data:
-  auto-alert-content.yaml: |
-    enable: true
-    summary: "Builds are delayed due to maintenance"
-    type: "warning"
-```
-
-🔐 The data.banner-content.yaml should follow the schema defined in `auto-alert-schema.json`
-
-### Folder Structure
-
-```bash
-
-auto-alerts/   # Alert ConfigMaps (one file = one alert)
-.
-├── alert-1.yaml           # Fully valid ConfigMap YAML
-├── alert-2.yaml
-└── kustomization.yaml     # Auto-generated, includes all alert YAMLs
-
-```
