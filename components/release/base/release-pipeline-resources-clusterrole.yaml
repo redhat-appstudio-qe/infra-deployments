@@ -50,3 +50,11 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - pipelinesascode.tekton.dev
+  resources:
+  - repositories
+  verbs:
+  - get
+  - list
+  - watch
