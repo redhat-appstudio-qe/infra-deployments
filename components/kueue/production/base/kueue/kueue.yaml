@@ -13,7 +13,7 @@ spec:
   managementState: Managed
   config:
     integrations:
-      frameworks: # The operator requires at lest one framework to be enabled
+      frameworks: # The operator requires at least one framework to be enabled
        - BatchJob
       externalFrameworks:
        -  group: tekton.dev
