@@ -56,7 +56,7 @@ spec:
           verb|request_kind|tested_cluster|resource_type|exported_job|http_method|\
           http_route|http_status_code|gin_errors|rule_result|rule_execution_cause|\
           policy_name|policy_background_mode|rule_type|policy_type|policy_validation_mode|\
-          resource_request_operation|resource_kind|policy_change_type"
+          resource_request_operation|resource_kind|policy_change_type|event_type"
           
 
 ---
@@ -168,6 +168,7 @@ spec:
         - '{__name__="kube_deployment_spec_replicas", namespace="mintmaker"}'
         - '{__name__="cluster_ram_requested_perc"}'
         - '{__name__="node_memory_pressured_perc"}'
+        - '{__name__="redis_node_memory_usage_perc"}'
 
         # Namespace (expression):  ~".*monitoring.*"
         - '{__name__="kube_deployment_status_replicas_ready", namespace=~".*monitoring.*"}'
