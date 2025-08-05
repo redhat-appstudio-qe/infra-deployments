@@ -1,0 +1,142 @@
+---
+# Simplified Loki configuration for development
+loki:
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+
+  commonConfig:
+    replication_factor: 1
+
+  compactor:
+    retention_enabled: true
+    delete_request_store: filesystem
+  ruler:
+    storage:
+      type: local
+      local:
+        directory: /var/loki/ruler
+
+deploymentMode: SingleBinary
+
+# Gateway configuration
+gateway:
+  enabled: true
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+# Pod and container security contexts
+podSecurityContext:
+  runAsNonRoot: false  # Allow running as root for loki
+  allowPrivilegeEscalation: false
+
+containerSecurityContext:
+  runAsNonRoot: false  # Allow running as root for loki
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+
+# Disable canary to avoid SCC issues for now
+lokiCanary:
+  enabled: false
+
+singleBinary:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: false  # No persistent storage for development
+  podDisruptionBudget:
+    enabled: true
+    maxUnavailable: 1
+    unhealthyPodEvictionPolicy: AlwaysAllow
+  extraVolumeMounts:
+    - name: loki-storage
+      mountPath: /var/loki
+  extraVolumes:
+    - name: loki-storage
+      emptyDir: {}  # Use ephemeral storage
+
+# Disable sidecar completely
+sidecar:
+  rules:
+    enabled: false
+  datasources:
+    enabled: false
+
+# Zero out replica counts of other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+
+# Disable ALL memcached components
+chunksCache:
+  enabled: false
+  replicas: 0
+
+resultsCache:
+  enabled: false
+  replicas: 0
+
+memcached:
+  enabled: false
+
+memcachedResults:
+  enabled: false
+
+memcachedChunks:
+  enabled: false
+
+memcachedFrontend:
+  enabled: false
+
+memcachedIndexQueries:
+  enabled: false
+
+memcachedIndexWrites:
+  enabled: false
+
+# Disable test pods for cleaner development environment  
+test:
+  enabled: false
