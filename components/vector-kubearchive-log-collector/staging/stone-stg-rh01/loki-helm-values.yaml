@@ -1,0 +1,102 @@
+---
+# Ultra-simplified Loki configuration for staging
+deploymentMode: SingleBinary
+
+# Disable gateway - not needed for SingleBinary
+gateway:
+  enabled: false
+
+# Service Account configuration to match SCC  
+serviceAccount:
+  create: false
+  name: vector-kubearchive-log-collector-loki
+
+# Disable canary
+lokiCanary:
+  enabled: false
+
+# Single binary configuration - the only thing that matters
+singleBinary:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  persistence:
+    enabled: false
+  podDisruptionBudget:
+    enabled: true
+    maxUnavailable: 1
+    unhealthyPodEvictionPolicy: AlwaysAllow
+
+# Basic Loki configuration with S3 storage
+loki:
+  commonConfig:
+    replication_factor: 1
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  storage:
+    type: s3
+    bucketNames:
+      chunks: stone-stg-rh01-loki-storage
+      ruler: stone-stg-rh01-loki-storage
+      admin: stone-stg-rh01-loki-storage
+    s3:
+      endpoint: https://s3.us-east-1.amazonaws.com
+      region: us-east-1
+  # Required storage_config for Helm chart
+  storage_config:
+    aws:
+      region: us-east-1
+      bucketnames: stone-stg-rh01-loki-storage
+
+# Security contexts for OpenShift
+podSecurityContext:
+  runAsNonRoot: false
+  allowPrivilegeEscalation: false
+
+containerSecurityContext:
+  runAsNonRoot: false
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+
+# Disable test pods
+test:
+  enabled: false
+
+# Explicitly disable all other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+ruler:
+  replicas: 0

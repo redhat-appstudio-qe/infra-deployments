@@ -1,0 +1,98 @@
+---
+# Ultra-simplified Loki configuration for development
+deploymentMode: SingleBinary
+
+# Disable gateway - not needed for SingleBinary
+gateway:
+  enabled: false
+
+# Service Account configuration to match SCC  
+serviceAccount:
+  create: false
+  name: vector-kubearchive-log-collector-loki
+
+# Disable canary
+lokiCanary:
+  enabled: false
+
+# Single binary configuration - the only thing that matters
+singleBinary:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  persistence:
+    enabled: false  # Use ephemeral storage for dev
+  podDisruptionBudget:
+    enabled: true
+    maxUnavailable: 1
+    unhealthyPodEvictionPolicy: AlwaysAllow
+
+# Basic Loki configuration
+loki:
+  commonConfig:
+    replication_factor: 1
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  # Required storage configuration for Helm chart
+  storage:
+    type: filesystem
+    bucketNames:
+      chunks: chunks
+      ruler: ruler
+      admin: admin
+  storage_config:
+    filesystem:
+      directory: /var/loki/chunks
+
+# Security contexts for OpenShift
+podSecurityContext:
+  runAsNonRoot: false
+  allowPrivilegeEscalation: false
+
+containerSecurityContext:
+  runAsNonRoot: false
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+
+# Disable test pods
+test:
+  enabled: false
+
+# Explicitly disable all other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+ruler:
+  replicas: 0
