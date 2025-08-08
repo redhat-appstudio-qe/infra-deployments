@@ -10,8 +10,5 @@ commonAnnotations:
   ignore-check.kube-linter.io/sensitive-host-mounts: |
     "Vector Runs requires certain host mounts to watch  files being created by pods."
 
-generators:
-- vector-helm-generator.yaml
-
 resources:
 - vector-pre.yaml
