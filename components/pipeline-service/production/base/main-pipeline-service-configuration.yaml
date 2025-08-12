@@ -1916,6 +1916,8 @@ spec:
                 containers:
                   - name: controller
                     env:
+                      # TODO: this is resolved in next operator release and should be removed when it's deployed
+                      # https://github.com/tektoncd/operator/commit/f5941cd59f6c7724b2c9d3ad84d11e8a425d2738
                       - name: GIT_SSL_CAINFO
                         value: /tekton-custom-certs/ca-bundle.crt
                     resources:
