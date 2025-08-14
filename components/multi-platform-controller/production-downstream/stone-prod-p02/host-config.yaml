@@ -79,7 +79,7 @@ data:
   dynamic.linux-mlarge-arm64.aws-secret: aws-account
   dynamic.linux-mlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-mlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-mlarge-arm64.max-instances: "5"
+  dynamic.linux-mlarge-arm64.max-instances: "10"
   dynamic.linux-mlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-mlarge-arm64.allocation-timeout: "1200"
 
@@ -92,7 +92,7 @@ data:
   dynamic.linux-mxlarge-arm64.aws-secret: aws-account
   dynamic.linux-mxlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-mxlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-mxlarge-arm64.max-instances: "5"
+  dynamic.linux-mxlarge-arm64.max-instances: "10"
   dynamic.linux-mxlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-mxlarge-arm64.allocation-timeout: "1200"
 
@@ -105,7 +105,7 @@ data:
   dynamic.linux-m2xlarge-arm64.aws-secret: aws-account
   dynamic.linux-m2xlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-m2xlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-m2xlarge-arm64.max-instances: "5"
+  dynamic.linux-m2xlarge-arm64.max-instances: "10"
   dynamic.linux-m2xlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-m2xlarge-arm64.allocation-timeout: "1200"
 
@@ -118,7 +118,7 @@ data:
   dynamic.linux-d160-m2xlarge-arm64.aws-secret: aws-account
   dynamic.linux-d160-m2xlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-d160-m2xlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-d160-m2xlarge-arm64.max-instances: "5"
+  dynamic.linux-d160-m2xlarge-arm64.max-instances: "10"
   dynamic.linux-d160-m2xlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-d160-m2xlarge-arm64.allocation-timeout: "1200"
   dynamic.linux-d160-m2xlarge-arm64.disk: "160"
@@ -132,7 +132,7 @@ data:
   dynamic.linux-m4xlarge-arm64.aws-secret: aws-account
   dynamic.linux-m4xlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-m4xlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-m4xlarge-arm64.max-instances: "5"
+  dynamic.linux-m4xlarge-arm64.max-instances: "10"
   dynamic.linux-m4xlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-m4xlarge-arm64.allocation-timeout: "1200"
 
@@ -223,7 +223,7 @@ data:
   dynamic.linux-d160-m4xlarge-arm64.aws-secret: aws-account
   dynamic.linux-d160-m4xlarge-arm64.ssh-secret: aws-ssh-key
   dynamic.linux-d160-m4xlarge-arm64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-d160-m4xlarge-arm64.max-instances: "5"
+  dynamic.linux-d160-m4xlarge-arm64.max-instances: "20"
   dynamic.linux-d160-m4xlarge-arm64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-d160-m4xlarge-arm64.allocation-timeout: "1200"
   dynamic.linux-d160-m4xlarge-arm64.disk: "160"
@@ -277,7 +277,7 @@ data:
   dynamic.linux-mlarge-amd64.aws-secret: aws-account
   dynamic.linux-mlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-mlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-mlarge-amd64.max-instances: "5"
+  dynamic.linux-mlarge-amd64.max-instances: "10"
   dynamic.linux-mlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-mlarge-amd64.allocation-timeout: "1200"
 
@@ -290,7 +290,7 @@ data:
   dynamic.linux-mxlarge-amd64.aws-secret: aws-account
   dynamic.linux-mxlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-mxlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-mxlarge-amd64.max-instances: "5"
+  dynamic.linux-mxlarge-amd64.max-instances: "10"
   dynamic.linux-mxlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-mxlarge-amd64.allocation-timeout: "1200"
 
@@ -303,7 +303,7 @@ data:
   dynamic.linux-m2xlarge-amd64.aws-secret: aws-account
   dynamic.linux-m2xlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-m2xlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-m2xlarge-amd64.max-instances: "5"
+  dynamic.linux-m2xlarge-amd64.max-instances: "10"
   dynamic.linux-m2xlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-m2xlarge-amd64.allocation-timeout: "1200"
 
@@ -316,7 +316,7 @@ data:
   dynamic.linux-d160-m2xlarge-amd64.aws-secret: aws-account
   dynamic.linux-d160-m2xlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-d160-m2xlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-d160-m2xlarge-amd64.max-instances: "5"
+  dynamic.linux-d160-m2xlarge-amd64.max-instances: "10"
   dynamic.linux-d160-m2xlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-d160-m2xlarge-amd64.allocation-timeout: "1200"
   dynamic.linux-d160-m2xlarge-amd64.disk: "160"
@@ -330,7 +330,7 @@ data:
   dynamic.linux-m4xlarge-amd64.aws-secret: aws-account
   dynamic.linux-m4xlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-m4xlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-m4xlarge-amd64.max-instances: "5"
+  dynamic.linux-m4xlarge-amd64.max-instances: "10"
   dynamic.linux-m4xlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-m4xlarge-amd64.allocation-timeout: "1200"
 
@@ -344,7 +344,7 @@ data:
   dynamic.linux-d160-m4xlarge-amd64.aws-secret: aws-account
   dynamic.linux-d160-m4xlarge-amd64.ssh-secret: aws-ssh-key
   dynamic.linux-d160-m4xlarge-amd64.security-group-id: sg-0903aedd465be979e
-  dynamic.linux-d160-m4xlarge-amd64.max-instances: "5"
+  dynamic.linux-d160-m4xlarge-amd64.max-instances: "20"
   dynamic.linux-d160-m4xlarge-amd64.subnet-id: subnet-02c476f8d2a4ae05e
   dynamic.linux-d160-m4xlarge-amd64.allocation-timeout: "1200"
   dynamic.linux-d160-m4xlarge-amd64.disk: "160"

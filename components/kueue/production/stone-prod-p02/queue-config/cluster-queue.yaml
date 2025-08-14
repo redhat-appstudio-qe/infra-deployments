@@ -70,13 +70,13 @@ spec:
       - name: linux-cxlarge-arm64
         nominalQuota: '5'
       - name: linux-d160-m2xlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-d160-m2xlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-d160-m4xlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '20'
       - name: linux-d160-m4xlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '20'
       - name: linux-d160-m8xlarge-amd64
         nominalQuota: '5'
   - coveredResources:
@@ -108,25 +108,25 @@ spec:
       - name: linux-g6xlarge-amd64
         nominalQuota: '5'
       - name: linux-m2xlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-m2xlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-m4xlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-m4xlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-m8xlarge-amd64
         nominalQuota: '5'
       - name: linux-m8xlarge-arm64
         nominalQuota: '5'
       - name: linux-mlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-mlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-mxlarge-amd64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-mxlarge-arm64
-        nominalQuota: '5'
+        nominalQuota: '10'
       - name: linux-ppc64le
         nominalQuota: '40'
       - name: linux-root-amd64
