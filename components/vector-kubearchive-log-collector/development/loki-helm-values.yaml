@@ -83,6 +83,12 @@ ingester:
     enabled: true
   zoneAwareReplication:
     enabled: false
+  resources:
+    requests:
+      cpu: 300m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
   persistence:
     enabled: true
     size: 10Gi
@@ -95,6 +101,12 @@ querier:
   replicas: 1
   autoscaling:
     enabled: false
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
   affinity: {}
 
 queryFrontend:
@@ -173,15 +185,25 @@ gateway:
     registry: docker.io
     repository: nginxinc/nginx-unprivileged
     tag: 1.24-alpine
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
   service:
     type: ClusterIP
     port: 80
-    resources:
-      requests:
-        cpu: 50m
-        memory: 64Mi
-      limits:
-        memory: 128Mi
+
+# Enable lokiCanary for health checks
+lokiCanary:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
 
 # Enable minio for storage
 minio:
@@ -194,6 +216,19 @@ minio:
     size: 10Gi
   resources:
     requests:
-      memory: 512Mi
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
   postJob:
     enabled: false
+
+# Resources for memcached exporter to satisfy linter
+memcachedExporter:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
