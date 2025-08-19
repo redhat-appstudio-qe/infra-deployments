@@ -222,6 +222,12 @@ minio:
       memory: 256Mi
   postJob:
     enabled: false
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
 
 # Resources for memcached exporter to satisfy linter
 memcachedExporter:
