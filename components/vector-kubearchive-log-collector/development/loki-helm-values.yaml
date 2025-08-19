@@ -99,27 +99,63 @@ querier:
 
 queryFrontend:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
 
 queryScheduler:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
 
 distributor:
   replicas: 3
   autoscaling:
     enabled: true
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
   affinity: {}
 
 compactor:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
 
 indexGateway:
   replicas: 1
   maxUnavailable: 0
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
   affinity: {}
 
 ruler:
   replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
 
 bloomPlanner:
   replicas: 0
@@ -140,6 +176,12 @@ gateway:
   service:
     type: ClusterIP
     port: 80
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
 
 # Enable minio for storage
 minio:
