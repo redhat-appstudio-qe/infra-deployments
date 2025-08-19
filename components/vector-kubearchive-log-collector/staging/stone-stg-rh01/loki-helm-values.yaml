@@ -152,6 +152,7 @@ ingester:
     enabled: true
   zoneAwareReplication:
     enabled: true
+  maxUnavailable: 1
   persistence:
     enabled: true
     size: 10Gi
@@ -164,18 +165,22 @@ querier:
   replicas: 3
   autoscaling:
     enabled: true
+  maxUnavailable: 1
   affinity: {}
 
 queryFrontend:
   replicas: 2
+  maxUnavailable: 1
 
 queryScheduler:
   replicas: 2
+  maxUnavailable: 1
 
 distributor:
   replicas: 3
   autoscaling:
     enabled: true
+  maxUnavailable: 1
   affinity: {}
 
 compactor:
