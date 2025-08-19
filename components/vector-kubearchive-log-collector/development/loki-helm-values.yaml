@@ -85,10 +85,10 @@ ingester:
     enabled: false
   resources:
     requests:
-      cpu: 300m
-      memory: 512Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
-      memory: 1Gi
+      memory: 512Mi
   persistence:
     enabled: true
     size: 10Gi
@@ -103,7 +103,7 @@ querier:
     enabled: false
   resources:
     requests:
-      cpu: 200m
+      cpu: 100m
       memory: 256Mi
     limits:
       memory: 512Mi
@@ -113,19 +113,19 @@ queryFrontend:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 50m
+      memory: 64Mi
     limits:
-      memory: 256Mi
+      memory: 128Mi
 
 queryScheduler:
   replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 50m
+      memory: 64Mi
     limits:
-      memory: 256Mi
+      memory: 128Mi
 
 distributor:
   replicas: 3
@@ -134,7 +134,7 @@ distributor:
   maxUnavailable: 1
   resources:
     requests:
-      cpu: 200m
+      cpu: 100m
       memory: 256Mi
     limits:
       memory: 512Mi
@@ -145,16 +145,16 @@ compactor:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 128Mi
     limits:
-      memory: 512Mi
+      memory: 256Mi
 
 indexGateway:
   replicas: 1
   maxUnavailable: 0
   resources:
     requests:
-      cpu: 200m
+      cpu: 100m
       memory: 256Mi
     limits:
       memory: 512Mi
