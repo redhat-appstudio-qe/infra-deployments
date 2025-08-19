@@ -27,7 +27,7 @@ loki:
      # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
      max_concurrent: 4
   pattern_ingester:
-     enabled: true
+     enabled: false
   limits_config:
        retention_period: 744h  # 31 days retention
        ingestion_rate_mb: 10
@@ -78,9 +78,9 @@ write:
 
 # Distributed components configuration
 ingester:
-  replicas: 1
+  replicas: 3
   autoscaling:
-    enabled: false
+    enabled: true
   zoneAwareReplication:
     enabled: false
   persistence:
@@ -104,9 +104,9 @@ queryScheduler:
   replicas: 1
 
 distributor:
-  replicas: 1
+  replicas: 3
   autoscaling:
-    enabled: false
+    enabled: true
   affinity: {}
 
 compactor:
@@ -128,11 +128,29 @@ bloomGateway:
   replicas: 0
 
  # This exposes the Loki gateway so it can be written to and queried externaly
-gateway:
-   service:
-     type: LoadBalancer
 
+gateway:
+  enabled: true
+  replicas: 1
+  image:
+    registry: docker.io
+    repository: nginxinc/nginx-unprivileged
+    tag: 1.24-alpine
+  service:
+    type: ClusterIP
+    port: 80
 
 # Enable minio for storage
 minio:
   enabled: true
+  rootUser: loki
+  rootPassword: supersecret
+  mode: standalone
+  persistence:
+    enabled: true
+    size: 10Gi
+  resources:
+    requests:
+      memory: 512Mi
+  postJob:
+    enabled: false
