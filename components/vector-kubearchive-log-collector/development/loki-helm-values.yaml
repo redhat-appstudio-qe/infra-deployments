@@ -107,6 +107,7 @@ distributor:
   replicas: 3
   autoscaling:
     enabled: true
+  maxUnavailable: 1
   affinity: {}
 
 compactor:
