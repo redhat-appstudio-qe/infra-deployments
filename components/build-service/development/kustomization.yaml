@@ -1,19 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../base
-- https://github.com/konflux-ci/build-service/config/default?ref=931e56b1771db737c4fbbd1ae90fbd6e1b73344d
-
+  - ../base
+  - https://github.com/brianwcook/build-service/config/default?ref=9bf353c0ac898b06e1c2e837ce7fe591a4ed0626
 namespace: build-service
-
 images:
-- name: quay.io/konflux-ci/build-service
-  newName: quay.io/konflux-ci/build-service
-  newTag: 931e56b1771db737c4fbbd1ae90fbd6e1b73344d
-
+  - name: quay.io/konflux-ci/build-service
+    newName: quay.io/redhat-user-workloads/rhtap-build-tenant/build-service/build-service
+    newTag: on-pr-9bf353c0ac898b06e1c2e837ce7fe591a4ed0626
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-
 patches:
   - target:
       group: apps
