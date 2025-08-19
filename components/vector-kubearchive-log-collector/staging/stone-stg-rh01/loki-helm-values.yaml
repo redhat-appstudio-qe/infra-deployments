@@ -23,7 +23,7 @@ singleBinary:
 # Basic Loki configuration with S3 storage
 loki:
   commonConfig:
-    replication_factor: 1
+    replication_factor: 3
     path_prefix: /var/loki  # This directory will be writable via volume mount
   schemaConfig:
     configs:
@@ -37,9 +37,9 @@ loki:
   # Configure ingestion limits to handle Vector's data volume
   limits_config:
       retention_period: 744h  # 31 days retention
-      ingestion_rate_mb: 10
-      ingestion_burst_size_mb: 20
-      max_streams_per_user: 10000
+      ingestion_rate_mb: 20
+      ingestion_burst_size_mb: 40
+      max_streams_per_user: 0
       max_line_size: 256000
       reject_old_samples: false
       reject_old_samples_max_age: 168h
@@ -47,6 +47,17 @@ loki:
       allow_structured_metadata: true
       volume_enabled: true
       max_global_streams_per_user: 50000
+  # Tuning for high-load queries
+  querier:
+    max_concurrent: 8
+  query_range:
+    split_queries_by_interval: 24h
+    parallelise_shardable_queries: true
+  # Ingester chunking behavior
+  ingester:
+    chunk_target_size: 1536000
+    chunk_idle_period: 1m
+    max_chunk_age: 1h
   # Required storage configuration for Helm chart
   storage:
     type: s3
@@ -136,11 +147,11 @@ write:
 
 # Distributed components configuration
 ingester:
-  replicas: 1
+  replicas: 3
   autoscaling:
-    enabled: false
+    enabled: true
   zoneAwareReplication:
-    enabled: false
+    enabled: true
   persistence:
     enabled: true
     size: 10Gi
@@ -150,28 +161,28 @@ ingester:
     hard: {}
 
 querier:
-  replicas: 1
+  replicas: 3
   autoscaling:
-    enabled: false
+    enabled: true
   affinity: {}
 
 queryFrontend:
-  replicas: 1
+  replicas: 2
 
 queryScheduler:
-  replicas: 1
+  replicas: 2
 
 distributor:
-  replicas: 1
+  replicas: 3
   autoscaling:
-    enabled: false
+    enabled: true
   affinity: {}
 
 compactor:
   replicas: 1
 
 indexGateway:
-  replicas: 1
+  replicas: 2
   maxUnavailable: 0
   affinity: {}
 
