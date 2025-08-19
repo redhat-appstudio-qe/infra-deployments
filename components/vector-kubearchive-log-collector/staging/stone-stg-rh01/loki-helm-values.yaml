@@ -4,8 +4,14 @@ deploymentMode: Distributed
 
  # This exposes the Loki gateway so it can be written to and queried externaly
 gateway:
-   service:
-     type: LoadBalancer
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
 
 # Service Account configuration to use IAM role for S3 access
 serviceAccount:
@@ -153,6 +159,12 @@ ingester:
   zoneAwareReplication:
     enabled: true
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      memory: 2Gi
   persistence:
     enabled: true
     size: 10Gi
@@ -166,33 +178,75 @@ querier:
   autoscaling:
     enabled: true
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 300m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
   affinity: {}
 
 queryFrontend:
   replicas: 2
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
 
 queryScheduler:
   replicas: 2
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
 
 distributor:
   replicas: 3
   autoscaling:
     enabled: true
   maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 300m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
   affinity: {}
 
 compactor:
   replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
 
 indexGateway:
   replicas: 2
   maxUnavailable: 0
+  resources:
+    requests:
+      cpu: 300m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
   affinity: {}
 
 ruler:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
 
 bloomPlanner:
   replicas: 0
@@ -200,3 +254,12 @@ bloomBuilder:
   replicas: 0
 bloomGateway:
   replicas: 0
+
+# Resources for memcached exporter to satisfy linter
+memcachedExporter:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
