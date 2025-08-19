@@ -70,8 +70,8 @@ customConfig:
     loki:
       type: loki
       inputs: ["remap_app_logs"]
-      # Direct connection to Loki service (no gateway)
-      endpoint: "http://vector-kubearchive-log-collector-loki.product-kubearchive-logging.svc.cluster.local:3100"
+      # Send to Loki gateway
+      endpoint: "http://vector-kubearchive-log-collector-loki-gateway.product-kubearchive-logging.svc.cluster.local"
       encoding:
         codec: "text"  # Use text instead of json to avoid metadata issues
         except_fields: ["tmp"]  # Exclude temporary fields
