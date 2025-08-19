@@ -13,7 +13,7 @@ images:
     newTag: adba93ac28b10c71629ecdf37bdef579fb381582
 configMapGenerator:
   - literals:
-      - GITHUB_ORG=olegbet-stonesoup
+      - GITHUB_ORG=redhat-appstudio-qe
     name: github-config
     behavior: replace
   - literals:
