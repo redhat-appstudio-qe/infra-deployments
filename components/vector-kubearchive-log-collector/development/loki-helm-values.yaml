@@ -1,5 +1,5 @@
 ---
-# Ultra-simplified Loki configuration for development
+# simplified Loki configuration for development
 deploymentMode: Distributed
 
 # Service Account configuration to match SCC  
