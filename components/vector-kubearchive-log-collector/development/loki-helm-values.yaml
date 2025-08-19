@@ -194,6 +194,8 @@ gateway:
   service:
     type: ClusterIP
     port: 80
+  nginxConfig:
+    resolver: "dns-default.openshift-dns.svc.cluster.local."
 
 # Enable lokiCanary for health checks
 lokiCanary:
