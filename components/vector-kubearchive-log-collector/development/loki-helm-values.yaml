@@ -2,6 +2,26 @@
 # simplified Loki configuration for development
 deploymentMode: Distributed
 
+ # This exposes the Loki gateway so it can be written to and queried externaly
+gateway:
+  enabled: true
+  replicas: 1
+  image:
+    registry: docker.io
+    repository: nginxinc/nginx-unprivileged
+    tag: 1.24-alpine
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+  service:
+    type: ClusterIP
+    port: 80
+  nginxConfig:
+    resolver: "dns-default.openshift-dns.svc.cluster.local."
+
 # Service Account configuration to match SCC  
 serviceAccount:
   create: false
@@ -176,26 +196,6 @@ bloomBuilder:
 bloomGateway:
   replicas: 0
 
- # This exposes the Loki gateway so it can be written to and queried externaly
-
-gateway:
-  enabled: true
-  replicas: 1
-  image:
-    registry: docker.io
-    repository: nginxinc/nginx-unprivileged
-    tag: 1.24-alpine
-  resources:
-    requests:
-      cpu: 50m
-      memory: 64Mi
-    limits:
-      memory: 128Mi
-  service:
-    type: ClusterIP
-    port: 80
-  nginxConfig:
-    resolver: "dns-default.openshift-dns.svc.cluster.local."
 
 # Enable lokiCanary for health checks
 lokiCanary:
@@ -224,12 +224,6 @@ minio:
       memory: 256Mi
   postJob:
     enabled: false
-    resources:
-      requests:
-        cpu: 50m
-        memory: 64Mi
-      limits:
-        memory: 128Mi
 
 # Resources for memcached exporter to satisfy linter
 memcachedExporter:
