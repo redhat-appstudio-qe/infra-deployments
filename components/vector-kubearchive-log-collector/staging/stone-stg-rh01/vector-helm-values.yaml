@@ -20,7 +20,9 @@ customConfig:
       glob_minimum_cooldown_ms: 500
       max_line_bytes: 3145728
       auto_partial_merge: true
-      extra_label_selector: "app.kubernetes.io/managed-by in (tekton-pipelines,pipelinesascode.tekton.dev)"
+      # Temporarily collect from vector namespace for testing - originally was:
+      # extra_label_selector: "app.kubernetes.io/managed-by in (tekton-pipelines,pipelinesascode.tekton.dev)"
+      extra_namespace_label_selector: "kubernetes.io/metadata.name=product-kubearchive-logging"
   transforms:
     reduce_events:
       type: reduce
@@ -53,6 +55,22 @@ customConfig:
           .container = del(.tmp.kubernetes.container_name)
         } else {
           .container = "unknown_container"
+        }
+        if exists(.tmp.kubernetes.pod_namespace) {
+          .namespace = del(.tmp.kubernetes.pod_namespace)
+        } else {
+          .namespace = "unknown_namespace"
+        }
+        # Preserve the actual log message - this was missing!
+        if exists(.tmp.message) {
+          .message = to_string(del(.tmp.message)) ?? "no_message"
+        } else {
+          .message = "no_message"
+        }
+        # Basic data sanitization to prevent 400 errors
+        # Truncate very long messages
+        if length(.message) > 32768 {
+          .message = slice!(.message, 0, 32768) + "...[TRUNCATED]"
         }
         # Clean up temporary fields
         del(.tmp)
