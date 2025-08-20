@@ -12,6 +12,14 @@ gateway:
       memory: 128Mi
     limits:
       memory: 256Mi
+  # Fix Docker Hub rate limiting by using Quay.io registry
+  image:
+    registry: quay.io
+    repository: nginx/nginx-unprivileged
+    tag: 1.24-alpine
+  # Fix DNS resolver for OpenShift
+  nginxConfig:
+    resolver: "dns-default.openshift-dns.svc.cluster.local."
 
 # Service Account configuration to use IAM role for S3 access
 serviceAccount:
@@ -254,6 +262,10 @@ bloomGateway:
 
 # Disable canary
 lokiCanary:
+  enabled: false
+
+# Disable Minio - staging uses S3 with IAM role
+minio:
   enabled: false
 
 # Resources for memcached exporter to satisfy linter
