@@ -53,7 +53,7 @@ loki:
   querier:
     max_concurrent: 8
   query_range:
-    split_queries_by_interval: 24h
+    # split_queries_by_interval deprecated in Loki 3.x - removed
     parallelise_shardable_queries: true
   # Ingester chunking behavior
   ingester:
