@@ -214,8 +214,7 @@ minio:
   rootPassword: supersecret
   mode: standalone
   persistence:
-    enabled: true
-    size: 10Gi
+    enabled: false  # Use emptyDir for development (no storage class available)
   resources:
     requests:
       cpu: 100m
