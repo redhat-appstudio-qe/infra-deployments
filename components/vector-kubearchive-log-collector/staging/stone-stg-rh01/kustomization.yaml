@@ -13,8 +13,8 @@ commonAnnotations:
 
 resources:
 - ../../base
-- loki-secret.yaml
 - vector-pre.yaml
+- loki-secret.yaml
 
 generators:
 - vector-helm-generator.yaml
