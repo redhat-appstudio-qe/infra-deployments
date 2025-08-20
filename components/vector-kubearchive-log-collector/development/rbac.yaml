@@ -39,8 +39,6 @@ supplementalGroups:
   type: RunAsAny
 users:
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector
-- system:serviceaccount:product-kubearchive-logging:loki
-- system:serviceaccount:product-kubearchive-logging:loki-sa
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-grafana
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-loki
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-loki-canary
