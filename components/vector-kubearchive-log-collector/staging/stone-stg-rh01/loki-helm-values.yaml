@@ -18,10 +18,6 @@ serviceAccount:
   create: false
   name: loki-sa
 
-# Disable canary
-lokiCanary:
-  enabled: false
-
 # Single binary configuration with proper volume mounts
 singleBinary:
   replicas: 0
@@ -116,33 +112,6 @@ sidecar:
   datasources:
     enabled: false
 
-# Enable Memcached caches for performance
-chunksCache:
-  enabled: true
-  replicas: 1
-
-resultsCache:
-  enabled: true
-  replicas: 1
-
-memcached:
-  enabled: true
-
-memcachedResults:
-  enabled: true
-
-memcachedChunks:
-  enabled: true
-
-memcachedFrontend:
-  enabled: true
-
-memcachedIndexQueries:
-  enabled: true
-
-memcachedIndexWrites:
-  enabled: true
-
 # Zero out replica counts of other deployment modes
 backend:
   replicas: 0
@@ -172,6 +141,33 @@ ingester:
   podAntiAffinity:
     soft: {}
     hard: {}
+
+# Enable Memcached caches for performance
+chunksCache:
+  enabled: true
+  replicas: 1
+
+resultsCache:
+  enabled: true
+  replicas: 1
+
+memcached:
+  enabled: true
+
+memcachedResults:
+  enabled: true
+
+memcachedChunks:
+  enabled: true
+
+memcachedFrontend:
+  enabled: true
+
+memcachedIndexQueries:
+  enabled: true
+
+memcachedIndexWrites:
+  enabled: true
 
 querier:
   replicas: 3
@@ -254,6 +250,11 @@ bloomBuilder:
   replicas: 0
 bloomGateway:
   replicas: 0
+
+
+# Disable canary
+lokiCanary:
+  enabled: false
 
 # Resources for memcached exporter to satisfy linter
 memcachedExporter:
