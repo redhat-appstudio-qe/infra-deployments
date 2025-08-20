@@ -1,45 +1,11 @@
 ---
-# Ultra-simplified Loki configuration for development
-deploymentMode: SingleBinary
-
-# Disable gateway - not needed for SingleBinary
-gateway:
-  enabled: false
+# simplified Loki configuration for development
+deploymentMode: Distributed
 
 # Service Account configuration to match SCC  
 serviceAccount:
   create: false
   name: vector-kubearchive-log-collector-loki
-
-# Disable canary
-lokiCanary:
-  enabled: false
-
-# Single binary configuration with proper volume mounts
-singleBinary:
-  replicas: 1
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 512Mi
-  persistence:
-    enabled: false  # Use ephemeral storage for dev
-  podDisruptionBudget:
-    enabled: true
-    maxUnavailable: 1
-    unhealthyPodEvictionPolicy: AlwaysAllow
-  # Add writable volume mounts for Loki data directories
-  extraVolumeMounts:
-    - name: loki-storage
-      mountPath: /var/loki
-
-  extraVolumes:
-    - name: loki-storage
-      emptyDir: {}
-
 
 # Basic Loki configuration
 loki:
@@ -50,42 +16,30 @@ loki:
     configs:
       - from: "2024-04-01"
         store: tsdb
-        object_store: filesystem
+        object_store: s3
         schema: v13
         index:
           prefix: loki_index_
           period: 24h
-  # Configure ingestion limits to handle Vector's data volume
+  ingester:
+     chunk_encoding: snappy
+  querier:
+     # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+     max_concurrent: 4
+  pattern_ingester:
+     enabled: false
   limits_config:
-    ingestion_rate_mb: 16          # Increase from default 4MB to 16MB per second
-    ingestion_burst_size_mb: 32    # Allow bursts up to 32MB
-    max_line_size: 256KB           # Allow larger log lines
-    max_streams_per_user: 10000    # Allow more streams per tenant
-    max_global_streams_per_user: 50000
-    reject_old_samples: false      # Don't reject old samples
-    reject_old_samples_max_age: 168h  # Accept samples up to 7 days old
-  # Required storage configuration for Helm chart
-  storage:
-    type: filesystem
-    bucketNames:
-      chunks: chunks
-      ruler: ruler
-      admin: admin
-    filesystem:
-      chunks_directory: /var/loki/chunks
-      rules_directory: /var/loki/rules
-  storage_config:
-    filesystem:
-      directory: /var/loki/chunks
-  # Configure ruler storage to use the writable volume
-  ruler:
-    storage:
-      type: local
-      local:
-        directory: /var/loki/ruler
-  # Configure compactor to use writable volume
-  compactor:
-    working_directory: /var/loki/compactor
+       retention_period: 744h  # 31 days retention
+       ingestion_rate_mb: 10
+       ingestion_burst_size_mb: 20
+       max_streams_per_user: 0
+       max_line_size: 256000
+       reject_old_samples: true
+       reject_old_samples_max_age: 168h
+       discover_service_name: []
+       allow_structured_metadata: true
+       volume_enabled: true
+       max_global_streams_per_user: 50000
 
 # Security contexts for OpenShift
 podSecurityContext:
@@ -111,53 +65,178 @@ sidecar:
   datasources:
     enabled: false
 
-# Disable ALL memcached components to avoid exporter containers and PDB issues
-chunksCache:
-  enabled: false
+singleBinary:
   replicas: 0
 
-resultsCache:
-  enabled: false
-  replicas: 0
-
-memcached:
-  enabled: false
-
-memcachedResults:
-  enabled: false
-
-memcachedChunks:
-  enabled: false
-
-memcachedFrontend:
-  enabled: false
-
-memcachedIndexQueries:
-  enabled: false
-
-memcachedIndexWrites:
-  enabled: false
-
-# Explicitly disable all other deployment modes
+# Zero out replica counts of other deployment modes
 backend:
   replicas: 0
 read:
   replicas: 0
 write:
   replicas: 0
+
+# Distributed components configuration
 ingester:
-  replicas: 0
+  replicas: 3
+  autoscaling:
+    enabled: true
+  zoneAwareReplication:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  persistence:
+    enabled: true
+    size: 10Gi
+  affinity: {}
+  podAntiAffinity:
+    soft: {}
+    hard: {}
+
 querier:
-  replicas: 0
+  replicas: 1
+  autoscaling:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  affinity: {}
+
 queryFrontend:
-  replicas: 0
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
 queryScheduler:
-  replicas: 0
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
 distributor:
-  replicas: 0
+  replicas: 3
+  autoscaling:
+    enabled: true
+  maxUnavailable: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  affinity: {}
+
 compactor:
-  replicas: 0
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
 indexGateway:
-  replicas: 0
+  replicas: 1
+  maxUnavailable: 0
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  affinity: {}
+
 ruler:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+bloomPlanner:
   replicas: 0
+bloomBuilder:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+
+ # This exposes the Loki gateway so it can be written to and queried externaly
+
+gateway:
+  enabled: true
+  replicas: 1
+  image:
+    registry: docker.io
+    repository: nginxinc/nginx-unprivileged
+    tag: 1.24-alpine
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+  service:
+    type: ClusterIP
+    port: 80
+  nginxConfig:
+    resolver: "dns-default.openshift-dns.svc.cluster.local."
+
+# Enable lokiCanary for health checks
+lokiCanary:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+# Enable minio for storage
+minio:
+  enabled: true
+  rootUser: loki
+  rootPassword: supersecret
+  mode: standalone
+  persistence:
+    enabled: true
+    size: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  postJob:
+    enabled: false
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+
+# Resources for memcached exporter to satisfy linter
+memcachedExporter:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
