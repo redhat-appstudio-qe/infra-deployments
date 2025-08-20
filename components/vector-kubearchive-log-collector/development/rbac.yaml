@@ -1,6 +1,6 @@
 # Development-specific configurations for vector-kubearchive-log-collector
 # This file contains only development-specific resources (minio-related)
-# Common resources are in ../base/vector-pre.yaml
+# Common resources are in ../base/rbac.yaml
 
 ---
 # Development-specific SecurityContextConstraints patch to add minio users
