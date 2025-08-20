@@ -19,7 +19,7 @@ commonAnnotations:
 
 resources:
 - ../base
-- vector-pre.yaml
+- rbac.yaml
 - loki-secret.yaml
 
 generators:
