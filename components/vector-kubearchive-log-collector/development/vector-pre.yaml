@@ -42,7 +42,6 @@ supplementalGroups:
 users:
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector
 - system:serviceaccount:product-kubearchive-logging:loki
-- system:serviceaccount:product-kubearchive-logging:loki-sa
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-grafana
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-loki
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-loki-canary
@@ -106,16 +105,6 @@ subjects:
 - kind: ServiceAccount
   name: vector-kubearchive-log-collector-minio
   namespace: product-kubearchive-logging
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: loki-sa
-  namespace: product-kubearchive-logging
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
-    # This annotation links the SA to the AWS IAM Role
-    eks.amazonaws.com/role-arn: "arn:aws:iam::663944276957:role/stone-stg-rh01-loki-storage-role"
 ---
 apiVersion: v1
 kind: ServiceAccount
