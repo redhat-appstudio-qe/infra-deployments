@@ -55,7 +55,6 @@ customConfig:
           .container = "unknown_container"
         }
         # Clean up temporary fields
-        .message = del(.tmp.message)
         del(.tmp)
   sinks:
     loki:
