@@ -45,7 +45,6 @@ loki:
     type: s3
     bucketNames:
       chunks: loki-chunks
-      ruler: loki-ruler  
       admin: loki-admin
     s3:
       endpoint: http://vector-kubearchive-log-collector-minio:9000
@@ -80,13 +79,7 @@ loki:
      max_concurrent: 2  # Reduce from 4
   pattern_ingester:
      enabled: false
-  # Configure ruler and compactor to use writable volumes
-  ruler:
-    rule_path: /var/loki/ruler
-    storage:
-      type: local
-      local:
-        directory: /var/loki/ruler
+  # Configure compactor to use writable volumes (ruler removed since component is disabled)
   compactor:
     working_directory: /var/loki/compactor
   limits_config:
@@ -222,13 +215,34 @@ indexGateway:
   affinity: {}
 
 ruler:
-  replicas: 1
-  resources:
-    requests:
-      cpu: 25m  # Reduce from 50m
-      memory: 64Mi  # Reduce from 128Mi
-    limits:
-      memory: 128Mi  # Reduce from 256Mi
+  replicas: 0  # Disable ruler - not essential for basic log functionality
+
+# Disable all cache components to avoid Pending issues in development
+chunksCache:
+  enabled: false
+  replicas: 0
+
+resultsCache:
+  enabled: false
+  replicas: 0
+
+memcached:
+  enabled: false
+
+memcachedResults:
+  enabled: false
+
+memcachedChunks:
+  enabled: false
+
+memcachedFrontend:
+  enabled: false
+
+memcachedIndexQueries:
+  enabled: false
+
+memcachedIndexWrites:
+  enabled: false
 
 bloomPlanner:
   replicas: 0
@@ -238,15 +252,9 @@ bloomGateway:
   replicas: 0
 
 
-# Enable lokiCanary for health checks
+# Disable lokiCanary - not essential for core functionality
 lokiCanary:
-  enabled: true
-  resources:
-    requests:
-      cpu: 25m  # Reduce from 50m
-      memory: 32Mi  # Reduce from 64Mi
-    limits:
-      memory: 64Mi  # Reduce from 128Mi
+  enabled: false
 
 # Enable minio for storage
 minio:
@@ -265,12 +273,6 @@ minio:
   postJob:
     enabled: false
 
-# Resources for memcached exporter to satisfy linter
+# Disable memcached exporter - not essential for core functionality
 memcachedExporter:
-  enabled: true
-  resources:
-    requests:
-      cpu: 25m  # Reduce from 50m
-      memory: 32Mi  # Reduce from 64Mi
-    limits:
-      memory: 64Mi  # Reduce from 128Mi
+  enabled: false
