@@ -6,9 +6,10 @@ deploymentMode: Distributed
 gateway:
   enabled: true
   replicas: 1
+  # Fix Docker Hub rate limiting by using Quay.io registry
   image:
-    registry: docker.io
-    repository: nginxinc/nginx-unprivileged
+    registry: quay.io
+    repository: nginx/nginx-unprivileged
     tag: 1.24-alpine
   resources:
     requests:
