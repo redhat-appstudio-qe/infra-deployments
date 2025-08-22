@@ -45,10 +45,10 @@ users:
 - system:serviceaccount:product-kubearchive-logging:minio-sa
 - system:serviceaccount:product-kubearchive-logging:vector-kubearchive-log-collector-minio
 volumes:
-- persistentVolumeClaim
 - configMap
 - emptyDir
 - hostPath
+- persistentVolumeClaim
 - projected
 - secret
 ---
