@@ -54,7 +54,7 @@ datasources:
         type: loki
         access: proxy
         # Use Loki gateway
-        url: http://vector-kubearchive-log-collector-loki-gateway.product-kubearchive-logging.svc.cluster.local
+        url: http://vector-kubearchive-log-collector-loki-gateway.product-kubearchive-logging.svc.cluster.local:80
         basicAuth: true
         basicAuthUser: $LOKI_USER
         secureJsonData:

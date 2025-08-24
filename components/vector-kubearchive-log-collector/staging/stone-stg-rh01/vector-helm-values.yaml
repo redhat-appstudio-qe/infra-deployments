@@ -79,7 +79,7 @@ customConfig:
       type: loki
       inputs: ["remap_app_logs"]
       # Send to Loki gateway
-      endpoint: "http://vector-kubearchive-log-collector-loki-gateway.product-kubearchive-logging.svc.cluster.local"
+      endpoint: "http://vector-kubearchive-log-collector-loki-gateway.product-kubearchive-logging.svc.cluster.local:80"
       encoding:
         codec: "text"
         except_fields: ["tmp"]
