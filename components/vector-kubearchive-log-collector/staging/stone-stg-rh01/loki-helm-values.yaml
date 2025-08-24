@@ -32,6 +32,8 @@ singleBinary:
 
 # Basic Loki configuration with S3 storage
 loki:
+  # Enable multi-tenancy to handle X-Scope-OrgID headers
+  auth_enabled: true
   commonConfig:
     replication_factor: 3
     path_prefix: /var/loki  # This directory will be writable via volume mount
