@@ -37,6 +37,8 @@ serviceAccount:
 
 # Basic Loki configuration
 loki:
+  # Enable multi-tenancy to handle X-Scope-OrgID headers
+  auth_enabled: true
   commonConfig:
     replication_factor: 1  # Keep at 1 for development
     path_prefix: /var/loki  # This directory will be writable via volume mount
