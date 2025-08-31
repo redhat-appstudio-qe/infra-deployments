@@ -41,4 +41,8 @@ volumes:
   - hostPath
   - persistentVolumeClaim
   - projected
+<<<<<<< HEAD
   - secret
+=======
+  - secret
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
