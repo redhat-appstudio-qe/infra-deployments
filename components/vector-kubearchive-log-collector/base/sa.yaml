@@ -10,6 +10,17 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+<<<<<<< HEAD
+=======
+  name: grafana
+  namespace: product-kubearchive-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
   name: loki-canary
   namespace: product-kubearchive-logging
   annotations:

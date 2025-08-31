@@ -6,4 +6,8 @@
   value: system:serviceaccount:product-kubearchive-logging:minio-sa
 - op: add
   path: /users/-
+<<<<<<< HEAD
   value: system:serviceaccount:product-kubearchive-logging:minio
+=======
+  value: system:serviceaccount:product-kubearchive-logging:minio
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
