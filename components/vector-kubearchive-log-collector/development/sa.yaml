@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -7,6 +8,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"  # Before workloads
 ---
+=======
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
 # Additional service accounts for development (minio)
 apiVersion: v1
 kind: ServiceAccount
@@ -22,4 +25,8 @@ metadata:
   name: minio
   namespace: product-kubearchive-logging
   annotations:
+<<<<<<< HEAD
     argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+=======
+    argocd.argoproj.io/sync-wave: "-1"  # Before workloads
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
