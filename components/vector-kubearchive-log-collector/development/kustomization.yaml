@@ -21,7 +21,7 @@ resources:
 - ../base
 - rbac.yaml
 - loki-secret.yaml
-- sa.yaml
+- minio-sa.yaml
 
 patches:
   - path: scc-patch.yaml
