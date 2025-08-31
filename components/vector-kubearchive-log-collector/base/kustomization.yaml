@@ -8,7 +8,3 @@ resources:
 - rbac.yaml
 - sa.yaml
 - scc.yaml
-<<<<<<< HEAD
-=======
-
->>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
