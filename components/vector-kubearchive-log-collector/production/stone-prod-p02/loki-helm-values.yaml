@@ -26,7 +26,7 @@ serviceAccount:
   create: true
   name: loki-sa
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::663944276957:role/stone-stg-rh01-loki-storage-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::663944276957:role/stone-prod-p02-loki-storage-role
 
 # Single binary configuration with proper volume mounts
 singleBinary:
@@ -76,15 +76,14 @@ loki:
   storage:
     type: s3
     bucketNames:
-      chunks: stone-stg-rh01-loki-storage
-      ruler: stone-stg-rh01-loki-storage
-      admin: stone-stg-rh01-loki-storage
+      chunks: stone-prod-p02-loki-storage
+      ruler: stone-prod-p02-loki-storage
+      admin: stone-prod-p02-loki-storage
     s3:
       region: us-east-1
-  # Required storage_config for Helm chart (chunks on S3)
   storage_config:
     aws:
-      bucketnames: stone-stg-rh01-loki-storage
+      bucketnames: stone-prod-p02-loki-storage
       region: us-east-1
   # Configure ruler storage to use local filesystem
   ruler:

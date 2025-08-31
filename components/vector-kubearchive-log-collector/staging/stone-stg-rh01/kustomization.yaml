@@ -22,24 +22,7 @@ generators:
 - grafana-helm-generator.yaml
 
 patches:
-- patch: |-
-    apiVersion: external-secrets.io/v1beta1
-    kind: ExternalSecret
-    metadata:
-      name: kubearchive-loki
-      namespace: product-kubearchive-logging
-    spec:
-      dataFrom:
-        - extract:
-            key: staging/kubearchive/loki
-      refreshInterval: 5m
-      secretStoreRef:
-        kind: ClusterSecretStore
-        name: appsre-stonesoup-vault
-      target:
-        creationPolicy: Orphan
-        name: kubearchive-loki
-        template:
-          metadata:
-            annotations:
-              argocd.argoproj.io/sync-options: Prune=false
+- path: scc-patch.yaml
+  target:
+    kind: SecurityContextConstraints
+    name: kubearchive-logging-scc
