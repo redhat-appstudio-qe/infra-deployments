@@ -18,6 +18,7 @@ resources:
 generators:
 - vector-helm-generator.yaml
 - loki-helm-generator.yaml
+- grafana-helm-generator.yaml
 
 patches:
 - path: scc-patch.yaml
