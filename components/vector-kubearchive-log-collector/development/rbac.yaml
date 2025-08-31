@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+# Development-specific configurations for vector-kubearchive-log-collector
+# This file contains only development-specific resources (minio-related)
+# Common resources are in ../base/rbac.yaml
+
+---
+>>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
 # Development-specific ClusterRoleBinding that includes minio service accounts
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

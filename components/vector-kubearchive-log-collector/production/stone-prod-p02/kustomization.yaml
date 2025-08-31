@@ -12,18 +12,17 @@ commonAnnotations:
     "Managed by upstream Loki chart (no value exposed for unhealthyPodEvictionPolicy)."
 
 resources:
-- ../base
+- ../../base
+- rbac.yaml
+- loki-secret.yaml
 
 generators:
 - vector-helm-generator.yaml
 - loki-helm-generator.yaml
 - grafana-helm-generator.yaml
-<<<<<<< HEAD
-=======
 
 patches:
 - path: scc-patch.yaml
   target:
     kind: SecurityContextConstraints
     name: kubearchive-logging-scc
->>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
