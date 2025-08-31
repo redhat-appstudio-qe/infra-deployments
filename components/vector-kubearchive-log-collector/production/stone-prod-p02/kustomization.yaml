@@ -13,7 +13,6 @@ commonAnnotations:
 
 resources:
 - ../../base
-- rbac.yaml
 - loki-secret.yaml
 
 generators:
