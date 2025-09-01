@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: cert-manager
+
+generators:
+  - trust-manager-helm-generator.yaml
+
+# set resources to containers
+patches:
+  - path: trust-manager-resources.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: trust-manager
+  - path: trust-manager-init-resources.yaml
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: trust-manager

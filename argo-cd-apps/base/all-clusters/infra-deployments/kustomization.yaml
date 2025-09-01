@@ -13,5 +13,6 @@ resources:
   - kubesaw-common
   - cost-management
   - kubelet-config
+  - trust-manager
 components:
   - ../../../k-components/inject-infra-deployments-repo-details
