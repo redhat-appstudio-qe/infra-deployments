@@ -27,56 +27,6 @@ loki:
         index:
           prefix: loki_index_
           period: 24h
-<<<<<<< HEAD
-  # Configure compactor to use writable volumes
-=======
-  # Configure ingestion limits to handle Vector's data volume
-  limits_config:
-      retention_period: 744h  # 31 days retention
-      ingestion_rate_mb: 20
-      ingestion_burst_size_mb: 40
-      max_streams_per_user: 0
-      max_line_size: 256000
-      reject_old_samples: false
-      reject_old_samples_max_age: 168h
-      discover_service_name: []
-      allow_structured_metadata: true
-      volume_enabled: true
-      max_global_streams_per_user: 50000
-  # Tuning for high-load queries
-  querier:
-    max_concurrent: 8
-  query_range:
-    # split_queries_by_interval deprecated in Loki 3.x - removed
-    parallelise_shardable_queries: true
-  # Ingester chunking behavior
-  ingester:
-    chunk_target_size: 1536000
-    chunk_idle_period: 1m
-    max_chunk_age: 1h
-  # Required storage configuration for Helm chart
-  storage:
-    type: s3
-    bucketNames:
-      chunks: stone-stg-rh01-loki-storage
-      ruler: stone-stg-rh01-loki-storage
-      admin: stone-stg-rh01-loki-storage
-    s3:
-      region: us-east-1
-  # Required storage_config for Helm chart (chunks on S3)
-  storage_config:
-    aws:
-      bucketnames: stone-stg-rh01-loki-storage
-      region: us-east-1
-  # Configure ruler storage to use local filesystem
-  ruler:
-    rule_path: /var/loki/ruler
-    storage:
-      type: local
-      local:
-        directory: /var/loki/ruler
-  # Configure compactor to use writable volume for working directory
->>>>>>> fe12a26bc (KAR-589: setup stone-prod-p02 config for kubearchive-logging)
   compactor:
     working_directory: /var/loki/compactor
 
