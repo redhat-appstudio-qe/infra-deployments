@@ -14,7 +14,6 @@ commonAnnotations:
 resources:
 - ../../base
 - loki-secret.yaml
-- sa.yaml
 
 patches:
   - path: scc-patch.yaml
