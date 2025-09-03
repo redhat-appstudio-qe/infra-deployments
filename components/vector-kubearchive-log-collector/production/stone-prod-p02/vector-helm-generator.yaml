@@ -7,6 +7,6 @@ repo: https://helm.vector.dev
 version: 0.43.0
 releaseName: vector
 namespace: product-kubearchive-logging
+valuesFile: vector-helm-values.yaml
 additionalValuesFiles:
   - vector-helm-prod-values.yaml
-valuesFile: vector-helm-values.yaml
