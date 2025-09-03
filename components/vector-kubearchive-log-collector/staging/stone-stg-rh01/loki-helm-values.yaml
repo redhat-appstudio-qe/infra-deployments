@@ -27,7 +27,6 @@ loki:
         index:
           prefix: loki_index_
           period: 24h
-  # Configure compactor to use writable volumes
   compactor:
     working_directory: /var/loki/compactor
 
