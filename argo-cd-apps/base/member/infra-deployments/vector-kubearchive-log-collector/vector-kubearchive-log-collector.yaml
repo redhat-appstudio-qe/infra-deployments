@@ -15,8 +15,12 @@ spec:
                 clusterDir: ""
           - list:
               elements:
+                # Staging
                 - nameNormalized: stone-stg-rh01
                   values.clusterDir: stone-stg-rh01
+                # Private
+                - nameNormalized: stone-prod-p02
+                  values.clusterDir: stone-prod-p02
   template:
     metadata:
       name: vector-kubearchive-log-collector-{{nameNormalized}}
