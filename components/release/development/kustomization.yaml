@@ -6,6 +6,9 @@ resources:
   - https://github.com/konflux-ci/release-service/config/default?ref=492726f09614c37cb26108dac9681921d9f17b5e
   - release_service_config.yaml
 
+components:
+  - ../k-components/manager-resources-patch
+
 images:
   - name: quay.io/konflux-ci/release-service
     newName: quay.io/konflux-ci/release-service
