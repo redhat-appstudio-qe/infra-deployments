@@ -4,8 +4,8 @@ Tekton-Kueue Configuration Test
 
 A comprehensive test suite that validates the CEL expressions in the tekton-kueue configuration by:
 
-1. **Reading configuration dynamically** from `components/kueue/development/tekton-kueue/config.yaml`
-2. **Getting the image** from `components/kueue/staging/base/tekton-kueue/kustomization.yaml`
+1. **Reading configuration dynamically** from specified config files
+2. **Getting the image** from specified kustomization files
 3. **Running mutations** using the actual tekton-kueue container via podman
 4. **Validating results** against expected annotations, labels, and priority classes
 
@@ -20,34 +20,13 @@ Usage:
     python hack/test-tekton-kueue-config.py --verbose
 
 Test Scenarios:
-    The test covers all CEL expressions in the configuration:
-
-    1. **Multi-platform Resource Requests**:
-       - New style: `build-platforms` parameter → `kueue.konflux-ci.dev/requests-*` annotations
-       - Old style: `PLATFORM` parameters in tasks → `kueue.konflux-ci.dev/requests-*` annotations
-
-    2. **AWS IP Resource Requests**:
-       - New style: `build-platforms` parameter → `kueue.konflux-ci.dev/requests-aws-ip` annotations
-         for platforms NOT in the excluded list (linux/ppc64le, linux/s390x, linux-x86-64, local, localhost, linux/amd64)
-       - Old style: `PLATFORM` parameters in tasks → `kueue.konflux-ci.dev/requests-aws-ip` annotations
-         for platforms NOT in the excluded list
-
-    3. **Priority Assignment Logic**:
-       - Push events → `konflux-post-merge-build`
-       - Pull requests → `konflux-pre-merge-build`
-       - Integration test push → `konflux-post-merge-test`
-       - Integration test PR → `konflux-pre-merge-test`
-       - Release managed → `konflux-release`
-       - Release tenant → `konflux-tenant-release`
-       - Mintmaker namespace → `konflux-dependency-update`
-       - Default → `konflux-default`
-
-    4. **Queue Assignment**: All PipelineRuns get `kueue.x-k8s.io/queue-name: pipelines-queue`
+    Each test can now specify its own config file and kustomization file,
+    allowing testing of multiple configurations and images.
 
 Prerequisites:
     - Python 3 with PyYAML
     - Podman (for running the tekton-kueue container)
-    - Access to the tekton-kueue image specified in the kustomization
+    - Access to the tekton-kueue images specified in the kustomizations
 
 CI/CD Integration:
     The test runs automatically on pull requests via the GitHub action
@@ -66,17 +45,16 @@ import os
 import yaml
 import unittest
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional, Set
 from dataclasses import dataclass
 import sys
 
 
 @dataclass
-class Prerequisites:
-    image: str
-    podman_version: str
+class TestConfig:
     config_file: Path
     kustomization_file: Path
+    image: str
 
 
 def get_tekton_kueue_image(kustomization_file: Path) -> str:
@@ -99,51 +77,79 @@ def get_tekton_kueue_image(kustomization_file: Path) -> str:
     except Exception as e:
         raise RuntimeError(f"Failed to read tekton-kueue image from {kustomization_file}: {e}")
 
-def check_prerequisites(should_print: bool = True) -> Prerequisites:
-    """Check that all prerequisites are available.
+def resolve_path(path_str: str, repo_root: Path) -> Path:
+    """Resolve a path string to an absolute Path, handling both relative and absolute paths."""
+    if Path(path_str).is_absolute():
+        return Path(path_str)
+    return repo_root / path_str
 
-    Returns a Prerequisites object with discovered info (image, podman_version)
-    on success. Raises an exception on failure.
-    """
-    messages = ["Checking prerequisites..."]
 
-    # Compute repo paths locally
-    repo_root = Path(__file__).parent.parent
-    config_file = repo_root / "components/kueue/development/tekton-kueue/config.yaml"
-    kustomization_file = repo_root / "components/kueue/development/tekton-kueue/kustomization.yaml"
+def add_test_combination(test_name: str, pipelinerun_key: str, config_key: str) -> None:
+    """Helper function to add a new test combination dynamically."""
+    global TEST_COMBINATIONS
+    TEST_COMBINATIONS[test_name] = {
+        "pipelinerun_key": pipelinerun_key,
+        "config_key": config_key
+    }
 
-    # Config file
+
+def validate_test_config(test_key: str, test_combination: Dict, repo_root: Path) -> TestConfig:
+    """Validate and resolve config and kustomization files for a test combination."""
+    # Get the config combination
+    config_key = test_combination["config_key"]
+    config_data = CONFIG_COMBINATIONS[config_key]
+
+    config_file = resolve_path(config_data["config_file"], repo_root)
+    kustomization_file = resolve_path(config_data["kustomization_file"], repo_root)
+
+    # Validate files exist
     if not config_file.exists():
-        raise FileNotFoundError(f"Config file not found: {config_file}")
-    messages.append(f"\u2713 Config file found: {config_file}")
+        raise FileNotFoundError(f"Config file not found for test '{test_key}' (config '{config_key}'): {config_file}")
 
-    # Kustomization file
     if not kustomization_file.exists():
-        raise FileNotFoundError(f"Kustomization file not found: {kustomization_file}")
-    messages.append(f"\u2713 Kustomization file found: {kustomization_file}")
+        raise FileNotFoundError(f"Kustomization file not found for test '{test_key}' (config '{config_key}'): {kustomization_file}")
 
-    # Image from kustomization
+    # Get image from kustomization
     image = get_tekton_kueue_image(kustomization_file)
-    messages.append(f"\u2713 Tekton-kueue image: {image}")
 
-    # Podman availability
-    result = subprocess.run(["podman", "--version"], capture_output=True, check=True, text=True)
-    podman_version = result.stdout.strip()
-    messages.append(f"\u2713 Podman available: {podman_version}")
-
-    if should_print:
-        for line in messages:
-            print(line)
-
-    return Prerequisites(
-        image=image,
-        podman_version=podman_version,
+    return TestConfig(
         config_file=config_file,
         kustomization_file=kustomization_file,
+        image=image
     )
 
-# Test PipelineRun definitions
-TEST_PIPELINERUNS = {
+
+def check_prerequisites(should_print: bool = True) -> None:
+    """Check that all prerequisites are available for all tests."""
+    messages = ["Checking prerequisites..."]
+    repo_root = Path(__file__).parent.parent
+
+    # Check podman availability
+    try:
+        result = subprocess.run(["podman", "--version"], capture_output=True, check=True, text=True)
+        podman_version = result.stdout.strip()
+        messages.append(f"✓ Podman available: {podman_version}")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        raise RuntimeError("Podman not available")
+
+    # Validate all test configurations
+    unique_configs: Set[str] = set()
+    for test_key, test_combination in TEST_COMBINATIONS.items():
+        try:
+            config = validate_test_config(test_key, test_combination, repo_root)
+            config_key = f"{config.config_file}|{config.kustomization_file}"
+            if config_key not in unique_configs:
+                unique_configs.add(config_key)
+                messages.append(f"✓ Test '{test_key}': config={config.config_file}, image={config.image}")
+        except Exception as e:
+            raise RuntimeError(f"Test '{test_key}' validation failed: {e}")
+
+    if should_print:
+        for message in messages:
+            print(message)
+
+# Test PipelineRun definitions (reusable across different configs)
+PIPELINERUN_DEFINITIONS = {
     "multiplatform_new": {
         "name": "Multi-platform pipeline (new style with build-platforms parameter)",
         "pipelinerun": {
@@ -456,6 +462,147 @@ TEST_PIPELINERUNS = {
                 "kueue.x-k8s.io/priority-class": "konflux-post-merge-build"
             }
         }
+    },
+
+    "user-specific-priority": {
+        "name": "Multi-platform pipeline with user-specific priority (new style)",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "test-user-specific-priority",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "push",
+                    "kueue.x-k8s.io/priority-class": "konflux-user-specific"
+                }
+            },
+            "spec": {
+                "pipelineRef": {"name": "build-pipeline"},
+                "params": [
+                    {
+                        "name": "build-platforms",
+                        "value": ["linux/amd64", "linux/s390x", "linux/ppc64le", "linux/arm64", "darwin/amd64"]
+                    }
+                ],
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-linux-amd64": "1",
+                "kueue.konflux-ci.dev/requests-linux-s390x": "1",
+                "kueue.konflux-ci.dev/requests-linux-ppc64le": "1",
+                "kueue.konflux-ci.dev/requests-linux-arm64": "1",
+                "kueue.konflux-ci.dev/requests-darwin-amd64": "1",
+                "kueue.konflux-ci.dev/requests-aws-ip": "3"
+            },
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-user-specific"
+            }
+        }
+    },
+
+}
+
+# Configuration combinations that can be applied to any PipelineRun
+CONFIG_COMBINATIONS = {
+    "development": {
+        "name": "Development config",
+        "config_file": "components/kueue/development/tekton-kueue/config.yaml",
+        "kustomization_file": "components/kueue/development/tekton-kueue/kustomization.yaml"
+    },
+    "staging": {
+        "name": "Staging config",
+        "config_file": "components/kueue/staging/base/tekton-kueue/config.yaml",
+        "kustomization_file": "components/kueue/staging/base/tekton-kueue/kustomization.yaml"
+    },
+    "production": {
+        "name": "Production config",
+        "config_file": "components/kueue/production/base/tekton-kueue/config.yaml",
+        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    },
+    "production-kflux-ocp-p01": {
+        "name": "Production config",
+        "config_file": "components/kueue/production/kflux-ocp-p01/config.yaml",
+        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    }
+}
+
+# Test combinations: which PipelineRuns to test with which configs
+# This creates a cartesian product of PipelineRuns and configs
+TEST_COMBINATIONS = {
+    # Test all PipelineRuns with development config (default)
+    "multiplatform_new_dev": {
+        "pipelinerun_key": "multiplatform_new",
+        "config_key": "development"
+    },
+    "multiplatform_old_dev": {
+        "pipelinerun_key": "multiplatform_old",
+        "config_key": "development"
+    },
+    "release_managed_dev": {
+        "pipelinerun_key": "release_managed",
+        "config_key": "development"
+    },
+    "release_tenant_dev": {
+        "pipelinerun_key": "release_tenant",
+        "config_key": "development"
+    },
+    "mintmaker_dev": {
+        "pipelinerun_key": "mintmaker",
+        "config_key": "development"
+    },
+    "integration_test_push_dev": {
+        "pipelinerun_key": "integration_test_push",
+        "config_key": "development"
+    },
+    "integration_test_pr_dev": {
+        "pipelinerun_key": "integration_test_pr",
+        "config_key": "development"
+    },
+    "default_priority_dev": {
+        "pipelinerun_key": "default_priority",
+        "config_key": "development"
+    },
+    "aws_platforms_only_dev": {
+        "pipelinerun_key": "aws_platforms_only",
+        "config_key": "development"
+    },
+    "mixed_platforms_excluded_included_dev": {
+        "pipelinerun_key": "mixed_platforms_excluded_included",
+        "config_key": "development"
+    },
+
+    # Test key PipelineRuns with staging config
+    "multiplatform_new_staging": {
+        "pipelinerun_key": "multiplatform_new",
+        "config_key": "staging"
+    },
+    "release_managed_staging": {
+        "pipelinerun_key": "release_managed",
+        "config_key": "staging"
+    },
+    "integration_test_push_staging": {
+        "pipelinerun_key": "integration_test_push",
+        "config_key": "staging"
+    },
+
+    # Test key PipelineRuns with production config
+    "multiplatform_new_production": {
+        "pipelinerun_key": "multiplatform_new",
+        "config_key": "production"
+    },
+    "release_managed_production": {
+        "pipelinerun_key": "release_managed",
+        "config_key": "production"
+    },
+
+    # Example: Test the same PipelineRun with different configs to show reusability
+    "user-specific-priority_and_mixed_platforms_production-kflux-ocp-p01": {
+        "pipelinerun_key": "user-specific-priority",
+        "config_key": "production-kflux-ocp-p01"
     }
 }
 
@@ -466,23 +613,28 @@ class TektonKueueMutationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up test class - check prerequisites."""
-        info = check_prerequisites(should_print=False)
-        cls.tekton_kueue_image = info.image
-        cls.config_file = info.config_file
-        print(f"Using tekton-kueue image: {cls.tekton_kueue_image}")
+        check_prerequisites(should_print=False)
+        cls.repo_root = Path(__file__).parent.parent
+        print("Prerequisites validated for all tests.")
 
-    def run_mutation_test(self, test_data: Dict) -> Dict:
+    def run_mutation_test(self, test_key: str, test_combination: Dict) -> Dict:
         """Run a single mutation test and return results."""
-        pipelinerun = test_data["pipelinerun"]
+        # Get test-specific configuration
+        test_config = validate_test_config(test_key, test_combination, self.repo_root)
+
+        # Get the PipelineRun definition
+        pipelinerun_key = test_combination["pipelinerun_key"]
+        pipelinerun_data = PIPELINERUN_DEFINITIONS[pipelinerun_key]
+        pipelinerun = pipelinerun_data["pipelinerun"]
 
         with tempfile.TemporaryDirectory() as temp_dir:
             # Write the config file
             config_path = Path(temp_dir) / "config.yaml"
             pipelinerun_path = Path(temp_dir) / "pipelinerun.yaml"
 
-            # Copy the config file
+            # Copy the test-specific config file
             import shutil
-            shutil.copy2(self.config_file, config_path)
+            shutil.copy2(test_config.config_file, config_path)
 
             # Write the PipelineRun
             with open(pipelinerun_path, 'w') as f:
@@ -493,11 +645,11 @@ class TektonKueueMutationTest(unittest.TestCase):
             os.chmod(pipelinerun_path, 0o644)
             os.chmod(temp_dir, 0o755)
 
-            # Run the mutation
+            # Run the mutation with test-specific image
             cmd = [
                 "podman", "run", "--rm",
                 "-v", f"{temp_dir}:/workspace:z",
-                self.tekton_kueue_image,
+                test_config.image,
                 "mutate",
                 "--pipelinerun-file", "/workspace/pipelinerun.yaml",
                 "--config-dir", "/workspace"
@@ -516,13 +668,21 @@ class TektonKueueMutationTest(unittest.TestCase):
 
             return mutated
 
-    def validate_mutation_result(self, test_key: str, test_data: Dict):
+    def validate_mutation_result(self, test_key: str, test_combination: Dict):
         """Helper method to validate mutation results."""
         with self.subTest(test=test_key):
-            mutated = self.run_mutation_test(test_data)
-            expected = test_data["expected"]
+            # Print test-specific config info
+            test_config = validate_test_config(test_key, test_combination, self.repo_root)
+            print(f"Running test '{test_key}' with config: {test_config.config_file}, image: {test_config.image}")
 
-            original_metadata = test_data["pipelinerun"].get("metadata", {})
+            mutated = self.run_mutation_test(test_key, test_combination)
+
+            # Get expected results from the PipelineRun definition
+            pipelinerun_key = test_combination["pipelinerun_key"]
+            pipelinerun_data = PIPELINERUN_DEFINITIONS[pipelinerun_key]
+            expected = pipelinerun_data["expected"]
+
+            original_metadata = pipelinerun_data["pipelinerun"].get("metadata", {})
             original_annotations = original_metadata.get("annotations", {}) or {}
             original_labels = original_metadata.get("labels", {}) or {}
 
@@ -548,8 +708,8 @@ class TektonKueueMutationTest(unittest.TestCase):
 
     def test_all_mutations(self):
         """Test all tekton-kueue mutation scenarios."""
-        for test_key, test_data in TEST_PIPELINERUNS.items():
-            self.validate_mutation_result(test_key, test_data)
+        for test_key, test_combination in TEST_COMBINATIONS.items():
+            self.validate_mutation_result(test_key, test_combination)
 
 
 if __name__ == "__main__":
@@ -566,7 +726,7 @@ if __name__ == "__main__":
 
     if args.check_setup:
         try:
-            info = check_prerequisites(should_print=True)
+            check_prerequisites(should_print=True)
         except Exception as e:
             print(f"✗ {e}")
             sys.exit(1)
