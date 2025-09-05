@@ -2,13 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/konflux-ci/mintmaker/config/default?ref=d9daa8e361dc4714b598bd9443ae32b0e8384f79
-  - https://github.com/konflux-ci/mintmaker/config/renovate?ref=d9daa8e361dc4714b598bd9443ae32b0e8384f79
+  - https://github.com/konflux-ci/mintmaker/config/default?ref=5ee3d251d0f5244c71532de98d091ab8bc27810c
+  - https://github.com/konflux-ci/mintmaker/config/renovate?ref=5ee3d251d0f5244c71532de98d091ab8bc27810c
 
 images:
   - name: quay.io/konflux-ci/mintmaker
     newName: quay.io/konflux-ci/mintmaker
-    newTag: d9daa8e361dc4714b598bd9443ae32b0e8384f79
+    newTag: 5ee3d251d0f5244c71532de98d091ab8bc27810c
 
 namespace: mintmaker
 
