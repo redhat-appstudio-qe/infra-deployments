@@ -36,9 +36,12 @@ loki:
       volume_enabled: true
       max_global_streams_per_user: 50000
   ingester:
-    chunk_target_size: 1536000
-    chunk_idle_period: 1m
-    max_chunk_age: 1h
+    chunk_target_size: 1048576
+    chunk_idle_period: 5m
+    max_chunk_age: 2h
+    chunk_retain_period: 1h
+    chunk_encoding: snappy
+    flush_op_timeout: 10m
   # Tuning for high-load queries
   querier:
     max_concurrent: 8
