@@ -87,7 +87,6 @@ customConfig:
         job: "vector"
         pod_id: "{{`{{ pod_id }}`}}"
         container: "{{`{{ container }}`}}"
-        namespace: "{{`{{ namespace }}`}}"
         pod: "{{`{{ pod_name }}`}}"
       buffer:
         type: "memory"
