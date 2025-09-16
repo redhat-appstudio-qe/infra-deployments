@@ -9,9 +9,7 @@ resources:
   - ../../base/ca-bundle
   - ../../base/repository-validator
   - ../../base/keycloak
-  - ../../base/ui
   - ../../base/eaas
-  - ../../base/toolchain-member
 
 patchesStrategicMerge:
   - delete-applications.yaml
@@ -66,16 +64,6 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: toolchain-host-operator
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: toolchain-member-operator
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
       name: ingresscontroller
   - path: development-overlay-patch.yaml
     target:
@@ -107,16 +95,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: keycloak
-  - path: set-local-cluster-label.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: ui
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: ui
   - path: development-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -210,11 +188,6 @@ patches:
       version: v1alpha1
       name: kueue
   - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: policies
-  - path: kyverno-argocd-diff.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1

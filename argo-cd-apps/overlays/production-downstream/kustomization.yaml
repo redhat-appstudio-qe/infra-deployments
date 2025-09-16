@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ../konflux-public-staging
   - ../../base/smee-client
-  - ../../base/ui
   - ../../base/ca-bundle
   - ../../base/keycloak
   - ../../base/repository-validator
@@ -91,16 +90,6 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: toolchain-host-operator
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: toolchain-member-operator
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
       name: cluster-secret-store-rh
   - path: production-overlay-patch.yaml
     target:
@@ -127,11 +116,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: smee
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: ui
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
