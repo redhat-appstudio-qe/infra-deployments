@@ -6,6 +6,9 @@ rules:
   - verbs:
       - get
       - list
+      - create
+      - watch
+      - patch
     apiGroups:
       - ''
     resources:
@@ -39,6 +42,7 @@ rules:
       - get
       - list
       - create
+      - watch
       - update
       - patch
     apiGroups:
