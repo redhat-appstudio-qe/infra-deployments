@@ -60,8 +60,6 @@ spec:
     chart: postgresql
     helm:
       parameters:
-      - name: image.tag
-        value: 17.5.0
       - name: tls.enabled
         value: "true"
       - name: tls.certificatesSecret
@@ -101,8 +99,8 @@ spec:
       - name: shmVolume.enabled
         value: "false"
       releaseName: postgres
-    repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 14.0.5
+    repoURL: registry-1.docker.io/bitnamichartssecure
+    targetRevision: 17.0.2
   syncPolicy:
     automated:
       prune: true
@@ -116,6 +114,21 @@ spec:
     syncOptions:
     - CreateNamespace=false
     - Validate=false
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-bitnami-postgresql
+  namespace: openshift-gitops
+  labels:
+    argocd.argoproj.io/secret-type: repository
+data:
+  enableOCI: true
+  name: bitnamisecure
+  project: default
+  type: helm
+  url: registry-1.docker.io/bitnamichartssecure
+type: Opaque
 ---
 apiVersion: minio.min.io/v2
 kind: Tenant
