@@ -102,7 +102,7 @@ spec:
         value: "false"
       releaseName: postgres
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 14.0.5
+    targetRevision: 16.7.27
   syncPolicy:
     automated:
       prune: true
