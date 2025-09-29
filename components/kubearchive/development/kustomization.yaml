@@ -8,7 +8,7 @@ resources:
   - release-vacuum.yaml
   - kubearchive-config.yaml
   - pipelines-vacuum.yaml
-  - https://github.com/kubearchive/kubearchive/releases/download/v1.7.0/kubearchive.yaml?timeout=90
+  - kubearchive.yaml
 
 namespace: product-kubearchive
 secretGenerator:
