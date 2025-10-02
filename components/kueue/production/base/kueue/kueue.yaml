@@ -16,6 +16,6 @@ spec:
       frameworks: # The operator requires at lest one framework to be enabled
        - BatchJob
       externalFrameworks:
-       -  group: tekton.dev
+       - group: tekton.dev
           version: v1
           resource: pipelineruns
