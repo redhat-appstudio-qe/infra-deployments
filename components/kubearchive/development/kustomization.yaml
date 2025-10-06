@@ -140,9 +140,19 @@ patches:
       metadata:
         name: kubearchive-api-server
         namespace: kubearchive
+        annotations:
+          ignore-check.kube-linter.io/no-anti-affinity: "antiAffinity is added but as preferred instead of required"
       spec:
+        replicas: 2
         template:
           spec:
+            affinity:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app: kubearchive-api-server
+                  topologyKey: "kubernetes.io/hostname"
             containers:
               - name: kubearchive-api-server
                 env:
