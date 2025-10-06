@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/component: namespace
     app.kubernetes.io/name: kubearchive
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive
 ---
 apiVersion: apiextensions.k8s.io/v1
@@ -601,7 +601,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server
   namespace: kubearchive
 ---
@@ -612,7 +612,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-cluster-vacuum
   namespace: kubearchive
 ---
@@ -623,7 +623,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator
   namespace: kubearchive
 ---
@@ -634,7 +634,7 @@ metadata:
     app.kubernetes.io/component: sink
     app.kubernetes.io/name: kubearchive-sink
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-sink
   namespace: kubearchive
 ---
@@ -645,7 +645,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-cluster-vacuum
   namespace: kubearchive
 rules:
@@ -665,7 +665,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-leader-election
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-leader-election
   namespace: kubearchive
 rules:
@@ -708,7 +708,7 @@ metadata:
     app.kubernetes.io/component: sink
     app.kubernetes.io/name: kubearchive-sink-watch
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-sink-watch
   namespace: kubearchive
 rules:
@@ -728,7 +728,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: clusterkubearchiveconfig-read
 rules:
   - apiGroups:
@@ -746,7 +746,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server
 rules:
   - apiGroups:
@@ -764,7 +764,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kubearchive-edit
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: kubearchive-edit
 rules:
@@ -936,7 +936,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-config-editor
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-config-editor
 rules:
   - apiGroups:
@@ -965,7 +965,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-config-viewer
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-config-viewer
 rules:
   - apiGroups:
@@ -989,7 +989,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kubearchive-view
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
     rbac.authorization.k8s.io/aggregate-to-view: "true"
   name: kubearchive-view
 rules:
@@ -1009,7 +1009,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-cluster-vacuum
   namespace: kubearchive
 roleRef:
@@ -1028,7 +1028,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-leader-election
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-leader-election
   namespace: kubearchive
 roleRef:
@@ -1047,7 +1047,7 @@ metadata:
     app.kubernetes.io/component: sink
     app.kubernetes.io/name: kubearchive-sink-watch
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-sink-watch
   namespace: kubearchive
 roleRef:
@@ -1066,7 +1066,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: clusterkubearchiveconfig-read
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -1084,7 +1084,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -1102,7 +1102,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -1121,7 +1121,7 @@ metadata:
     app.kubernetes.io/component: logging
     app.kubernetes.io/name: kubearchive-logging
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-logging
   namespace: kubearchive
 ---
@@ -1129,7 +1129,7 @@ apiVersion: v1
 data:
   DATABASE_DB: a3ViZWFyY2hpdmU=
   DATABASE_KIND: cG9zdGdyZXNxbA==
-  DATABASE_PASSWORD: RGF0YWJhczNQYXNzdzByZA==
+  DATABASE_PASSWORD: RGF0YWJhczNQYXNzdzByZA==  # notsecret
   DATABASE_PORT: NTQzMg==
   DATABASE_URL: a3ViZWFyY2hpdmUtcncucG9zdGdyZXNxbC5zdmMuY2x1c3Rlci5sb2NhbA==
   DATABASE_USER: a3ViZWFyY2hpdmU=
@@ -1139,21 +1139,21 @@ metadata:
     app.kubernetes.io/component: database
     app.kubernetes.io/name: kubearchive-database-credentials
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-database-credentials
   namespace: kubearchive
 type: Opaque
 ---
 apiVersion: v1
 data:
-  Authorization: QmFzaWMgWVdSdGFXNDZjR0Z6YzNkdmNtUT0=
+  Authorization: QmFzaWMgWVdSdGFXNDZjR0Z6YzNkdmNtUT0=  # notsecret
 kind: Secret
 metadata:
   labels:
     app.kubernetes.io/component: logging
     app.kubernetes.io/name: kubearchive-logging
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-logging
   namespace: kubearchive
 type: Opaque
@@ -1165,7 +1165,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server
   namespace: kubearchive
 spec:
@@ -1184,7 +1184,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-webhooks
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-webhooks
   namespace: kubearchive
 spec:
@@ -1207,7 +1207,7 @@ metadata:
     app.kubernetes.io/component: sink
     app.kubernetes.io/name: kubearchive-sink
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-sink
   namespace: kubearchive
 spec:
@@ -1225,7 +1225,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server
   namespace: kubearchive
 spec:
@@ -1275,7 +1275,7 @@ spec:
           envFrom:
             - secretRef:
                 name: kubearchive-database-credentials
-          image: quay.io/kubearchive/api:no-eventing-1a13a90@sha256:2b556bdf36aeb2d3aa83bac858dcaa4f410ff4237eff2457eba411e8dc9f3076
+          image: quay.io/kubearchive/api:watchers-539215e@sha256:b704fd3201c3ab67d855a864c237594a1f6de63d6d167e3bbb43d157226dad34
           livenessProbe:
             httpGet:
               path: /livez
@@ -1285,6 +1285,9 @@ spec:
           ports:
             - containerPort: 8081
               name: server
+              protocol: TCP
+            - containerPort: 8888
+              name: pprof
               protocol: TCP
           readinessProbe:
             httpGet:
@@ -1320,7 +1323,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator
   namespace: kubearchive
 spec:
@@ -1366,7 +1369,7 @@ spec:
               valueFrom:
                 resourceFieldRef:
                   resource: limits.cpu
-          image: quay.io/kubearchive/operator:no-eventing-1a13a90@sha256:8b5cf29fb25aaaa0095214ea67a7ad93f59aed5d3129c3dd84a75b1ff32b3823
+          image: quay.io/kubearchive/operator:watchers-539215e@sha256:3c15a9e53c852f262896370b611f2e41938cb919d501edc4d2e7e207264d5848
           livenessProbe:
             httpGet:
               path: /healthz
@@ -1378,7 +1381,7 @@ spec:
             - containerPort: 9443
               name: webhook-server
               protocol: TCP
-            - containerPort: 8082
+            - containerPort: 8888
               name: pprof-server
               protocol: TCP
           readinessProbe:
@@ -1420,7 +1423,7 @@ metadata:
     app.kubernetes.io/component: sink
     app.kubernetes.io/name: kubearchive-sink
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-sink
   namespace: kubearchive
 spec:
@@ -1468,7 +1471,7 @@ spec:
           envFrom:
             - secretRef:
                 name: kubearchive-database-credentials
-          image: quay.io/kubearchive/sink:no-eventing-1a13a90@sha256:97ef2da6b1c09d13622a99e09f042195374b2a1c93b7f06f5c035d735edebe52
+          image: quay.io/kubearchive/sink:watchers-539215e@sha256:9da520b559108a8a8c18e7add1b96c292a653e51ce56893ad38fe90662ece464
           livenessProbe:
             httpGet:
               path: /livez
@@ -1477,6 +1480,9 @@ spec:
           ports:
             - containerPort: 8080
               name: sink
+              protocol: TCP
+            - containerPort: 8888
+              name: pprof
               protocol: TCP
           readinessProbe:
             httpGet:
@@ -1506,7 +1512,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-vacuum
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: cluster-vacuum
   namespace: kubearchive
 spec:
@@ -1527,7 +1533,7 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-              image: quay.io/kubearchive/vacuum:no-eventing-1a13a90@sha256:94d11ead23780dd3cb1384ecc583566e3df85f8ad693a2d08055b567c841d31f
+              image: quay.io/kubearchive/vacuum:watchers-539215e@sha256:12a0056025e3de65fc19c875e1c5e3bad157d4a508ad300d86412791c7097e86
               name: vacuum
           restartPolicy: Never
           serviceAccount: kubearchive-cluster-vacuum
@@ -1541,7 +1547,7 @@ metadata:
     app.kubernetes.io/component: kubearchive
     app.kubernetes.io/name: kubearchive-schema-migration
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-schema-migration
   namespace: kubearchive
 spec:
@@ -1552,18 +1558,13 @@ spec:
     spec:
       containers:
         - args:
-            - set -o errexit;
-              git clone https://github.com/kubearchive/kubearchive --depth=1 --branch=${KUBEARCHIVE_VERSION} /tmp/kubearchive;
-              cd /tmp/kubearchive;
-              export QUOTED_PASSWORD=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${DATABASE_PASSWORD}', ''))");
-              curl --silent -L https://github.com/golang-migrate/migrate/releases/download/${MIGRATE_VERSION}/migrate.linux-amd64.tar.gz | tar xvz migrate;
-              ./migrate -verbose -path integrations/database/postgresql/migrations/ -database postgresql://${DATABASE_USER}:${QUOTED_PASSWORD}@${DATABASE_URL}:${DATABASE_PORT}/${DATABASE_DB} up
+            - set -o errexit; git clone https://github.com/kubearchive/kubearchive --depth=1 --branch= /tmp/kubearchive; cd /tmp/kubearchive; export QUOTED_PASSWORD=$(python3 -c "import urllib.parse; print(urllib.parse.quote('', ''))"); curl --silent -L https://github.com/golang-migrate/migrate/releases/download//migrate.linux-amd64.tar.gz | tar xvz migrate; ./migrate -verbose -path integrations/database/postgresql/migrations/ -database postgresql://:@:/ up
           command:
             - /bin/sh
             - -c
           env:
             - name: KUBEARCHIVE_VERSION
-              value: no-eventing-1a13a90
+              value: watchers-539215e
             - name: MIGRATE_VERSION
               value: v4.18.3
           envFrom:
@@ -1589,7 +1590,7 @@ metadata:
     app.kubernetes.io/component: api-server
     app.kubernetes.io/name: kubearchive-api-server-certificate
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-api-server-certificate
   namespace: kubearchive
 spec:
@@ -1623,7 +1624,7 @@ metadata:
     app.kubernetes.io/component: certs
     app.kubernetes.io/name: kubearchive-ca
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-ca
   namespace: kubearchive
 spec:
@@ -1645,7 +1646,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-operator-certificate
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-operator-certificate
   namespace: kubearchive
 spec:
@@ -1664,7 +1665,7 @@ metadata:
     app.kubernetes.io/component: certs
     app.kubernetes.io/name: kubearchive
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive
   namespace: kubearchive
 spec:
@@ -1678,7 +1679,7 @@ metadata:
     app.kubernetes.io/component: certs
     app.kubernetes.io/name: kubearchive-ca
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-ca
   namespace: kubearchive
 spec:
@@ -1693,7 +1694,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-mutating-webhook-configuration
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-mutating-webhook-configuration
 webhooks:
   - admissionReviewVersions:
@@ -1806,7 +1807,7 @@ metadata:
     app.kubernetes.io/component: operator
     app.kubernetes.io/name: kubearchive-validating-webhook-configuration
     app.kubernetes.io/part-of: kubearchive
-    app.kubernetes.io/version: no-eventing-1a13a90
+    app.kubernetes.io/version: watchers-539215e
   name: kubearchive-validating-webhook-configuration
 webhooks:
   - admissionReviewVersions:
