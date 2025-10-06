@@ -141,6 +141,7 @@ patches:
         name: kubearchive-api-server
         namespace: kubearchive
       spec:
+        replicas: 2
         template:
           spec:
             containers:
