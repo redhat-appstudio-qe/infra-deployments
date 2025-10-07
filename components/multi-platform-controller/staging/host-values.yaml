@@ -184,4 +184,3 @@ staticHosts:
     platform: "linux/s390x"
     secret: "ibm-stage-s390x-ssh-key"
     user: "root"
-
