@@ -1,0 +1,10 @@
+# Note: latest tag and repository without frozen reference is for testing purposes only and is temporary.
+resources:
+  - ../base
+  - rbac
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/registry/base?ref=main
+
+# images:
+#   - name: quay.io/redhat-appstudio/o11y
+#     newName: quay.io/redhat-appstudio/o11y
+#     newTag: latest
