@@ -4,7 +4,7 @@ metadata:
   name: squid-helm
 name: squid-helm
 repo: oci://quay.io/konflux-ci/caching
-version: 0.1.384+ae9d01c
+version: 0.1.400+2e7bd2e
 valuesInline:
   installCertManagerComponents: false
   mirrord:
