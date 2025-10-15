@@ -90,6 +90,9 @@ patches:
         name: kubearchive-schema-migration
         namespace: kubearchive
         annotations:
+          argocd.argoproj.io/hook: PreSync
+          argocd.argoproj.io/hook-delete-policy: HookSucceeded
+          argocd.argoproj.io/sync-wave: "-1"
           ignore-check.kube-linter.io/no-read-only-root-fs: >
             "This job needs to clone a repository to do its job, so it needs write access to the FS."
       spec:
