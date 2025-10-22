@@ -2243,7 +2243,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   displayName: custom-operators
-  image: quay.io/openshift-pipeline/pipelines-index-4.15@sha256:affbe080c29e18b74a00ec8da0ce550fa7ba1d65fa4a6e6a5898295212786ef7
+  image: quay.io/openshift-pipeline/pipelines-index-4.15@sha256:f36d698cecd8faeafefe79da94367ab6c26d9f095c36a252c72ae5bb5c1442b3
   sourceType: grpc
   updateStrategy:
     registryPoll:
