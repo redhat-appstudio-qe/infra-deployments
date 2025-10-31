@@ -1,4 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://github.com/konflux-ci/release-service/config/grafana/?ref=441e6d2a5ca03dd00f1bcf58ac51d41d3e6e61a9
+- https://github.com/konflux-ci/release-service/config/grafana/?ref=cf04a9e927b51a712a569b2ae22b07ad384afb32
