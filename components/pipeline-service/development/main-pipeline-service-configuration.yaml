@@ -2266,6 +2266,9 @@ spec:
     env:
       - name: AUTOINSTALL_COMPONENTS
         value: "false"
+        # TODO: this image is currently busted in the Konflux builds
+      - name: IMAGE_ADDONS_TKN_CLI_SERVE
+        value: registry.redhat.io/openshift-pipelines/pipelines-serve-tkn-cli-rhel9@sha256:41d669fbe8bb48481890fb9fb52de9d4cac98cb74e6a6b284d046a8d21b06e58
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

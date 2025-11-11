@@ -2681,6 +2681,8 @@ spec:
     env:
     - name: AUTOINSTALL_COMPONENTS
       value: "false"
+    - name: IMAGE_ADDONS_TKN_CLI_SERVE
+      value: registry.redhat.io/openshift-pipelines/pipelines-serve-tkn-cli-rhel9@sha256:41d669fbe8bb48481890fb9fb52de9d4cac98cb74e6a6b284d046a8d21b06e58
   name: openshift-pipelines-operator-rh
   source: custom-operators
   sourceNamespace: openshift-marketplace
