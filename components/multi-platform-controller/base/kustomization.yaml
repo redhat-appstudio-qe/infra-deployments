@@ -6,14 +6,14 @@ namespace: multi-platform-controller
 resources:
 - common
 - rbac
-- https://github.com/konflux-ci/multi-platform-controller/deploy/operator?ref=4cf5ec3e7c42c7b434d1e82a72823a75bbb74400
-- https://github.com/konflux-ci/multi-platform-controller/deploy/otp?ref=4cf5ec3e7c42c7b434d1e82a72823a75bbb74400
+- https://github.com/konflux-ci/multi-platform-controller/deploy/operator?ref=ea17c3d236af6f0db39bebbb6398f2e10130f25e
+- https://github.com/konflux-ci/multi-platform-controller/deploy/otp?ref=ea17c3d236af6f0db39bebbb6398f2e10130f25e
 
 
 images:
 - name: multi-platform-controller
   newName: quay.io/konflux-ci/multi-platform-controller
-  newTag: 4cf5ec3e7c42c7b434d1e82a72823a75bbb74400
+  newTag: ea17c3d236af6f0db39bebbb6398f2e10130f25e
 - name: multi-platform-otp-server
   newName: quay.io/konflux-ci/multi-platform-controller-otp-service
-  newTag: 4cf5ec3e7c42c7b434d1e82a72823a75bbb74400
+  newTag: ea17c3d236af6f0db39bebbb6398f2e10130f25e
