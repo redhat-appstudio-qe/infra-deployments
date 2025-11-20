@@ -3,27 +3,21 @@ kind: Kustomization
 resources:
   - ./argocd-roles
   - ./rbac
-  - https://github.com/redhat-appstudio/application-service/config/default?ref=c7128eb4e63f16041fd54124065060e69efc95ea
-
-
+  - https://github.com/redhat-appstudio/application-service/config/default?ref=b64a5ad83a34b454c1551203c9a71c84b3ecada3
 components:
   - ../k-components/manager-resources
   - ../k-components/enable-profiling
-
 images:
   - name: quay.io/redhat-appstudio/application-service
-    newName: quay.io/redhat-appstudio/application-service
-    newTag: c7128eb4e63f16041fd54124065060e69efc95ea
-
+    newName: registry.build04.ci.openshift.org/ci-op-60hjp67j/pipeline
+    newTag: redhat-appstudio-has-image
 configMapGenerator:
   - literals:
-      - GITHUB_ORG=""
+      - GITHUB_ORG=redhat-appstudio-qe
     name: github-config
     behavior: replace
   - literals:
       - ENVIRONMENT="development"
     name: feature-flag-config
     behavior: replace
-
-
 namespace: application-service
