@@ -2,9 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=4d0a0dfb145b53ab61292e16b9f0fc3bbc2dfa40
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=2fe5a57a7910a603b0426c2a7949a4c75140e160
 
 images:
 - name: quay.io/redhat-appstudio/o11y
   newName: quay.io/redhat-appstudio/o11y
-  newTag: 4d0a0dfb145b53ab61292e16b9f0fc3bbc2dfa40
+  newTag: 2fe5a57a7910a603b0426c2a7949a4c75140e160
