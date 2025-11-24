@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: image-rbac-proxy
+resources:
+- ../base
+- https://github.com/konflux-ci/image-rbac-proxy/deploy/development/base?ref=9a8ba688853397456a2b83ab37877381f49f35ae
+# Enable this to create/rotate oauth secret
+- ../base/oauth
+
+images:
+- name: quay.io/konflux-ci/image-rbac-proxy
+  newName: quay.io/konflux-ci/image-rbac-proxy
+  newTag: 9a8ba688853397456a2b83ab37877381f49f35ae
