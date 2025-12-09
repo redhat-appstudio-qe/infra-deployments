@@ -11,7 +11,7 @@ archDefaults:
     key-name: "konflux-prod-int-mab01"
     security-group-id: "sg-0903aedd465be979e"
     subnet-id: "subnet-02c476f8d2a4ae05e"
-  windows-amd64:
+  windows:
     ami: "ami-0cf643428c5013531"
     key-name: "konflux-prod-int-mab01"
     security-group-id: "sg-0903aedd465be979e"
@@ -247,7 +247,7 @@ dynamicConfigs:
       sudo chown ec2-user:staff /Users/ec2-user/$user
       sudo chmod 600 /Users/ec2-user/$user
 
-  windows-amd64:
+  windows-4xlarge-amd64:
     user-data: |
       <powershell>
       ## -----------------------------------------
