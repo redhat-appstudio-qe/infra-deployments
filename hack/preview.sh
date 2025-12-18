@@ -37,42 +37,56 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [ -f $ROOT/hack/preview.env ]; then
-    source $ROOT/hack/preview.env
-fi
+# Setup git environment and create preview branch
+setup_git_preview_branch() {
+    if [ -f $ROOT/hack/preview.env ]; then
+        source $ROOT/hack/preview.env
+    fi
 
-if [ -z "$MY_GIT_FORK_REMOTE" ]; then
-    echo "Set MY_GIT_FORK_REMOTE environment to name of your fork remote"
-    exit 1
-fi
+    if [ -z "$MY_GIT_FORK_REMOTE" ]; then
+        echo "Set MY_GIT_FORK_REMOTE environment to name of your fork remote"
+        exit 1
+    fi
 
-MY_GIT_REPO_URL=$(git ls-remote --get-url $MY_GIT_FORK_REMOTE | sed 's|^git@github.com:|https://github.com/|')
-MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-trap "git checkout $MY_GIT_BRANCH" EXIT
+    MY_GIT_REPO_URL=$(git ls-remote --get-url $MY_GIT_FORK_REMOTE | sed 's|^git@github.com:|https://github.com/|')
+    MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    trap "git checkout $MY_GIT_BRANCH" EXIT
 
 
-if echo "$MY_GIT_REPO_URL" | grep -q redhat-appstudio/infra-deployments; then
-    echo "Use your fork repository for preview"
-    exit 1
-fi
+    if echo "$MY_GIT_REPO_URL" | grep -q redhat-appstudio/infra-deployments; then
+        echo "Use your fork repository for preview"
+        exit 1
+    fi
 
-# Do not allow to use default github org
-if [ -z "$MY_GITHUB_ORG" ] || [ "$MY_GITHUB_ORG" == "redhat-appstudio-appdata" ]; then
-    echo "Set MY_GITHUB_ORG environment variable"
-    exit 1
-fi
+    # Do not allow to use default github org
+    if [ -z "$MY_GITHUB_ORG" ] || [ "$MY_GITHUB_ORG" == "redhat-appstudio-appdata" ]; then
+        echo "Set MY_GITHUB_ORG environment variable"
+        exit 1
+    fi
 
-if ! git diff --exit-code --quiet; then
-    echo "Changes in working Git working tree, commit them or stash them"
-    exit 1
-fi
+    if ! git diff --exit-code --quiet; then
+        echo "Changes in working Git working tree, commit them or stash them"
+        exit 1
+    fi
 
-# Create preview branch for preview configuration
-PREVIEW_BRANCH=preview-${MY_GIT_BRANCH}${TEST_BRANCH_ID+-$TEST_BRANCH_ID}
-if git rev-parse --verify $PREVIEW_BRANCH &> /dev/null; then
-    git branch -D $PREVIEW_BRANCH
-fi
-git checkout -b $PREVIEW_BRANCH
+    # Create preview branch for preview configuration
+    PREVIEW_BRANCH=preview-${MY_GIT_BRANCH}${TEST_BRANCH_ID+-$TEST_BRANCH_ID}
+    if git rev-parse --verify $PREVIEW_BRANCH &> /dev/null; then
+        git branch -D $PREVIEW_BRANCH
+    fi
+    git checkout -b $PREVIEW_BRANCH
+}
+
+# Commit and push preview changes
+commit_and_push_preview() {
+    if ! git diff --exit-code --quiet; then
+        git commit -a -m "Preview mode, do not merge into main"
+        git push -f --set-upstream $MY_GIT_FORK_REMOTE $PREVIEW_BRANCH
+    fi
+}
+
+# Initialize git and create preview branch
+setup_git_preview_branch
 
 # patch argoCD applications to point to your fork
 update_patch_file () {
@@ -203,10 +217,8 @@ sed -i.bak "s/rekor-server.enterprise-contract-service.svc/$rekor_server/" $ROOT
 
 [[ -n "${PIPELINE_PR_OWNER}" && "${PIPELINE_PR_SHA}" ]] && yq -i e ".resources[] |= sub(\"ref=[^ ]*\"; \"ref=${PIPELINE_PR_SHA}\") | .resources[] |= sub(\"openshift-pipelines\"; \"${PIPELINE_PR_OWNER}\")" $ROOT/components/pipeline-service/development/kustomization.yaml
 
-if ! git diff --exit-code --quiet; then
-    git commit -a -m "Preview mode, do not merge into main"
-    git push -f --set-upstream $MY_GIT_FORK_REMOTE $PREVIEW_BRANCH
-fi
+# Commit and push preview changes
+commit_and_push_preview
 
 # Create the root Application
 oc apply -k $ROOT/argo-cd-apps/app-of-app-sets/development
