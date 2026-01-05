@@ -17,7 +17,7 @@ spec:
   - port: 80
     targetPort: 8080
     protocol: TCP
-    name: http
+    name: kite-port
   selector:
     app: konflux-kite
     component: backend
