@@ -101,7 +101,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
-          name: http
+          name: kite-port
           protocol: TCP
         envFrom:
         - configMapRef:
