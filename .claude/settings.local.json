@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:cloud.ibm.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(find:*)"
+    ]
+  }
+}
