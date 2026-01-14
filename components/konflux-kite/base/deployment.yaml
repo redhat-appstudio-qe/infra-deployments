@@ -100,7 +100,7 @@ spec:
         image: quay.io/konflux-ci/kite-prod:0.1
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8443
           name: kite-port
           protocol: TCP
         envFrom:
