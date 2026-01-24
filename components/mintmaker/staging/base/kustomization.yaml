@@ -4,15 +4,15 @@ resources:
 - ../../base
 - ../../base/external-secrets
 - ../blackbox
-- https://github.com/konflux-ci/mintmaker/config/default?ref=ae67a3377628a178743143da686e35091db17c4d
-- https://github.com/konflux-ci/mintmaker/config/renovate?ref=ae67a3377628a178743143da686e35091db17c4d
+- https://github.com/konflux-ci/mintmaker/config/default?ref=6fbde4d9d6fa5d4823ea34ef2af0c257d4e19386
+- https://github.com/konflux-ci/mintmaker/config/renovate?ref=6fbde4d9d6fa5d4823ea34ef2af0c257d4e19386
 
 namespace: mintmaker
 
 images:
 - name: quay.io/konflux-ci/mintmaker
   newName: quay.io/konflux-ci/mintmaker
-  newTag: ae67a3377628a178743143da686e35091db17c4d
+  newTag: 6fbde4d9d6fa5d4823ea34ef2af0c257d4e19386
 - name: quay.io/konflux-ci/mintmaker-renovate-image
   newName: quay.io/konflux-ci/mintmaker-renovate-image
   newTag: 7a3afa07c3f6e39ca9d42a57ca62659a964001ee
