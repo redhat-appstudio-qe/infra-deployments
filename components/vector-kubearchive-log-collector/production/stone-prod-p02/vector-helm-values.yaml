@@ -126,15 +126,7 @@ tolerations:
   - effect: NoExecute
     key: node.kubernetes.io/unreachable
     operator: Exists
-<<<<<<< HEAD
-<<<<<<< HEAD
     tolerationSeconds: 300
-=======
-    tolerationSeconds: 300  
->>>>>>> 04b196874 (chore(KAR-770): update vector image version)
-=======
-    tolerationSeconds: 300
->>>>>>> 5c6a8c7f9 (fix linter error)
   - effect: NoSchedule
     key: node.kubernetes.io/memory-pressure
     operator: Exists
