@@ -114,4 +114,10 @@ cel:
         priority('konflux-tenant-release') :
 
         plrNamespace == 'mintmaker' ? priority('konflux-dependency-update') :
+
+        # Child pipelines created by internal-pipelinerun (signing, etc.) inherit release priority
+        has(pipelineRun.metadata.labels) &&
+        'internal-services.appstudio.openshift.io/pipelinerun-uid' in pipelineRun.metadata.labels ?
+        priority('konflux-release') :
+
         priority('konflux-default')
