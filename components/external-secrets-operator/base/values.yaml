@@ -44,6 +44,11 @@ certController:
     limits:
       memory: 128Mi
       cpu: 200m
+  # Enable metrics Service for cert-controller
+  metrics:
+    service:
+      enabled: true
+      port: 8080
 
 # Webhook resources (matching OperatorConfig spec.webhook.resources)
 webhook:
@@ -55,11 +60,23 @@ webhook:
     limits:
       memory: 128Mi
       cpu: 200m
+  # Enable metrics port on webhook Service
+  metrics:
+    service:
+      enabled: true
+      port: 8080
 
 # Prometheus configuration (matching OperatorConfig spec.prometheus)
 prometheus:
   enabled: true
   service:
+    port: 8080
+
+# Metrics Service - enables the metrics Service from helm chart
+# This creates external-secrets-operator-metrics Service with correct selectors
+metrics:
+  service:
+    enabled: true
     port: 8080
 
 # Logging
