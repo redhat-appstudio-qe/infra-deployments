@@ -106,6 +106,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  version: quay.io/kubearchive/grafana:12.1.0
   config:
     users:
       viewers_can_edit: "True"
