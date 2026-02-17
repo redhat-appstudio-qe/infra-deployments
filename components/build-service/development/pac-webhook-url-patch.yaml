@@ -9,7 +9,7 @@ spec:
   template:
     spec:
       containers:
-      - name: manager
-        env:
-          - name: PAC_WEBHOOK_URL
-            value: ""
+        - name: manager
+          env:
+            - name: PAC_WEBHOOK_URL
+              value: "https://smee.io/eD7wVjSs9x6FJ"
