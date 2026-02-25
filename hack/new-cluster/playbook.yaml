@@ -55,6 +55,7 @@
       - authentication
       - backup
       - build-service
+      - cert-manager
       - cost-management
       - etcd-shield
       - integration
@@ -62,6 +63,7 @@
       - konflux-info
       - konflux-rbac
       - konflux-ui
+      - kueue
       - kyverno
       - mintmaker
       - monitoring/logging
@@ -75,6 +77,7 @@
       - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-logging/monitoring-workload-logging.yaml"
       - "{{ dst }}/argo-cd-apps/base/all-clusters/infra-deployments/monitoring-workload-prometheus/monitoring-workload-prometheus.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/build-service/build-service.yaml"
+      - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/etcd-defrag/etcd-defrag.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/etcd-shield/etcd-shield.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/integration/integration.yaml"
       - "{{ dst }}/argo-cd-apps/base/member/infra-deployments/konflux-info/konflux-info.yaml"
@@ -157,3 +160,7 @@
       loop: "{{ templated_components }}"
       loop_control:
         loop_var: component
+
+    - name: Generate pipeline-service deploy config (special requirement)
+      tags: [components]
+      shell: "{{ dst }}/hack/generate-deploy-config.sh -c {{ dst }}/components/pipeline-service"
