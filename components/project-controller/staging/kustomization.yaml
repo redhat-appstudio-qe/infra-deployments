@@ -2,11 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/konflux-ci/project-controller/config/default?ref=6c62ac87fc002791a1b2323914f53874662a8360
+  - https://github.com/konflux-ci/project-controller/config/default?ref=950394346e969f845ada351285a44b6ddc209cd5
 
 images:
 - name: konflux-project-controller
   newName: quay.io/konflux-ci/project-controller
-  newTag: 6c62ac87fc002791a1b2323914f53874662a8360
+  newTag: 950394346e969f845ada351285a44b6ddc209cd5
 
 namespace: project-controller
