@@ -4,7 +4,7 @@
 # To use this, configure your Codeberg webhook to point to this smee.io URL
 - op: replace
   path: /spec/template/spec/containers/0/args/3
-  value: "https://smee.io/REPLACE_ME"
+  value: "https://smee.io/eD7wVjSs9x6FJ"
 - op: replace
   path: /spec/template/spec/containers/1/env/1/value
-  value: "https://smee.io/REPLACE_ME"
+  value: "https://smee.io/eD7wVjSs9x6FJ"
