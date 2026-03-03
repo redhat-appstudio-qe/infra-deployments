@@ -281,3 +281,4 @@ log_info "  - mintmaker (Mintmaker)"
 # Output summary for LLM parsing
 echo ""
 echo "[PAC_SETUP_JSON] {\"status\":\"success\",\"namespaces\":[\"$PAC_NAMESPACE\",\"build-service\",\"$INTEGRATION_NAMESPACE\",\"mintmaker\"],\"github_app_configured\":$([ -n "$GITHUB_APP_DATA" ] && echo "true" || echo "false"),\"github_token_configured\":$([ -n "$GITHUB_WEBHOOK_DATA" ] && echo "true" || echo "false"),\"gitlab_token_configured\":$([ -n "$GITLAB_WEBHOOK_DATA" ] && echo "true" || echo "false")}"
+#### Test
