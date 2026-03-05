@@ -1,0 +1,79 @@
+# Workaround for the bug in the operator: https://github.com/grafana/grafana-operator/issues/2552
+# This should run once after operator is deployed so that the installplan is approved automatically
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: approve-installplan
+  namespace: appstudio-grafana
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: approve-installplan
+  namespace: appstudio-grafana
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+rules:
+- apiGroups:
+  - operators.coreos.com
+  resources:
+  - installplans
+  verbs:
+  - get
+  - list
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: approve-installplan
+  namespace: appstudio-grafana
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: approve-installplan
+subjects:
+- kind: ServiceAccount
+  name: approve-installplan
+  namespace: appstudio-grafana
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: approve-grafana-installplan
+  namespace: appstudio-grafana
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 5
+  template:
+    spec:
+      serviceAccountName: approve-installplan
+      containers:
+      - name: approve
+        image: registry.redhat.io/openshift4/ose-cli:latest
+        command:
+        - /bin/bash
+        - -c
+        - |
+          for i in $(seq 1 30); do
+            PLAN=$(oc get installplan -n appstudio-grafana -o jsonpath='{.items[?(@.spec.approved==false)].metadata.name}')
+            if [ -n "$PLAN" ]; then
+              echo "Approving InstallPlan: $PLAN"
+              oc patch installplan "$PLAN" -n appstudio-grafana --type merge -p '{"spec":{"approved":true}}'
+              exit 0
+            fi
+            echo "Waiting for InstallPlan... ($i/30)"
+            sleep 10
+          done
+          echo "No unapproved InstallPlan found"
+          exit 1
+      restartPolicy: Never
