@@ -96,6 +96,10 @@ cel:
     - |
         pacEventType == 'push' ? priority('konflux-post-merge-build') :
         pacEventType == 'pull_request' ? priority('konflux-pre-merge-build') :
+        pacTestEventType == 'test-comment' ? priority('konflux-pre-merge-build') :
+        pacTestEventType == 'retest-comment' ? priority('konflux-pre-merge-build') :
+        pacTestEventType == 'retest-all-comment' ? priority('konflux-pre-merge-build') :
+        pacTestEventType == 'ok-to-test-comment' ? priority('konflux-pre-merge-build') :
         pacTestEventType == 'push' ? priority('konflux-post-merge-test') :
         pacTestEventType == 'pull_request' ? priority('konflux-pre-merge-test') :
 
