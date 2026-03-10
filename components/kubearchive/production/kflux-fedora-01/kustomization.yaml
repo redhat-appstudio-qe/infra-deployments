@@ -17,7 +17,7 @@ configMapGenerator:
       options:
         disableNameSuffixHash: true
       literals:
-        - URL=https://kubearchive-api-server-product-kubearchive.apps.kflux-ocp-p01.7ayg.p1.openshiftapps.com
+        - URL=https://kubearchive-api-server-product-kubearchive.apps.kflux-fedora-01.84db.p1.openshiftapps.com
     - name: kubearchive-logging
       literals:
           - |
@@ -73,7 +73,6 @@ patches:
         annotations:
           # Needed if just the command is changed, otherwise the job needs to be deleted manually
           argocd.argoproj.io/sync-options: Force=true,Replace=true
-          argocd.argoproj.io/sync-wave: "-1"
           ignore-check.kube-linter.io/no-read-only-root-fs: >
             "This job needs to clone a repository to do its job, so it needs write access to the FS."
       spec:
@@ -98,9 +97,11 @@ patches:
       metadata:
         name: database-secret
       spec:
+        secretStoreRef:
+          name: appsre-stonesoup-vault
         dataFrom:
           - extract:
-              key: integrations-output/external-resources/appsrep09ue1/kflux-ocp-p01/kflux-ocp-p01-kube-archive-rds
+              key: production/platform/terraform/generated/kflux-fedora-01/kubearchive-database
   # These patches add an annotation so an OpenShift service
   # creates the TLS secrets instead of Cert Manager
   - patch: |-
@@ -173,6 +174,8 @@ patches:
                 - name: GOMEMLIMIT
                   value: 10GiB
                   valueFrom: null # required because valueFrom comes from the original
+                - name: KUBEARCHIVE_MONITOR_ALL_NAMESPACES
+                  value: "true"
                 - name: KUBEARCHIVE_OTEL_MODE
                   value: enabled
                 - name: OTEL_EXPORTER_OTLP_ENDPOINT
