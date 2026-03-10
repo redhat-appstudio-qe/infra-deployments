@@ -321,6 +321,65 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
         }
     },
 
+    "gitlab_merge_request": {
+        "name": "Multi-platform pipeline (old style with PLATFORM parameters): empty tasks in pipelineSpec",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "gitlab_merge_request",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "Merge_Request"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+                "pipelinesascode.tekton.dev/event-type": "Merge_Request"
+            }
+        }
+    },
+    "gitlab_merge_request_test": {
+        "name": "Multi-platform pipeline (old style with PLATFORM parameters): empty tasks in pipelineSpec",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "gitlab_merge_request_test",
+                "namespace": "default",
+                "labels": {
+                    "pac.test.appstudio.openshift.io/event-type": "Merge_Request"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
+                "pac.test.appstudio.openshift.io/event-type": "Merge_Request"
+            }
+        }
+    },
+
     "release_managed": {
         "name": "Release managed pipeline",
         "pipelinerun": {
