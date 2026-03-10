@@ -400,7 +400,127 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
         }
     },
 
-    "test-comment": {
+    "build-test-comment": {
+        "name": "build pipeline triggered via /test comment",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "build-test-comment",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "test-comment"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+                "pipelinesascode.tekton.dev/event-type": "test-comment"
+            }
+        }
+    },
+
+    "build-retest-comment": {
+        "name": "build pipeline triggered via /retest check comment",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "build-retest-comment",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "retest-comment"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+                "pipelinesascode.tekton.dev/event-type": "retest-comment"
+            }
+        }
+    },
+
+    "build-retest-all-comment": {
+        "name": "build pipeline triggered via /retest comment",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "build-retest-all-comment",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "retest-all-comment"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+                "pipelinesascode.tekton.dev/event-type": "retest-all-comment"
+            }
+        }
+    },
+
+    "build-ok-to-test-comment": {
+        "name": "build pipeline triggered via /ok-to-test comment",
+        "pipelinerun": {
+            "apiVersion": "tekton.dev/v1",
+            "kind": "PipelineRun",
+            "metadata": {
+                "name": "build-ok-to-test-comment",
+                "namespace": "default",
+                "labels": {
+                    "pipelinesascode.tekton.dev/event-type": "ok-to-test-comment"
+                }
+            },
+            "spec": {
+                "pipelineSpec": {
+                    "description": "foo", # a completely empty pipelineSpec is not allowed
+                    "tasks": [],
+                },
+                "workspaces": [{"name": "shared-workspace", "emptyDir": {}}]
+            }
+        },
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+                "pipelinesascode.tekton.dev/event-type": "ok-to-test-comment"
+            }
+        }
+    },
+
+    "test-test-comment": {
         "name": "pipeline triggered via /test comment",
         "pipelinerun": {
             "apiVersion": "tekton.dev/v1",
@@ -430,7 +550,7 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
         }
     },
 
-    "retest-comment": {
+    "test-retest-comment": {
         "name": "pipeline triggered via /retest check comment",
         "pipelinerun": {
             "apiVersion": "tekton.dev/v1",
@@ -460,7 +580,7 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
         }
     },
 
-    "retest-all-comment": {
+    "test-retest-all-comment": {
         "name": "pipeline triggered via /retest comment",
         "pipelinerun": {
             "apiVersion": "tekton.dev/v1",
@@ -490,7 +610,7 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
         }
     },
 
-    "ok-to-test-comment": {
+    "test-ok-to-test-comment": {
         "name": "pipeline triggered via /ok-to-test comment",
         "pipelinerun": {
             "apiVersion": "tekton.dev/v1",
@@ -926,20 +1046,36 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "prefer-new-parameters",
         "config_key": "development"
     },
-    "test-comment": {
-        "pipelinerun_key": "test-comment",
+    "test-test-comment": {
+        "pipelinerun_key": "test-test-comment",
         "config_key": "development"
     },
-    "retest-comment": {
-        "pipelinerun_key": "retest-comment",
+    "test-retest-comment": {
+        "pipelinerun_key": "test-retest-comment",
         "config_key": "development"
     },
-    "retest-all-comment": {
-        "pipelinerun_key": "retest-all-comment",
+    "test-retest-all-comment": {
+        "pipelinerun_key": "test-retest-all-comment",
         "config_key": "development"
     },
-    "ok-to-test-comment": {
-        "pipelinerun_key": "ok-to-test-comment",
+    "test-ok-to-test-comment": {
+        "pipelinerun_key": "test-ok-to-test-comment",
+        "config_key": "development"
+    },
+    "build-test-comment": {
+        "pipelinerun_key": "build-test-comment",
+        "config_key": "development"
+    },
+    "build-retest-comment": {
+        "pipelinerun_key": "build-retest-comment",
+        "config_key": "development"
+    },
+    "build-retest-all-comment": {
+        "pipelinerun_key": "build-retest-all-comment",
+        "config_key": "development"
+    },
+    "build-ok-to-test-comment": {
+        "pipelinerun_key": "build-ok-to-test-comment",
         "config_key": "development"
     },
 
@@ -978,20 +1114,36 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "prefer-new-parameters",
         "config_key": "staging"
     },
-    "test-comment": {
-        "pipelinerun_key": "test-comment",
+    "test-test-comment": {
+        "pipelinerun_key": "test-test-comment",
         "config_key": "staging"
     },
-    "retest-comment": {
-        "pipelinerun_key": "retest-comment",
+    "test-retest-comment": {
+        "pipelinerun_key": "test-retest-comment",
         "config_key": "staging"
     },
-    "retest-all-comment": {
-        "pipelinerun_key": "retest-all-comment",
+    "test-retest-all-comment": {
+        "pipelinerun_key": "test-retest-all-comment",
         "config_key": "staging"
     },
-    "ok-to-test-comment": {
-        "pipelinerun_key": "ok-to-test-comment",
+    "test-ok-to-test-comment": {
+        "pipelinerun_key": "test-ok-to-test-comment",
+        "config_key": "staging"
+    },
+    "build-test-comment": {
+        "pipelinerun_key": "build-test-comment",
+        "config_key": "staging"
+    },
+    "build-retest-comment": {
+        "pipelinerun_key": "build-retest-comment",
+        "config_key": "staging"
+    },
+    "build-retest-all-comment": {
+        "pipelinerun_key": "build-retest-all-comment",
+        "config_key": "staging"
+    },
+    "build-ok-to-test-comment": {
+        "pipelinerun_key": "build-ok-to-test-comment",
         "config_key": "staging"
     },
 

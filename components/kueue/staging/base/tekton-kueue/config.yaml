@@ -95,7 +95,11 @@ cel:
     # Set the pipeline priority
     - |
         pacEventType == 'push' ? priority('konflux-post-merge-build') :
-        pacEventType == 'pull_request' ? priority('konflux-pre-merge-build') :
+        pacEventType == 'pull_request' ||
+          pacEventType == 'test-comment' ||
+          pacEventType == 'retest-comment' ||
+          pacEventType == 'retest-all-comment' ||
+          pacEventType == 'ok-to-test-comment'  ? priority('konflux-pre-merge-build') :
         pacTestEventType == 'pull_request' ||
           pacTestEventType == 'test-comment' ||
           pacTestEventType == 'retest-comment' ||
