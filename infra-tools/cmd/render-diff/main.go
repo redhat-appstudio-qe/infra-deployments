@@ -120,6 +120,9 @@ func main() {
 	}
 	if len(changedFiles) == 0 {
 		fmt.Println("No changed files detected — nothing to diff.")
+		// Best-effort: update CI comment/summary so they don't stay stale.
+		// Failures here are non-fatal since there is nothing to report.
+		_ = runAllOutputModes(ctx, modes, &renderdiff.DiffResult{}, *color, *openDiff, *outputDir, headSHA, baseSHA)
 		return
 	}
 	slog.Info("Changed files detected", "count", len(changedFiles))
@@ -152,6 +155,9 @@ func main() {
 	}
 	if totalJobs == 0 {
 		fmt.Println("No affected components detected — nothing to diff.")
+		// Best-effort: update CI comment/summary so they don't stay stale.
+		// Failures here are non-fatal since there is nothing to report.
+		_ = runAllOutputModes(ctx, modes, &renderdiff.DiffResult{}, *color, *openDiff, *outputDir, headSHA, baseSHA)
 		return
 	}
 	slog.Info("Affected component paths detected", "count", totalJobs)
@@ -171,16 +177,22 @@ func main() {
 		logging.Fatal("render-diff failed", "err", err)
 	}
 
+	if hadError := runAllOutputModes(ctx, modes, result, *color, *openDiff, *outputDir, headSHA, baseSHA); hadError {
+		os.Exit(1)
+	}
+}
+
+// runAllOutputModes runs every configured output mode against the given result.
+// Returns true if any mode failed.
+func runAllOutputModes(ctx context.Context, modes []OutputMode, result *renderdiff.DiffResult, colorMode string, openDiff bool, outputDir, headSHA, baseSHA string) bool {
 	var hadError bool
 	for _, m := range modes {
-		if err := runOutputMode(ctx, m, result, *color, *openDiff, *outputDir, headSHA, baseSHA); err != nil {
-			slog.Error("output mode failed, continuing with remaining modes", "mode", m, "err", err)
+		if err := runOutputMode(ctx, m, result, colorMode, openDiff, outputDir, headSHA, baseSHA); err != nil {
+			slog.Error("output mode failed", "mode", m, "err", err)
 			hadError = true
 		}
 	}
-	if hadError {
-		os.Exit(1)
-	}
+	return hadError
 }
 
 // parseOutputModes splits a comma-separated output-mode string, validates each
