@@ -1,0 +1,73 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: run-kanary-tests
+spec:
+  params:
+    - name: tested-cluster
+      type: string
+      default: stone-stage-p01
+    - name: test-type
+      type: string
+      default: container-single-arch
+  workspaces:
+    - name: results
+  steps:
+    - name: run-test
+      image: quay.io/redhat-user-workloads/konflux-perfscale-tenant/loadtest
+      env:
+        - name: ARTIFACT_DIR
+          value: $(workspaces.results.path)
+        - name: CONCURRENCY
+          value: "1"
+        - name: MY_GITHUB_ORG
+          value: "rhtap-perf-test"
+        - name: COMPONENT_REPO
+          value: "https://github.com/rhtap-perf-test/nodejs-devfile-sample"
+        - name: LOGGING_LEVEL
+          value: "debug"
+        - name: USER_PREFIX
+          value: "stgrh01cs"
+        - name: QUAY_REPO
+          value: "redhat-user-workloads-stage"
+        - name: PIPELINE_REPO_TEMPLATING
+          value: "true"
+        - name: PIPELINE_REPO_TEMPLATING_SOURCE
+          value: "https://github.com/rhtap-perf-test/konflux-probe-test-templates"
+        - name: PIPELINE_REPO_TEMPLATING_SOURCE_DIR
+          value: "nodejs-devfile-sample-SingleArch/"
+        - name: RELEASE_POLICY
+          value: "tmp-onboard-policy"
+        - name: RELEASE_PIPELINE_URL
+          value: "https://github.com/konflux-ci/release-service-catalog.git"
+        - name: RELEASE_PIPELINE_REVISION
+          value: "production"
+        - name: RELEASE_PIPELINE_PATH
+          value: "pipelines/managed/e2e/e2e.yaml"
+        - name: RELEASE_PIPELINE_SERVICE_ACCOUNT
+          value: "release-serviceaccount"
+        # TODO: populate from secrets
+        - name: GITLAB_BOT_TOKEN
+          value: "PLACEHOLDER"
+        - name: GITHUB_TOKEN
+          value: "PLACEHOLDER"
+        - name: USERS
+          value: "PLACEHOLDER"
+        - name: OCP_PROMETHEUS_TOKEN
+          value: "PLACEHOLDER"
+      script: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+        cd tests/load-tests
+        echo "Running e2e load tests for cluster ${TESTED_CLUSTER}, type ${TEST_TYPE}..."
+        ./run-stage.sh
+    - name: collect-results
+      image: quay.io/redhat-user-workloads/konflux-perfscale-tenant/loadtest
+      env:
+        - name: ARTIFACT_DIR
+          value: $(workspaces.results.path)
+      script: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+        cd tests/load-tests
+        ci-scripts/collect-results.sh

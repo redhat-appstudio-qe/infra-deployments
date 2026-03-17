@@ -1,0 +1,45 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: kanary-otel-poc
+spec:
+  params:
+    - name: otel-endpoint
+      type: string
+      default: http://open-telemetry-opentelemetry-collector.konflux-otel.svc.cluster.local:4318
+    - name: tested-cluster
+      type: string
+      default: stone-stage-p01
+    - name: test-type
+      type: string
+      default: container-single-arch
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: run-kanary-tests
+      taskRef:
+        name: run-kanary-tests
+      params:
+        - name: tested-cluster
+          value: $(params.tested-cluster)
+        - name: test-type
+          value: $(params.test-type)
+      workspaces:
+        - name: results
+          workspace: shared-workspace
+  finally:
+    - name: push-kanary-metrics
+      taskRef:
+        name: push-kanary-metrics
+      params:
+        - name: otel-endpoint
+          value: $(params.otel-endpoint)
+        - name: tested-cluster
+          value: $(params.tested-cluster)
+        - name: test-type
+          value: $(params.test-type)
+        - name: test-task-status
+          value: $(tasks.run-kanary-tests.status)
+      workspaces:
+        - name: results
+          workspace: shared-workspace

@@ -1,3 +1,4 @@
 resources:
   - ../../base
-  - kanary-otel-pipeline.yaml
+  - tasks
+  - pipelines
