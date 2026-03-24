@@ -2,3 +2,5 @@ resources:
   - ../../base
   - tasks
   - pipelines
+  - rbac
+  - external-secrets
