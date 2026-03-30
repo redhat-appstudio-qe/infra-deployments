@@ -43,5 +43,5 @@ spec:
   channel: stable-v1.2
   installPlanApproval: Automatic
   name: kueue-operator
-  source: redhat-operators-1-18
+  source: redhat-operators
   sourceNamespace: openshift-kueue-operator
