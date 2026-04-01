@@ -1,3 +1,4 @@
+{{- define "multi-platform-controller.windows-init" -}}
 <powershell>
 # ------------------
 # Helper Functions
@@ -331,6 +332,11 @@ Write-Host "Scoop installed successfully!"
 # ---------------------------------------------------
 # OpenSSH Administrator Configuration & Service Start
 # ---------------------------------------------------
+{{- $config := index .Values.dynamicConfigs "windows-4xlarge-amd64" | default (dict) }}
+{{- $addresses := (list) }}
+{{- range $entry := (index $config "allowed-remote-addresses" | default (list)) }}
+    {{- $addresses = (squote $entry | append $addresses) }}
+{{- end }}
 Remove-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -ErrorAction SilentlyContinue
 New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' `
     -DisplayName 'OpenSSH Server (sshd)' `
@@ -339,7 +345,7 @@ New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' `
     -Protocol TCP `
     -Action Allow `
     -LocalPort 22 `
-    -RemoteAddress any | Out-Null
+    -RemoteAddress {{ join "," $addresses | default "any" }} | Out-Null
 
 # Get public key from AWS Instance Metadata Service (IMDSv2)
 $MAGIC_IP = "169.254.169.254"
@@ -381,3 +387,4 @@ Start-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'
 </powershell>
 <persist>true</persist>
+{{- end -}}
