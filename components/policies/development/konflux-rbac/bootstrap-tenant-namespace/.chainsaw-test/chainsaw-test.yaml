@@ -322,7 +322,7 @@ metadata:
   name: orphan-resources-on-policy-deletion
 spec:
   description: |
-    tests that the resources remain in a namespaces when the cluster policy is deleted
+    tests that the resources remain in a tenant namespace when the cluster policy is deleted
   concurrent: false
   namespace: 'orphan-resources'
   bindings:
