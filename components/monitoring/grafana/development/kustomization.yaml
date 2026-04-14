@@ -3,12 +3,12 @@ kind: Kustomization
 resources:
   - ../base
   - dashboards
-  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=0d3c45516968bffb24196952c3273cebd6df5d4f
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=8e80e6fee18998cc4839ce10b21ee0ce357fc443
 
 images:
 - name: quay.io/redhat-appstudio/o11y
   newName: quay.io/redhat-appstudio/o11y
-  newTag: 0d3c45516968bffb24196952c3273cebd6df5d4f
+  newTag: 8e80e6fee18998cc4839ce10b21ee0ce357fc443
 
 patches:
   - path: auto-assign-role-patch.yaml
