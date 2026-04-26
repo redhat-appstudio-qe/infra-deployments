@@ -141,6 +141,11 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: vector-kubearchive-log-collector
+  - path: vector-kubearchive-managed-namespace-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: vector-kubearchive-log-collector
   - path: development-overlay-patch.yaml
     target:
       kind: ApplicationSet
