@@ -1,0 +1,6 @@
+---
+- op: add
+  path: /spec/template/spec/syncPolicy/managedNamespaceMetadata
+  value:
+    labels:
+      openshift.io/cluster-monitoring: "true"
