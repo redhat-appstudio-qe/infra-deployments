@@ -13,5 +13,6 @@ resources:
   - disable-self-provisioning-for-all-cluster
   - cost-management
   - kubelet-config
+  - k8s-groups
 components:
   - ../../../k-components/inject-infra-deployments-repo-details
