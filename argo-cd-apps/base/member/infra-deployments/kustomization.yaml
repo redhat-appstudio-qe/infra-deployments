@@ -44,5 +44,6 @@ resources:
   - policies
   - konflux-kite
   - dummy-deployment
+  - k8s-groups
 components:
   - ../../../k-components/inject-infra-deployments-repo-details
