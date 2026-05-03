@@ -137,6 +137,21 @@ patches:
                       configMapKeyRef:
                         name: kubearchive-schema-version
                         key: MIGRATION_VERSION
+                  # Migration tuning: BATCH_SIZE is the number of resource IDs scanned per SQL query
+                  # (script default: 10000, documented default: 100000). SLEEP_INTERVAL is seconds
+                  # between batches (default: 0.1). Both are processed server-side in PostgreSQL;
+                  # the pod only receives INSERT count results.
+                  - name: BATCH_SIZE
+                    value: "300000"
+                  - name: SLEEP_INTERVAL
+                    value: "0"
+                resources:
+                  limits:
+                    cpu: 100m
+                    memory: 128Mi
+                  requests:
+                    cpu: 100m
+                    memory: 128Mi
                 securityContext:
                   runAsUser: null
   # We don't need the Secret as it will be created by the ExternalSecrets Operator
