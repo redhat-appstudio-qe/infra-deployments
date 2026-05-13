@@ -3,12 +3,12 @@ kind: Kustomization
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/image-controller/config/default?ref=67cc74626bb768336d375413d93725d380474417
+- https://github.com/konflux-ci/image-controller/config/default?ref=2b1c320886f9b18b3e882634a8d1e64c8812fc93
 
 images:
 - name: quay.io/konflux-ci/image-controller
   newName: quay.io/konflux-ci/image-controller
-  newTag: 67cc74626bb768336d375413d93725d380474417
+  newTag: 2b1c320886f9b18b3e882634a8d1e64c8812fc93
 
 namespace: image-controller
 
