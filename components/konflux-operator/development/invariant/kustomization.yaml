@@ -6,7 +6,7 @@ kind: Kustomization
 # Parent `../kustomization.yaml` adds per-team overlays from `../cr/overlay-patches/`.
 resources:
   # Upstream operator config (konflux-ci builds install.yaml from this layout).
-  - https://github.com/konflux-ci/konflux-ci/operator/config/default?ref=0bace1e20ff164a00e9d6becfce52e310a921931
+  - https://github.com/konflux-ci/konflux-ci/operator/config/default?ref=bcbd8fa16e00a34dfacb6c085e08fffd9eb61005
   - konflux.yaml
 
 patches:
@@ -15,4 +15,4 @@ patches:
 images:
   - name: localhost/konflux-operator
     newName: quay.io/konflux-ci/konflux-operator
-    newTag: 0bace1e20ff164a00e9d6becfce52e310a921931
+    newTag: bcbd8fa16e00a34dfacb6c085e08fffd9eb61005
