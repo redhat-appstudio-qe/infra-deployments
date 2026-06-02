@@ -4,7 +4,7 @@ resources:
   - ../base
   - ../base/external-secrets
   - rbac
-  - https://github.com/redhat-appstudio/application-service/config/prometheus/?ref=1336ddc41f94df2da57a8ad8da2613e789be4041
+  - https://github.com/redhat-appstudio/application-service/config/prometheus/?ref=8ca9febff2e0ced1d1a93464ef837a584109699a
 
 configMapGenerator:
   - literals:
