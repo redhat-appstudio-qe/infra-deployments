@@ -266,8 +266,15 @@ create_pac_secret "$PAC_NAMESPACE" "$FULL_SECRET_DATA"
 create_pac_secret "build-service" "$FULL_SECRET_DATA"
 create_pac_secret "$INTEGRATION_NAMESPACE" "$FULL_SECRET_DATA"
 
-# Mintmaker only needs GitHub App data (no webhook tokens)
-create_pac_secret "mintmaker" "$GITHUB_APP_DATA"
+# Mintmaker only needs GitHub App data (no webhook tokens). development-operator
+# overlay does not deploy mintmaker (not operator-managed yet).
+PAC_CONFIGURED_NAMESPACES=("$PAC_NAMESPACE" "build-service" "$INTEGRATION_NAMESPACE")
+if [ "${TARGET_PREVIEW_OVERLAY:-development}" != "development-operator" ]; then
+    create_pac_secret "mintmaker" "$GITHUB_APP_DATA"
+    PAC_CONFIGURED_NAMESPACES+=("mintmaker")
+else
+    log_info "Skipping mintmaker PAC secret (development-operator overlay excludes mintmaker)"
+fi
 
 log_info "============================================================================="
 log_success "PAC Integration Setup Complete"
@@ -276,8 +283,11 @@ log_info "Configured namespaces:"
 log_info "  - $PAC_NAMESPACE (PAC controller)"
 log_info "  - build-service (Build Service)"
 log_info "  - $INTEGRATION_NAMESPACE (Integration Service)"
-log_info "  - mintmaker (Mintmaker)"
+if [[ " ${PAC_CONFIGURED_NAMESPACES[*]} " == *" mintmaker "* ]]; then
+    log_info "  - mintmaker (Mintmaker)"
+fi
 
 # Output summary for LLM parsing
+PAC_NAMESPACES_JSON=$(printf '%s\n' "${PAC_CONFIGURED_NAMESPACES[@]}" | jq -R . | jq -s .)
 echo ""
-echo "[PAC_SETUP_JSON] {\"status\":\"success\",\"namespaces\":[\"$PAC_NAMESPACE\",\"build-service\",\"$INTEGRATION_NAMESPACE\",\"mintmaker\"],\"github_app_configured\":$([ -n "$GITHUB_APP_DATA" ] && echo "true" || echo "false"),\"github_token_configured\":$([ -n "$GITHUB_WEBHOOK_DATA" ] && echo "true" || echo "false"),\"gitlab_token_configured\":$([ -n "$GITLAB_WEBHOOK_DATA" ] && echo "true" || echo "false")}"
+echo "[PAC_SETUP_JSON] {\"status\":\"success\",\"namespaces\":${PAC_NAMESPACES_JSON},\"github_app_configured\":$([ -n "$GITHUB_APP_DATA" ] && echo "true" || echo "false"),\"github_token_configured\":$([ -n "$GITHUB_WEBHOOK_DATA" ] && echo "true" || echo "false"),\"gitlab_token_configured\":$([ -n "$GITLAB_WEBHOOK_DATA" ] && echo "true" || echo "false")}"
