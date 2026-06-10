@@ -8,15 +8,15 @@ resources:
 - ../../base/external-secrets
 - ../blackbox
 - plrs-resource-quota.yaml
-- https://github.com/konflux-ci/mintmaker/config/default?ref=cca09d9f397c274c60f37c9a6fe2117d44048a06
-- https://github.com/konflux-ci/mintmaker/config/renovate?ref=cca09d9f397c274c60f37c9a6fe2117d44048a06
+- https://github.com/konflux-ci/mintmaker/config/default?ref=bcc437c2a4841e579468172b94574ba5c976fb42
+- https://github.com/konflux-ci/mintmaker/config/renovate?ref=bcc437c2a4841e579468172b94574ba5c976fb42
 
 namespace: mintmaker
 
 images:
 - name: quay.io/konflux-ci/mintmaker
   newName: quay.io/konflux-ci/mintmaker
-  newTag: cca09d9f397c274c60f37c9a6fe2117d44048a06
+  newTag: bcc437c2a4841e579468172b94574ba5c976fb42
 - name: quay.io/konflux-ci/mintmaker-renovate-image
   newName: quay.io/konflux-ci/mintmaker-renovate-image
   newTag: 7ec5e69c873f874c267fd33ff30e5d5de7564de9
