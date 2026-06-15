@@ -1397,7 +1397,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
             "labels": {
                 "build.appstudio.openshift.io/type": "nudge",
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
-                "kueue.x-k8s.io/priority-class": "konflux-dependency-update"
+                "kueue.x-k8s.io/priority-class": "konflux-nudge"
             }
         }
     },
@@ -1436,6 +1436,19 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "prefer-new-parameters",
         "config_key": "production-kflux-ocp-p01"
     },
+    "nudging_kflux-ocp-p01": {
+        "pipelinerun_key": "nudge_pipelinerun",
+        "config_key": "production-kflux-ocp-p01",
+        "expected": {
+            "annotations": {},
+            "labels": {
+                "build.appstudio.openshift.io/type": "nudge",
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-nudge"
+            }
+        }
+    },
+
 
     # Example: Test the same PipelineRun with different configs to show reusability
     "user-specific-priority_and_mixed_platforms_production-kflux-ocp-p01": {
