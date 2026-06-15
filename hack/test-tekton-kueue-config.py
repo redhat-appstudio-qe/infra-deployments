@@ -1397,7 +1397,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
             "labels": {
                 "build.appstudio.openshift.io/type": "nudge",
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
-                "kueue.x-k8s.io/priority-class": "konflux-dependency-update"
+                "kueue.x-k8s.io/priority-class": "konflux-nudge"
             }
         }
     },
