@@ -1304,6 +1304,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
@@ -1319,7 +1320,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "release_managed",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-release"
@@ -1331,6 +1334,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-mintmaker": "1",
             },
             "labels": {
@@ -1343,7 +1347,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "internal_pipelinerun_child",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-release"
@@ -1356,6 +1362,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
@@ -1371,7 +1378,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_build",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
@@ -1382,7 +1391,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_test",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
@@ -1393,7 +1404,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "nudge_pipelinerun",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "build.appstudio.openshift.io/type": "nudge",
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
@@ -1408,6 +1421,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
@@ -1425,6 +1439,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-konflux-release": "1",
             },
             "labels": {
@@ -1442,6 +1457,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-konflux-release": "1",
             },
             "labels": {
@@ -1461,6 +1477,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-ppc64le": "1",
@@ -1480,7 +1497,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "ocp_prod_release",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-prod-release"
@@ -1491,7 +1510,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "ocp_stage_release",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-stage-release"
@@ -1503,7 +1524,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_build",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
@@ -1514,7 +1537,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_test",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
@@ -1673,6 +1698,71 @@ class TektonKueueMutationTest(unittest.TestCase):
         """Test all tekton-kueue mutation scenarios."""
         for test_key, test_combination in TEST_COMBINATIONS.items():
             self.validate_mutation_result(test_key, test_combination)
+
+
+EXPECTED_TOKEN_QUOTAS: Dict[str, Dict[str, str]] = {
+    "stone-prod-p01": {"plr": "300", "token": "300"},
+    "kflux-ocp-p01":  {"plr": "250", "token": "250"},
+    "kflux-prd-rh02": {"plr": "300", "token": "300"},
+}
+
+
+class ClusterQueueTokenResourceTest(unittest.TestCase):
+    """Validate that production cluster-queue manifests include the token resource correctly."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.repo_root = Path(__file__).parent.parent
+
+    def _load_cluster_queue(self, cluster: str) -> Dict[str, Any]:
+        path = self.repo_root / f"components/kueue/production/{cluster}/queue-config/cluster-queue.yaml"
+        with open(path) as f:
+            docs = list(yaml.safe_load_all(f))
+        for doc in docs:
+            if doc and doc.get("kind") == "ClusterQueue":
+                return doc
+        self.fail(f"No ClusterQueue found in {path}")
+
+    def _find_resource_group_with(self, cluster_queue: Dict, resource_name: str):
+        for rg in cluster_queue["spec"]["resourceGroups"]:
+            if resource_name in rg.get("coveredResources", []):
+                return rg
+        return None
+
+    def _find_flavor_resource(self, resource_group: Dict, resource_name: str):
+        for flavor in resource_group.get("flavors", []):
+            for res in flavor.get("resources", []):
+                if res["name"] == resource_name:
+                    return res
+        return None
+
+    def test_token_resource_in_production_clusters(self):
+        """Every listed production cluster-queue must have konflux-ci-dev-token with correct quota."""
+        for cluster, expected in EXPECTED_TOKEN_QUOTAS.items():
+            with self.subTest(cluster=cluster):
+                cq = self._load_cluster_queue(cluster)
+
+                rg = self._find_resource_group_with(cq, "tekton.dev/pipelineruns")
+                self.assertIsNotNone(rg, f"{cluster}: no resourceGroup with tekton.dev/pipelineruns")
+
+                self.assertIn(
+                    "konflux-ci-dev-token", rg["coveredResources"],
+                    f"{cluster}: konflux-ci-dev-token missing from coveredResources"
+                )
+
+                plr_res = self._find_flavor_resource(rg, "tekton.dev/pipelineruns")
+                self.assertIsNotNone(plr_res, f"{cluster}: tekton.dev/pipelineruns not in flavor resources")
+                self.assertEqual(
+                    str(plr_res["nominalQuota"]), expected["plr"],
+                    f"{cluster}: unexpected tekton.dev/pipelineruns quota"
+                )
+
+                token_res = self._find_flavor_resource(rg, "konflux-ci-dev-token")
+                self.assertIsNotNone(token_res, f"{cluster}: konflux-ci-dev-token not in flavor resources")
+                self.assertEqual(
+                    str(token_res["nominalQuota"]), expected["token"],
+                    f"{cluster}: expected token quota {expected['token']}, got {token_res['nominalQuota']}"
+                )
 
 
 if __name__ == "__main__":
