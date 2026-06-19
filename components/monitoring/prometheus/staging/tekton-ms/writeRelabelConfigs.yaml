@@ -1,0 +1,9 @@
+---
+- op: add
+  path: /spec/prometheusConfig/remoteWrite/0/writeRelabelConfigs
+  value:
+  - action: Keep
+    sourceLabels: [__name__]
+    regex: "tekton_pipelines_controller_(pipelinerun_total|pipelinerun_duration_seconds_(sum|count)|running_pipelineruns|running_pipelineruns_waiting_on_(pipeline|task)_resolution|taskrun_total|running_taskruns|running_taskruns_throttled_by_(node|quota))"
+  - action: LabelKeep
+    regex: "__name__|source_environment|source_cluster|namespace|job|le|pipeline|status|task"
