@@ -1,0 +1,4 @@
+resources:
+- monitoring-workload-kaexporter.yaml
+components:
+  - ../../k-components/deploy-to-member-cluster-merge-generator

@@ -1,0 +1,46 @@
+resources:
+  - ../base
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/ka/base?ref=TODO  # Update ref once PVO11Y-5276 merges
+
+images:
+  - name: ka-exporter
+    newName: quay.io/redhat-appstudio/o11y-exporters
+    newTag: TODO  # Update to merged commit hash
+
+patches:
+  # Remove the placeholder Secret from the o11y base — ExternalSecret manages it
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: ka-kubearchive-credentials
+    target:
+      kind: Secret
+      name: ka-kubearchive-credentials
+
+  # Set cluster-specific Vault path for KubeArchive credentials
+  - path: external-secrets/patches/ka-kubearchive-credentials-path.yaml
+    target:
+      name: ka-kubearchive-credentials
+      kind: ExternalSecret
+      group: external-secrets.io
+      version: v1
+
+  # Set CLUSTER_NAME on the Deployment
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ka-exporter-deployment
+      spec:
+        template:
+          spec:
+            containers:
+              - name: ka-exporter
+                env:
+                  - name: CLUSTER_NAME
+                    value: "stone-stg-rh01"
+    target:
+      kind: Deployment
+      name: ka-exporter-deployment
