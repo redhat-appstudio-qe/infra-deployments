@@ -150,6 +150,22 @@ func createTenant(fw *framework.Framework, t Tenant) {
 		Expect(err).ShouldNot(HaveOccurred(), "failed to create Component %s in namespace %s", comp.Name, t.Namespace)
 	}
 
+	By(fmt.Sprintf("Creating IntegrationTestScenario %s in namespace %s", DRIntegrationTestScenarioName, t.Namespace))
+	Eventually(func() error {
+		_, err := fw.AsKubeAdmin.IntegrationController.CreateIntegrationTestScenario(
+			DRIntegrationTestScenarioName,
+			t.AppName,
+			t.Namespace,
+			DRIntegrationTestGitURL,
+			DRIntegrationTestGitRevision,
+			DRIntegrationTestPathInRepo,
+			"",
+			[]string{},
+		)
+		return err
+	}, 2*time.Minute, 5*time.Second).Should(Succeed(),
+		"timed out creating IntegrationTestScenario %s in %s", DRIntegrationTestScenarioName, t.Namespace)
+
 	setupReleaseInfra(fw, t)
 }
 
