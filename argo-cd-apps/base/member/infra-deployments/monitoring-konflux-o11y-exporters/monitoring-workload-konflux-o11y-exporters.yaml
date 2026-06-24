@@ -1,28 +1,27 @@
 kind: ApplicationSet
 apiVersion: argoproj.io/v1alpha1
 metadata:
-  name: monitoring-workload-konflux-o11y-exporters
+  name: monitoring-workload-konflux-o11y-kaexporter
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - nameNormalized
         generators:
           - clusters:
-              selector:
-                matchLabels:
-                  appstudio.redhat.com/member-cluster: "true"
               values:
+                sourceRoot: components/monitoring/exporters/kaexporter
                 environment: staging
+                clusterDir: ""
           - list:
-              elements:
-                - exporter: kaexporter
-                  sourceRoot: components/monitoring/exporters/kaexporter
+              elements: []
   template:
     metadata:
-      name: konflux-o11y-exporters-{{exporter}}-{{nameNormalized}}
+      name: konflux-o11y-kaexporter-{{nameNormalized}}
     spec:
       project: default
       source:
-        path: '{{sourceRoot}}/{{values.environment}}'
+        path: '{{values.sourceRoot}}/{{values.environment}}/{{values.clusterDir}}'
         repoURL: https://github.com/redhat-appstudio/infra-deployments.git
         targetRevision: main
       destination:
