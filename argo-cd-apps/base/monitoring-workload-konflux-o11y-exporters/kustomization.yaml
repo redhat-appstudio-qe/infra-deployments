@@ -1,4 +1,4 @@
 resources:
-- monitoring-workload-kaexporter.yaml
+- monitoring-workload-konflux-o11y-exporters.yaml
 components:
   - ../../k-components/deploy-to-member-cluster-merge-generator

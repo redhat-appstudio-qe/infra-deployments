@@ -34,5 +34,5 @@ $patch: delete
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: monitoring-workload-kaexporter
+  name: monitoring-workload-konflux-o11y-exporters
 $patch: delete

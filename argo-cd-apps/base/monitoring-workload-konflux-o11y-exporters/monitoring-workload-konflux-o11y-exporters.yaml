@@ -1,7 +1,7 @@
 kind: ApplicationSet
 apiVersion: argoproj.io/v1alpha1
 metadata:
-  name: monitoring-workload-kaexporter
+  name: monitoring-workload-konflux-o11y-exporters
 spec:
   generators:
     - merge:
@@ -10,7 +10,7 @@ spec:
         generators:
           - clusters:
               values:
-                sourceRoot: components/monitoring/kaexporter
+                sourceRoot: components/monitoring/exporters/kaexporter
                 environment: staging
                 clusterDir: base
           - list:
@@ -21,7 +21,7 @@ spec:
                   values.clusterDir: stone-stg-rh01
   template:
     metadata:
-      name: monitoring-workload-kaexporter-{{nameNormalized}}
+      name: monitoring-workload-konflux-o11y-exporters-{{nameNormalized}}
     spec:
       project: default
       source:
@@ -29,7 +29,7 @@ spec:
         repoURL: https://github.com/redhat-appstudio/infra-deployments.git
         targetRevision: main
       destination:
-        namespace: appstudio-ka-exporter
+        namespace: konflux-o11y-exporters
         server: '{{server}}'
       syncPolicy:
         automated:
