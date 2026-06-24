@@ -29,10 +29,3 @@ kind: ApplicationSet
 metadata:
   name: dummy-deployment
 $patch: delete
----
-# KubeArchive exporter is staging-only
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: monitoring-workload-konflux-o11y-exporters
-$patch: delete

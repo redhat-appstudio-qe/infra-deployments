@@ -9,7 +9,6 @@ resources:
   - ../../base/eaas
   - ../../base/monitoring-blackbox
   - ../../base/monitoring-workload-kanary
-  - ../../base/monitoring-workload-konflux-o11y-exporters
 
 namespace: konflux-public-staging
 patchesStrategicMerge:

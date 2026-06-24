@@ -1,4 +1,0 @@
-resources:
-  - ../../base
-  - rbac
-  - external-secrets
