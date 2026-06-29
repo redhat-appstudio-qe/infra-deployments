@@ -1,0 +1,22 @@
+resources:
+  - ../base
+  - rbac
+  - external-secrets
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/kaexporter/base?ref=1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
+
+images:
+  - name: quay.io/redhat-appstudio/o11y
+    newName: quay.io/redhat-appstudio/o11y
+    newTag: 1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
+
+patches:
+  # Remove the placeholder Secret from the o11y base — ExternalSecret manages it
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: ka-kubearchive-credentials
+    target:
+      kind: Secret
+      name: ka-kubearchive-credentials

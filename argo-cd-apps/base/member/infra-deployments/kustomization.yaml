@@ -21,6 +21,7 @@ resources:
   - mintmaker
   - monitoring-cardinality
   - monitoring-registry
+  - monitoring-konflux-o11y-exporters
   - nvme-storage-configurator
   - tracing-workload-otel-collector
   - tempo
