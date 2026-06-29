@@ -118,10 +118,6 @@ loki:
     max_entries_limit_per_query: 100000
     increment_duplicate_timestamp: true
     allow_structured_metadata: true
-    # Query timeout configuration to prevent context canceled errors
-    max_query_length: 721h      # Maximum time range for queries (30 days)
-    max_query_parallelism: 32  # Maximum number of parallel queries
-    query_timeout: 10m         # Timeout for individual queries (10 minutes)
   runtimeConfig:
     configs:
       kubearchive:
@@ -129,6 +125,8 @@ loki:
         log_push_request_streams: false
         log_stream_creation: false
         log_duplicate_stream_info: false
+        query_timeout: 5m
+
   ingester:
     autoforget_unhealthy: true
     chunk_encoding: snappy
