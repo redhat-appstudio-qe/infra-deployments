@@ -2,7 +2,7 @@ resources:
   - ../base
   - rbac
   - external-secrets
-  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/ka/base?ref=1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/kaexporter/base?ref=1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
 
 images:
   - name: ka-exporter
