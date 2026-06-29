@@ -2,12 +2,12 @@ resources:
   - ../base
   - rbac
   - external-secrets
-  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/ka/base?ref=TODO  # Update ref once PVO11Y-5276 merges
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/ka/base?ref=1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
 
 images:
   - name: ka-exporter
     newName: quay.io/redhat-appstudio/o11y-exporters
-    newTag: TODO  # Update to merged commit hash
+    newTag: 1d9094f8f881fc2e5f8b39e6d09cfb07d32e7a25
 
 patches:
   # Remove the placeholder Secret from the o11y base — ExternalSecret manages it
