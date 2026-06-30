@@ -11,20 +11,21 @@ spec:
           - clusters:
               values:
                 sourceRoot: components/monitoring/exporters/kaexporter
-                clusterDir: base
+                environment: staging
+                clusterDir: ""
           - list:
               elements:
                 - nameNormalized: stone-stage-p01
-                  values.clusterDir: staging/stone-stage-p01
+                  values.clusterDir: stone-stage-p01
                 - nameNormalized: stone-stg-rh01
-                  values.clusterDir: staging/stone-stg-rh01
+                  values.clusterDir: stone-stg-rh01
   template:
     metadata:
       name: konflux-o11y-kaexporter-{{nameNormalized}}
     spec:
       project: default
       source:
-        path: '{{values.sourceRoot}}/{{values.clusterDir}}'
+        path: '{{values.sourceRoot}}/{{values.environment}}/{{values.clusterDir}}'
         repoURL: https://github.com/redhat-appstudio/infra-deployments.git
         targetRevision: main
       destination:
