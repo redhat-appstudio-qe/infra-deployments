@@ -14,4 +14,11 @@ patches:
       version: v1alpha1
       kind: Application
       name: all-application-sets
-namespace: argocd-staging
+  - path: patches/argocd-namespace-patch.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+      name: all-application-sets
+
+namespace: argocd-infra-deployments
