@@ -9,6 +9,13 @@ description: "Highest priority for component nudges"
 apiVersion: kueue.x-k8s.io/v1beta2
 kind: WorkloadPriorityClass
 metadata:
+  name: konflux-sign
+value: 1010
+description: "Higher priority for sign pipelines - generated from release pipelines"
+---
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: WorkloadPriorityClass
+metadata:
   name: konflux-release
 value: 1000
 description: "Higher priority for release pipelines"

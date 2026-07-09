@@ -22,6 +22,7 @@ spec:
     - aws-ip
     - mintmaker
     - konflux-release
+    - konflux-sign
     flavors:
     - name: default-flavor
       resources:
@@ -38,6 +39,8 @@ spec:
       - name: mintmaker
         nominalQuota: '150'
       - name: konflux-release
+        nominalQuota: '50'
+      - name: konflux-sign
         nominalQuota: '50'
   - coveredResources:
     - linux-amd64

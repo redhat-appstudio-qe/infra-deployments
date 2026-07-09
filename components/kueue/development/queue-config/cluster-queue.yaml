@@ -32,6 +32,7 @@ spec:
       - aws-ip
       - mintmaker
       - konflux-release
+      - konflux-sign
       flavors:
       - name: default-flavor
         resources:
@@ -51,6 +52,8 @@ spec:
           nominalQuota: "250"
         - name: mintmaker
           nominalQuota: "150"
+        - name: konflux-sign
+          nominalQuota: '50'
         - name: konflux-release
           nominalQuota: '50'
         # When a Workload doesn't have cpu or memory requests, if there is a limit range

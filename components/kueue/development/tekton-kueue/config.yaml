@@ -120,7 +120,7 @@ cel:
 
         has(pipelineRun.metadata.labels) &&
         'internal-services.appstudio.openshift.io/pipelinerun-uid' in pipelineRun.metadata.labels ?
-        [resource('konflux-release', 1)] : []
+        [resource('konflux-sign', 1)] : []
 
     # The token mechanism allows us to balance admitted PipelineRuns.
     # Here we want to state that each PipelineRuns needs one token, but
@@ -187,6 +187,6 @@ cel:
 
         has(pipelineRun.metadata.labels) &&
         'internal-services.appstudio.openshift.io/pipelinerun-uid' in pipelineRun.metadata.labels ?
-        priority('konflux-release') :
+        priority('konflux-sign') :
 
         priority('konflux-default')
