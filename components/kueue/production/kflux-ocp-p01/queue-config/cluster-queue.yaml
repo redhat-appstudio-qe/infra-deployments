@@ -25,8 +25,10 @@ spec:
     flavors:
     - name: default-flavor
       resources:
+      # To guarantee a priority lane for internal-services
+      # `tekton.dev/pipelineruns=konflux-ci-dev-token+konflux-release`
       - name: tekton.dev/pipelineruns
-        nominalQuota: '250'
+        nominalQuota: '350'
       - name: konflux-ci-dev-token
         nominalQuota: '250'
       - name: cpu
