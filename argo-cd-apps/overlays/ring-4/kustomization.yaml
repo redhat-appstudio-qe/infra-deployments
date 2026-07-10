@@ -4,8 +4,14 @@ resources:
   - ../../base/ring-deployments
 
 namespace: argocd-infra-deployments
+nameSuffix: -ring-4
+
 patches:
   - path: patches/ring-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+  - path: patches/all-clusters-patch.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1

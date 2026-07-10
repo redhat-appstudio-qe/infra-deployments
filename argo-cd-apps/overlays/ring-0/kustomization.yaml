@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - ../../base/ring-deployments
 namespace: openshift-gitops
+nameSuffix: -ring-0
 
 ## No patches until those applications are onboarded to the new standards
