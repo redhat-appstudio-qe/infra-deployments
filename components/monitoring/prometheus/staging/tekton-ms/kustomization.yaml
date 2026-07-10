@@ -4,14 +4,9 @@ resources:
   - ../../base/tekton-ms
   - kube-rbac-proxy.yaml
   - networkpolicy.yaml
+  - external-secrets/
 
 patches:
-  - path: rhobs-secret-path.yaml
-    target:
-      name: rhobs
-      kind: ExternalSecret
-      group: external-secrets.io
-      version: v1
   - path: remote-write-env-details.yaml
     target:
       name: appstudio-tekton-ms
