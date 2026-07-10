@@ -12,7 +12,7 @@ valuesInline:
   mirrord:
     enabled: false
   nginx:
-    enabled: true
+    enabled: false
     name: artifact-registry-proxy
     tls:
       enabled: true

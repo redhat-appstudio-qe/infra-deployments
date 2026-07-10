@@ -12,7 +12,7 @@ valuesInline:
   mirrord:
     enabled: false
   nginx:
-    enabled: true
+    enabled: false
     replicaCount: 3
     name: artifact-registry-proxy
     tls:
