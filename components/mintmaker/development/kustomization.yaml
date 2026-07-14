@@ -6,13 +6,13 @@ labels:
 resources:
   - ../base
   - plrs-resource-quota.yaml
-  - https://github.com/konflux-ci/mintmaker/config/default?ref=7bc5ca7e6ecd17749926284e491173bc90b2222d
-  - https://github.com/konflux-ci/mintmaker/config/renovate?ref=7bc5ca7e6ecd17749926284e491173bc90b2222d
+  - https://github.com/konflux-ci/mintmaker/config/default?ref=94d494ac08506a8fb28278860f969abd70423c90
+  - https://github.com/konflux-ci/mintmaker/config/renovate?ref=94d494ac08506a8fb28278860f969abd70423c90
 
 images:
   - name: quay.io/konflux-ci/mintmaker
     newName: quay.io/konflux-ci/mintmaker
-    newTag: 7bc5ca7e6ecd17749926284e491173bc90b2222d
+    newTag: 94d494ac08506a8fb28278860f969abd70423c90
   - name: quay.io/konflux-ci/mintmaker-renovate-image
     newName: quay.io/konflux-ci/mintmaker-renovate-image
     newTag: latest
