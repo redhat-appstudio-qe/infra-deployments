@@ -1187,6 +1187,16 @@ CONFIG_COMBINATIONS: Dict[str, ConfigCombination] = {
         "name": "Production RHEL config",
         "config_file": "components/kueue/production/kflux-rhel-p01/config.yaml",
         "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    },
+    "production-stone-prod-p01": {
+        "name": "Production stone-prod-p01 config (ring 1 temporary override)",
+        "config_file": "components/kueue/production/stone-prod-p01/config.yaml",
+        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    },
+    "production-kflux-prd-rh02": {
+        "name": "Production kflux-prd-rh02 config (ring 1 temporary override)",
+        "config_file": "components/kueue/production/kflux-prd-rh02/config.yaml",
+        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
     }
 }
 
@@ -1658,7 +1668,21 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
             }
         }
     },
-    
+
+    # KFLUXINFRA-3980 ring 1: build-platforms type guard
+    "multiplatform_new_string_param_production-kflux-ocp-p01": {
+        "pipelinerun_key": "multiplatform_new_string_param",
+        "config_key": "production-kflux-ocp-p01"
+    },
+    "multiplatform_new_string_param_production-stone-prod-p01": {
+        "pipelinerun_key": "multiplatform_new_string_param",
+        "config_key": "production-stone-prod-p01"
+    },
+    "multiplatform_new_string_param_production-kflux-prd-rh02": {
+        "pipelinerun_key": "multiplatform_new_string_param",
+        "config_key": "production-kflux-prd-rh02"
+    },
+
     # limit PLRs on p02
     "release_tenant_production_stone_prod_p02": {
         "pipelinerun_key": "release_tenant",
