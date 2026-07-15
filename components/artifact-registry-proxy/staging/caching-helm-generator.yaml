@@ -11,15 +11,15 @@ valuesInline:
   nginx:
     enabled: true
     replicaCount: 3
-    name: artifact-registry-proxy-v2
+    name: artifact-registry-proxy
     tls:
       enabled: true
-      secretName: artifact-registry-proxy-v2-tls
+      secretName: artifact-registry-proxy-tls
     service:
       port: 443
       trafficDistribution: PreferClose
       annotations:
-        service.beta.openshift.io/serving-cert-secret-name: artifact-registry-proxy-v2-tls
+        service.beta.openshift.io/serving-cert-secret-name: artifact-registry-proxy-tls
     upstream:
       url: https://red-hat.repo.sonatype.app
     auth:
