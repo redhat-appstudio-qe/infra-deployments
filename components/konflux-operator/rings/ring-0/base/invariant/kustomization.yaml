@@ -4,9 +4,6 @@ resources:
   - https://github.com/konflux-ci/konflux-ci/operator/config/default?ref=72d73f696e8847edfd53bbf9d302d6f2f703cfef
   - konflux.yaml
 
-patches:
-  - path: release-config.yaml
-
 images:
   - name: localhost/konflux-operator
     newName: quay.io/konflux-ci/konflux-operator
