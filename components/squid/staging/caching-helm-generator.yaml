@@ -4,7 +4,7 @@ metadata:
   name: caching-helm
 name: caching-helm
 repo: oci://quay.io/konflux-ci/caching
-version: 0.1.1775+d865e45
+version: 0.1.1799+03c65c8
 valuesInline:
   squid:
     enabled: true
