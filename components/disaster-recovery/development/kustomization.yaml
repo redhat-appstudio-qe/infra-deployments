@@ -3,11 +3,7 @@ kind: Kustomization
 namespace: konflux-disaster-recovery
 
 resources:
-- cronjob.yaml
-- event_listener.yaml
+- localqueue.yaml
+- namespace.yaml
 - pipeline.yaml
 - rbac.yaml
-- triggerbinding.yaml
-- triggertemplate.yaml
-- namespace.yaml
-- networkpolicy_allow_el_from_ns.yaml
