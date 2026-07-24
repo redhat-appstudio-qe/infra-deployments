@@ -6,7 +6,6 @@ customConfig:
   api:
     enabled: true
     address: 127.0.0.1:8686
-    playground: false
   sources:
     k8s_logs:
       type: kubernetes_logs
@@ -146,7 +145,7 @@ tolerations:
     operator: Exists
 image:
   repository: quay.io/kubearchive/vector
-  tag: 0.54.0-distroless-libc
+  tag: 0.57.0-distroless-libc
 serviceAccount:
   create: true
   name: vector
