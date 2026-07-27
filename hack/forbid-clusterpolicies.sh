@@ -23,8 +23,45 @@ error_handler() {
 # Trap the ERR signal and call the error_handler function
 trap error_handler ERR
 
+kustomize_build_with_retry() {
+  local max_attempts="${KUSTOMIZE_RETRIES:-5}"
+  local attempt=1
+  local kustomize_stdout=""
+  local kustomize_stderr=""
+
+  # Always restore ERR handling when leaving this function, including unexpected failures.
+  trap 'trap error_handler ERR' RETURN
+  trap - ERR
+  while true; do
+    kustomize_stderr=$(mktemp)
+    if kustomize_stdout=$(kustomize build --enable-helm "${folder}" 2>"${kustomize_stderr}"); then
+      rm -f "${kustomize_stderr}"
+      echo "${kustomize_stdout}" | yq -o=j || return 1
+      return 0
+    fi
+
+    if (( attempt >= max_attempts )); then
+      cat "${kustomize_stderr}" >&2
+      rm -f "${kustomize_stderr}"
+      return 1
+    fi
+
+    if [[ "${OUTPUT}" == "GITHUB" ]]; then
+      printf "::warning::kustomize build for '%s' failed (attempt %s/%s), retrying in %ss...\n" \
+        "${folder}" "${attempt}" "${max_attempts}" $(( attempt * 2 )) >&2
+    else
+      printf "kustomize build for '%s' failed (attempt %s/%s), retrying in %ss...\n" \
+        "${folder}" "${attempt}" "${max_attempts}" $(( attempt * 2 )) >&2
+    fi
+
+    rm -f "${kustomize_stderr}"
+    sleep $(( attempt * 2 ))
+    attempt=$((attempt + 1))
+  done
+}
+
 # build manifests and filter ClusterPolicies for provided folder
-manifests=$(kustomize build --enable-helm "${folder}" | yq -o=j)
+manifests=$(kustomize_build_with_retry) || exit $?
 policies=$(echo "${manifests}" | jq 'select(.kind=="ClusterPolicy")' | jq -s '.')
 
 # calculate the number of policies in the given folder
