@@ -4,9 +4,9 @@ namespace: image-rbac-proxy
 resources:
 - ../../base
 - ../../base/external-secrets
-- https://github.com/konflux-ci/image-rbac-proxy/deploy/base?ref=8fc718007abb984ee2f29acb860601f2bd1cdce6
+- https://github.com/konflux-ci/image-rbac-proxy/deploy/base?ref=180fe41615ea2259fc31ba2da6e83a98f8623de8
 
 images:
 - name: quay.io/konflux-ci/image-rbac-proxy
   newName: quay.io/konflux-ci/image-rbac-proxy
-  newTag: 8fc718007abb984ee2f29acb860601f2bd1cdce6
+  newTag: 180fe41615ea2259fc31ba2da6e83a98f8623de8
