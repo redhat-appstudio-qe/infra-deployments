@@ -2,8 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: konflux-operator
-  labels:
-    appstudio.redhat.com/environment: internal
+  labels: # Helps k-components detect this appset to apply the correct patches
+    appstudio.redhat.com/deployment-clusters: "tenant"
+    appstudio.redhat.com/internal-only: "true"
 spec:
   generators:
     - merge:
@@ -11,15 +12,12 @@ spec:
           - nameNormalized
         generators:
           - clusters:
-              selector:
-                matchLabels:
-                  appstudio.redhat.com/is-tenant-cluster: "true"
               values:
                 sourceRoot: components/konflux-operator
                 ring: "empty-base"
                 clusterDir: "empty-base"
           - list:
-              elements: [] # Populated via internal-clusters-patch
+              elements: [] # Populated via k-components (or manually if the cluster list is unusual)
 
   template:
     metadata:
