@@ -12,21 +12,11 @@ spec:
         mergeKeys:
           - nameNormalized
         generators:
-          - clusters:
-              matchExpressions: # Ensures that no clusters are selected
-                - key: appstudio.redhat.com/select-none
-                  operator: Exists
-                - key: appstudio.redhat.com/select-none
-                  operator: DoesNotExist
+          - clusters: # Ensures all clusters are selected (only in dev)
               values:
                 sourceRoot: components/kueue-rd
-                ring: "empty-base"
-                clusterDir: "empty-base"
-          - list:
-              elements:
-                - nameNormalized: ring-0
-                  values.ring: "ring-0"
-                  values.clusterDir: "base"
+                ring: "ring-0"
+                clusterDir: "base"
 
   template:
     metadata:
