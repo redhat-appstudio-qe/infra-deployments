@@ -37,6 +37,7 @@ jobs:
             ! -path 'components/monitoring/blackbox/staging/*' \
             ! -path 'components/monitoring/blackbox/production/*' \
             ! -path 'components/*/chainsaw/*' \
+            ! -path 'components/kueue-rd/rings/*/base/external-repo/*' \
             ! -path 'components/etcd-shield/base/*' \
             ! -path 'components/etcd-shield/rings/*/base/base-snapshot/*' \
             | \
