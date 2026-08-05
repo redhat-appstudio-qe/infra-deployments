@@ -15,4 +15,4 @@ spec:
           # (see components/pipeline-service), not in openshift-pipelines as
           # the operator's default assumes.
           - name: TEKTON_RESULTS_API_ADDR
-            value: tekton-results-api-service.tekton-results.svc.cluster.local:8080
+            value: tekton-results-api-service.openshift-pipelines.svc.cluster.local:8080
