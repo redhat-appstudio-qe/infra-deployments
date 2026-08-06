@@ -6,4 +6,3 @@ resources:
   - rbac
   - services
   - namespace.yaml
-  - pipeline-metrics-exporter-deployment.yaml
