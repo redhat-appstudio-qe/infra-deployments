@@ -17,9 +17,3 @@ helmCharts:
   releaseName: external-secrets-operator
   namespace: external-secrets-operator
   valuesFile: values.yaml
-
-# Override the ESO image with the Konflux-built image
-images:
-- name: ghcr.io/external-secrets/external-secrets
-  newName: quay.io/konflux-ci/external-secrets-operator
-  newTag: 81c0813fffc8a65f05376d7d80e1cfd39676a6a3
