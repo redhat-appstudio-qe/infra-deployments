@@ -5,6 +5,7 @@ namespace: argocd-infra-deployments
 resources:
   - authentication
   - etcd-shield
+  - external-secrets-operator
 
 components:
   - ../../k-components/deploy-to-all-production-clusters
