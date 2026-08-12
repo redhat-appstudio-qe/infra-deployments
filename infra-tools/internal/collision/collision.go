@@ -50,7 +50,7 @@ type OverlayGroup struct {
 // targets.
 var DefaultGroups = []OverlayGroup{
 	{OverlayPaths: []string{"argo-cd-apps/overlays/development", "argo-cd-apps/overlays/rd-dev"}},
-	{OverlayPaths: []string{"argo-cd-apps/overlays/development-operator"}},
+	{OverlayPaths: []string{"argo-cd-apps/overlays/development", "argo-cd-apps/overlays/development-operator"}},
 }
 
 // AppSet represents one ApplicationSet found while building an overlay: the
