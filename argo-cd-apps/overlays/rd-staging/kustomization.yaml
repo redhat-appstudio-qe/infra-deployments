@@ -4,6 +4,7 @@ namespace: argocd-infra-deployments
 
 resources:
   - authentication
+  - disaster-recovery
   - etcd-shield
   - konflux-operator
   - kueue
