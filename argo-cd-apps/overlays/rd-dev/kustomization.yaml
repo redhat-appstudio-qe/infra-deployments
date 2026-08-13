@@ -2,12 +2,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: openshift-gitops
-nameSuffix: -ring-0
 
 resources:
+  - ../development # Include until all Konflux microservices are migrated to rd-dev
   - etcd-shield
   - konflux-operator
   - kueue
 
-# No patches until those applications are onboarded to the new standards
-patches: []
+patchesStrategicMerge:
+  - patches/delete-legacy-konflux-member-appsets.yaml
+
+patches:
+  - path: patches/pipeline-service-env-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: pipeline-service
