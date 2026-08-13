@@ -388,7 +388,7 @@ configure_kueue_for_ocp_version() {
 
 # Enable Konflux CR image-controller only when Quay credentials are provided.
 configure_operator_image_controller() {
-    [ "$TARGET_PREVIEW_OVERLAY" != "development-operator" ] && return
+    [ "$TARGET_PREVIEW_OVERLAY" != "development-operator" ] &&  [ "$TARGET_PREVIEW_OVERLAY" != "rd-dev" ] && return
 
     local cr_patch="$ROOT/components/konflux-operator/rings/ring-0/base/cr/image-controller/image-controller.yaml"
     local ring_kust="$ROOT/components/konflux-operator/rings/ring-0/base/kustomization.yaml"
@@ -962,11 +962,11 @@ fi
 TARGET_APP_OF_APPS_PATH="$ROOT/argo-cd-apps/app-of-app-sets/$TARGET_PREVIEW_OVERLAY"
 TARGET_OVERLAY_PATH="$ROOT/argo-cd-apps/overlays/$TARGET_PREVIEW_OVERLAY"
 TARGET_OVERLAY_DELETE_FILE="$TARGET_OVERLAY_PATH/delete-applications.yaml"
-# If the delete file does not exist, create it and wire it into the overlay's Kustomize file
-if [ ! -f "$TARGET_OVERLAY_DELETE_FILE" ]; then
-    touch "$TARGET_OVERLAY_DELETE_FILE"
-    yq -i '.patchesStrategicMerge += ["delete-applications.yaml"]' "$TARGET_OVERLAY_PATH/kustomization.yaml"
-fi
+# NOTE: the delete file itself is created/wired further below, only after the
+# "uncommitted changes" git gate and the $PREVIEW_BRANCH checkout - creating
+# it here would modify a tracked file (kustomization.yaml) on $MY_GIT_BRANCH
+# before that gate runs, and the gate would then fail on every run (even from
+# a clean checkout) by tripping over the script's own edit.
 
 # =============================================================================
 # Main Execution
@@ -1032,6 +1032,15 @@ if git rev-parse --verify $PREVIEW_BRANCH &> /dev/null; then
     git branch -D $PREVIEW_BRANCH
 fi
 git checkout -b $PREVIEW_BRANCH
+
+# If the delete file does not exist, create it and wire it into the overlay's Kustomize
+# file. Must happen only now, on $PREVIEW_BRANCH: this modifies the tracked
+# kustomization.yaml, and doing so before the uncommitted-changes gate above would make
+# that gate fail on every run by tripping over this script's own edit.
+if [ ! -f "$TARGET_OVERLAY_DELETE_FILE" ]; then
+    touch "$TARGET_OVERLAY_DELETE_FILE"
+    yq -i '.patchesStrategicMerge += ["delete-applications.yaml"]' "$TARGET_OVERLAY_PATH/kustomization.yaml"
+fi
 
 log_success "Git environment initialized"
 log_info "  - Repository URL: $MY_GIT_REPO_URL"
