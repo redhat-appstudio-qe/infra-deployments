@@ -12,6 +12,7 @@ resources:
   - ../../overlays/rd-dev/konflux-operator
 patchesStrategicMerge:
   - delete-legacy-konflux-member-appsets.yaml
+  - delete-applications.yaml
 namespace: openshift-gitops
 patches:
   - path: pipeline-service-operator-patch.yaml
