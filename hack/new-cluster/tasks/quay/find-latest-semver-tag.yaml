@@ -7,7 +7,7 @@
     headers:
       Accept: "application/json"
   register: quay_tags_response
-  when: "vars[varname_tag] is undefined or vars[varname_tag] == ''"
+  when: "vars[varname_tag] is undefined or vars[varname_tag] == '' or vars[varname_digest] is undefined or vars[varname_digest] == ''"
 
 - name: Set {{ varname_tag }} and {{ varname_digest }} from latest semver tag
   tags: [always]
@@ -20,9 +20,11 @@
   set_fact:
     "{{ varname_tag }}": "{{ semver_tags[0].name }}"
     "{{ varname_digest }}": "{{ semver_tags[0].manifest_digest }}"
-  when: "vars[varname_tag] is undefined or vars[varname_tag] == ''"
+  when: "vars[varname_tag] is undefined or vars[varname_tag] == '' or vars[varname_digest] is undefined or vars[varname_digest] == ''"
+  failed_when: "semver_tags | length == 0"
 
 - name: Show selected tag for {{ repo }}
   tags: [always]
   debug:
     msg: "Selected {{ repo }} tag: {{ vars[varname_tag] }} digest: {{ vars[varname_digest] }}"
+  when: "vars[varname_tag] is defined and vars[varname_digest] is defined"
