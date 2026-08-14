@@ -54,7 +54,6 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=false
-        preserveResourcesOnDeletion: true
         retry:
           limit: -1
           backoff:
