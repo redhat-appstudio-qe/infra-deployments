@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: konflux-verifications-rd
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:
@@ -14,9 +16,7 @@ spec:
                 environment: staging
                 clusterDir: "empty-base"
           - list:
-              elements:
-                - nameNormalized: stone-stage-p01
-                  values.clusterDir: stone-stage-p01
+              elements: []
   template:
     metadata:
       name: konflux-verifications-rd-{{nameNormalized}}
