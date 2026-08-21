@@ -1,0 +1,4 @@
+---
+- op: replace
+  path: /spec/template/spec/containers/0/args/1
+  value: "https://smee-smee.apps.rosa.kflux-c-prd-e01.yo5u.p3.openshiftapps.com/redhathooklwp01"
