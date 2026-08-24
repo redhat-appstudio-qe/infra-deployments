@@ -40,7 +40,6 @@ resources:
   - konflux-verifications-rd
   - trust-manager
   - squid
-  - kueue
   - policies
   - konflux-kite
   - dummy-deployment
