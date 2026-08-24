@@ -3,7 +3,7 @@ apiVersion: kueue.x-k8s.io/v1beta2
 kind: ResourceFlavor
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: '10'
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: "default-flavor"
 ---
@@ -12,7 +12,7 @@ kind: ClusterQueue
 metadata:
   name: cluster-pipeline-queue
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: '10'
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
     flavorFungibility:
