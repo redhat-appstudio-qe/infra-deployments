@@ -9,6 +9,7 @@ rules:
   - applications
   - components
   - releaseplans
+  - componentgroups
   verbs:
   - get
   - list

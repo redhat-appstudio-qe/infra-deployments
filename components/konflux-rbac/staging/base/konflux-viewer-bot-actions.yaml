@@ -27,12 +27,21 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - appstudio.redhat.com
+  - konflux-ci.dev
   resources:
   - applications
   - snapshots
   - releases
   - components
+  - componentgroups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - appstudio.redhat.com
+  resources:
+  - componentgroups
   verbs:
   - get
   - list
