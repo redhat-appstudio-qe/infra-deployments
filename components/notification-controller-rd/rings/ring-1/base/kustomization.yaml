@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: notification-controller
 
 resources:
+- base-snapshot
 - https://github.com/konflux-ci/notification-service/config/default?ref=813f902b2df56da644170ecbab5b438fc88dd9be
 - aws-sns-secret.yaml
 
