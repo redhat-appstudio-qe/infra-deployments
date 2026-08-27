@@ -53,6 +53,17 @@ spec:
       destination:
         namespace: konflux-kyverno
         server: '{{server}}'
+      ignoreDifferences:
+        - group: apiextensions.k8s.io
+          kind: CustomResourceDefinition
+          name: '*.kyverno.io'
+          jqPathExpressions:
+            - .spec
+        - group: apiextensions.k8s.io
+          kind: CustomResourceDefinition
+          name: '*.wgpolicyk8s.io'
+          jqPathExpressions:
+            - .spec
       syncPolicy:
         automated:
           prune: true
@@ -60,6 +71,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - RespectIgnoreDifferences=true
         retry:
           limit: 50
           backoff:
