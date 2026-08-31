@@ -14,6 +14,7 @@ resources:
   - kueue
   - multi-platform-controller
   - notification-controller
+  - repository-validator
 
 components:
   - ../../k-components/deploy-to-all-staging-clusters
