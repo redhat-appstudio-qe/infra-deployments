@@ -14,11 +14,10 @@ patchesStrategicMerge:
   - delete-applications.yaml
 namespace: argocd
 patches:
-  - path: production-downstream-overlay-patch.yaml
+  - path: disable-auto-sync.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: multi-platform-controller
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
