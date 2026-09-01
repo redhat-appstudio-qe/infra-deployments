@@ -39,6 +39,7 @@ resources:
   - cert-manager
   - konflux-verifications-rd
   - trust-manager
+  - cert-manager-trusted-ca
   - squid
   - kueue
   - policies
