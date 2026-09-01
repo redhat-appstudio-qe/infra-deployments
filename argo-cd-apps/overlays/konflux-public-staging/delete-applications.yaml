@@ -35,3 +35,4 @@ kind: ApplicationSet
 metadata:
   name: etcd-defrag
 $patch: delete
+
