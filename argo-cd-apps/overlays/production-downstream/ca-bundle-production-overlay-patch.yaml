@@ -1,0 +1,16 @@
+# Sets production environment and enables per-cluster overlays for ca-bundle.
+# The default clusterDir is set to "base" so that non-overridden clusters
+# resolve to components/ca-bundle/production/base/ (restructured in
+# internal-infra-deployments to support per-cluster overlays for ROKS).
+---
+- op: add
+  path: /spec/generators/0/merge/generators/0/clusters/values/environment
+  value: production
+- op: add
+  path: /spec/generators/0/merge/generators/0/clusters/values/clusterDir
+  value: base
+- op: add
+  path: /spec/generators/0/merge/generators/1/list/elements/-
+  value:
+    nameNormalized: kflux-lw-p01
+    values.clusterDir: kflux-lw-p01
