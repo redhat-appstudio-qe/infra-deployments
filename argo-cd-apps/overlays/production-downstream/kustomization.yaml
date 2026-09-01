@@ -109,7 +109,7 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: smee-client
-  - path: production-overlay-patch.yaml
+  - path: ca-bundle-production-overlay-patch.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1
