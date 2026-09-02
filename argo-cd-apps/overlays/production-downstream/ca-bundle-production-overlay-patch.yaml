@@ -1,0 +1,12 @@
+# Sets production environment and adds kflux-lw-p01 to the ca-bundle
+# per-cluster overlay routing (ROKS cluster needing CA in cert-manager ns).
+# clusterDir defaults to "base" in the base ApplicationSet.
+---
+- op: add
+  path: /spec/generators/0/merge/generators/0/clusters/values/environment
+  value: production
+- op: add
+  path: /spec/generators/0/merge/generators/1/list/elements/-
+  value:
+    nameNormalized: kflux-lw-p01
+    values.clusterDir: kflux-lw-p01
