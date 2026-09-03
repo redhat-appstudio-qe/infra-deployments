@@ -1160,33 +1160,35 @@ PIPELINERUN_DEFINITIONS: Dict[str, PipelineRunTestData] = {
 CONFIG_COMBINATIONS: Dict[str, ConfigCombination] = {
     "development": {
         "name": "Development config",
-        "config_file": "components/kueue/development/tekton-kueue/config.yaml",
-        "kustomization_file": "components/kueue/development/tekton-kueue/kustomization.yaml"
+        "config_file": "components/kueue/rings/ring-0/base/tekton-kueue/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-0/base/tekton-kueue/kustomization.yaml"
     },
     "staging": {
         "name": "Staging config",
-        "config_file": "components/kueue/staging/base/tekton-kueue/config.yaml",
-        "kustomization_file": "components/kueue/staging/base/tekton-kueue/kustomization.yaml"
+        "config_file": "components/kueue/rings/ring-1/base/tekton-kueue/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-1/base/tekton-kueue/kustomization.yaml"
     },
-    "production": {
-        "name": "Production config",
-        "config_file": "components/kueue/production/base/tekton-kueue/config.yaml",
-        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    # Clusters in rings 2-4 (AKA production rings) have the same Kueue configs, except for the clusters listed
+    # below this entry
+    "production-ring-2": {
+        "name": "Production Ring 2 config",
+        "config_file": "components/kueue/rings/ring-2/kflux-prd-rh03/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-2/base/tekton-kueue/kustomization.yaml"
     },
     "production-kflux-ocp-p01": {
         "name": "Production config",
-        "config_file": "components/kueue/production/kflux-ocp-p01/config.yaml",
-        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+        "config_file": "components/kueue/rings/ring-2/kflux-ocp-p01/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-2/base/tekton-kueue/kustomization.yaml"
     },
     "production-stone-prod-p02": {
         "name": "Production p02 config",
-        "config_file": "components/kueue/production/stone-prod-p02/config.yaml",
-        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+        "config_file": "components/kueue/rings/ring-3/stone-prod-p02/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-3/base/tekton-kueue/kustomization.yaml"
     },
     "production-kflux-rhel-p01": {
         "name": "Production RHEL config",
-        "config_file": "components/kueue/production/kflux-rhel-p01/config.yaml",
-        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+        "config_file": "components/kueue/rings/ring-2/kflux-rhel-p01/config.yaml",
+        "kustomization_file": "components/kueue/rings/ring-2/base/tekton-kueue/kustomization.yaml"
     }
 }
 
@@ -1378,7 +1380,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     # Test key PipelineRuns with production config
     "multiplatform_new_production": {
         "pipelinerun_key": "multiplatform_new",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1395,7 +1397,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "release_managed_production": {
         "pipelinerun_key": "release_managed",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1408,7 +1410,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "mintmaker_production": {
         "pipelinerun_key": "mintmaker",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1422,7 +1424,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "internal_pipelinerun_child_production": {
         "pipelinerun_key": "internal_pipelinerun_child",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1436,7 +1438,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "prefer_new_parameters_production": {
         "pipelinerun_key": "prefer-new-parameters",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1453,7 +1455,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "gitlab_merge_request_production": {
         "pipelinerun_key": "gitlab_merge_request_build",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1466,7 +1468,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "gitlab_merge_request_test_production": {
         "pipelinerun_key": "gitlab_merge_request_test",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1479,7 +1481,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
     },
     "nudging_production": {
         "pipelinerun_key": "nudge_pipelinerun_prod",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
@@ -1661,7 +1663,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
 
     "multiplatform_new_string_param_production": {
         "pipelinerun_key": "multiplatform_new_string_param",
-        "config_key": "production",
+        "config_key": "production-ring-2",
         "expected": {
             "annotations": {
                 "kueue.konflux-ci.dev/validation-error": "build-platforms parameter must be an array of platform strings, got a non-array value",
