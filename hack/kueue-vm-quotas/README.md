@@ -24,7 +24,7 @@ Platform quotas are distributed across resource groups respecting Kueue's constr
 
 ```bash
 python3 hack/kueue-vm-quotas/update-kueue-vm-quotas.py \
-    components/multi-platform-controller/staging/host-config.yaml \
+    components/multi-platform-controller-rd/staging/host-config.yaml \
     components/kueue/development/queue-config/cluster-queue.yaml \
     --dry-run
 ```
@@ -33,8 +33,8 @@ python3 hack/kueue-vm-quotas/update-kueue-vm-quotas.py \
 
 ```bash
 python3 hack/kueue-vm-quotas/update-kueue-vm-quotas.py \
-    components/multi-platform-controller/staging/host-config.yaml \
-    components/kueue/development/queue-config/cluster-queue.yaml
+    components/multi-platform-controller/rings/ring-0/base/host-config.yaml \
+    components/kueue/rings/ring-0/base/cluster-queue.yaml
 ```
 
 ## Example Output
