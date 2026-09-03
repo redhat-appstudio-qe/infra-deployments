@@ -110,6 +110,9 @@ def parse_host_config(host_config_path: str) -> Dict[str, PlatformQuota]:
     with open(host_config_path, 'r') as f:
         config = yaml.safe_load(f)
     
+    if config is None:
+        raise ValueError(f"Empty or invalid YAML in {host_config_path} — helm template may have failed")
+
     platform_quotas: Dict[str, PlatformQuota] = {}
     data = config.get('data', {})
     
