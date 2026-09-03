@@ -34,7 +34,7 @@ generate_host_config() {
     # Determine the relative path to the base chart
     # Since we know the full path, we can calculate relative path directly
     # Extract the part after components/multi-platform-controller/
-    local subpath="${input_dir#*components/multi-platform-controller/}"
+    local subpath="${input_dir#*components/multi-platform-controller-rd/}"
     
     # Count directory levels to determine how many "../" we need
     # If subpath is empty, we're directly in multi-platform-controller (depth=0)
@@ -99,25 +99,25 @@ main() {
     
     # Define input-output file pairs
     local -A queue_configs=(
-        ["components/multi-platform-controller/staging/host-config.yaml"]="components/kueue/rings/ring-1/stone-stg-rh01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-1/stone-stg-rh01/host-config.yaml"]="components/kueue/rings/ring-1/stone-stg-rh01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/staging-downstream/host-config.yaml"]="components/kueue/rings/ring-1/stone-stage-p01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-1/stone-stage-p01/host-config.yaml"]="components/kueue/rings/ring-1/stone-stage-p01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production/kflux-prd-rh02/host-config.yaml"]="components/kueue/rings/ring-4/kflux-prd-rh02/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-4/kflux-prd-rh02/host-config.yaml"]="components/kueue/rings/ring-4/kflux-prd-rh02/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production/kflux-prd-rh03/host-config.yaml"]="components/kueue/rings/ring-2/kflux-prd-rh03/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-2/kflux-prd-rh03/host-config.yaml"]="components/kueue/rings/ring-2/kflux-prd-rh03/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production-downstream/kflux-ocp-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-ocp-p01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-2/kflux-ocp-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-ocp-p01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production-downstream/kflux-rhel-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-rhel-p01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-2/kflux-rhel-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-rhel-p01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production-downstream/kflux-osp-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-osp-p01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-2/kflux-osp-p01/host-config.yaml"]="components/kueue/rings/ring-2/kflux-osp-p01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production-downstream/stone-prod-p01/host-config.yaml"]="components/kueue/rings/ring-2/stone-prod-p01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-2/stone-prod-p01/host-config.yaml"]="components/kueue/rings/ring-2/stone-prod-p01/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production-downstream/stone-prod-p02/host-config.yaml"]="components/kueue/rings/ring-3/stone-prod-p02/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-3/stone-prod-p02/host-config.yaml"]="components/kueue/rings/ring-3/stone-prod-p02/cluster-queue.yaml"
 
-        ["components/multi-platform-controller/production/stone-prd-rh01/host-config.yaml"]="components/kueue/rings/ring-3/stone-prd-rh01/cluster-queue.yaml"
+        ["components/multi-platform-controller-rd/rings/ring-3/stone-prd-rh01/host-config.yaml"]="components/kueue/rings/ring-3/stone-prd-rh01/cluster-queue.yaml"
     )
     
     # Track generated files for cleanup
