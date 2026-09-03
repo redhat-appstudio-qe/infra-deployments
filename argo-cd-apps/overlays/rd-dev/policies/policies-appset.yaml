@@ -1,7 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: policies-rd
+  name: policies
+  annotations:
+    argocd.argoproj.io/sync-wave: "25"
 spec:
   generators:
     - merge:
