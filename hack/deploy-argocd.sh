@@ -151,10 +151,12 @@ spec:
         value: 5m
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: "1"
+        memory: 2Gi
+      limits:
+        memory: 8Gi
 ' --type=merge; then
-        log_success "Repo server configured: timeout=5m, cpu=100m, memory=100Mi"
+        log_success "Repo server configured: timeout=5m, cpu=1, memory=2Gi/8Gi"
     else
         log_warn "Failed to patch repo server configuration (may already be set)"
     fi
