@@ -246,7 +246,7 @@ ci_register_sprayproxy_pac_route() {
   fi
 
   echo "[INFO] Registering PAC route https://${pac_route} with SprayProxy..."
-  http_code="$(curl -s -o /dev/null -w "%{http_code}" \
+  http_code="$(curl -sk -o /dev/null -w "%{http_code}" \
     --connect-timeout 10 \
     --max-time 30 \
     --retry 3 \
