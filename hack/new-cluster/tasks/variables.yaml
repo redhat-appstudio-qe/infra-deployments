@@ -41,6 +41,19 @@
   fail:
     msg: "Variable 'network' must be one of {{allowed_networks}}, not {{network}}"
   when: "vars['network'] not in vars['allowed_networks']"
+- name: Check that konflux-operator ring base exists
+  tags: [always]
+  stat:
+    path: "{{ dst }}/components/konflux-operator/rings/{{ ring }}/base"
+  register: konflux_operator_ring_base
+- name: Fail if konflux-operator has no base for this ring
+  tags: [always]
+  fail:
+    msg: >-
+      konflux-operator has no rings/{{ ring }}/base. Operator-first bootstrap
+      currently requires ring-1 (staging) or ring-2 (production). Existing
+      operator rings: ring-1, ring-2.
+  when: not konflux_operator_ring_base.stat.exists
 - name: Determine the latest github commits
   tags: [always]
   include_tasks: tasks/github/find-latest-commits.yaml
