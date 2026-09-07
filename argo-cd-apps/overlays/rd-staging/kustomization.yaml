@@ -14,6 +14,9 @@ resources:
   - kueue
   - multi-platform-controller
   - smee-client
+  - notification-controller
+  - policies
+  - repository-validator
 
 components:
   - ../../k-components/deploy-to-all-staging-clusters
