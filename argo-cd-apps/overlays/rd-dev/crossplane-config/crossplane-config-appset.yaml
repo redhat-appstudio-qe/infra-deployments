@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: crossplane-config
+  name: crossplane-config-rd
 spec:
   generators:
     - merge:
