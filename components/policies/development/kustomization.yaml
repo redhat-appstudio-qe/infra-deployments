@@ -9,4 +9,5 @@ resources:
 - konflux-rbac/
 - integration/
 - kubearchive/
-- kueue/
+# Comment out Kueue policies since Kueue is only in ring overlays now
+# - kueue/
