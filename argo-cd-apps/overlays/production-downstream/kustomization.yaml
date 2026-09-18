@@ -9,7 +9,6 @@ resources:
   - ../../base/smee-client
   - ../../base/ca-bundle
   - ../../base/cert-manager-trusted-ca
-  - ../../base/repository-validator
   - ../../base/cluster-secret-store-rh
 patchesStrategicMerge:
   - delete-applications.yaml
@@ -109,11 +108,6 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: repository-validator
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
       name: project-controller
   - path: production-overlay-patch.yaml
     target:
@@ -190,11 +184,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: knative-eventing
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: etcd-defrag
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -397,3 +386,9 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: cert-manager-trusted-ca
+  # ROKS (hypershift) clusters — kubelet is managed by the platform
+  - path: exclude-kubelet-config-roks-clusters.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: kubelet-config
