@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/size
+  value: 1x.demo
+- op: add
+  path: /spec/limits
+  value:
+    global:
+      retention:
+        days: 7
