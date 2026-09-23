@@ -150,12 +150,6 @@ cel:
         pipelineRun.metadata.labels['build.appstudio.redhat.com/type'] == 'nudge' ?
         priority('konflux-nudge') :
 
-        has(pipelineRun.metadata.annotations) &&
-        'pipelinesascode.tekton.dev/source-branch' in pipelineRun.metadata.annotations &&
-        pipelineRun.metadata.annotations['pipelinesascode.tekton.dev/source-branch'].startsWith('konflux/mintmaker/') &&
-        plrNamespace != 'mintmaker' ?
-        priority('konflux-mintmaker-triggered') :
-
         pacEventType == 'push' ? priority('konflux-post-merge-build') :
         pacEventType == 'pull_request' ||
           pacEventType == "Merge_Request" ||
