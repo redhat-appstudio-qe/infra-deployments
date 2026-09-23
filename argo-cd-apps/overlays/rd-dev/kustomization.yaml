@@ -14,7 +14,7 @@ resources:
   - etcd-shield
   - konflux-operator
 # - kueue # TODO: Uncomment this once e2e tests use solely the rd-dev overlay
-  - kyverno
+# - kyverno # TODO: Uncomment this once e2e tests use solely the rd-dev overlay
   - multi-platform-controller
   # - policies # TODO: Uncomment this once e2e tests use solely the rd-dev overlay
   - smee-client
