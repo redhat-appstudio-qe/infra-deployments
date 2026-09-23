@@ -12,6 +12,13 @@ spec:
               selector:
                 matchLabels:
                   appstudio.redhat.com/member-cluster: "true"
+                matchExpressions:
+                  - key: nameNormalized
+                    operator: NotIn
+                    values:
+                      - lightwell-dev
+                      - stone-stage-p01
+                      - stone-stg-rh01
               values:
                 sourceRoot: components/squid
                 environment: staging
