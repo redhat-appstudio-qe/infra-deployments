@@ -15,7 +15,7 @@ components:
   - cr/enterprise-contract
   - cr/konflux-rbac
   - cr/telemetry
-  - cr/servicemonitor-view
+  - cr/operator-view
 
 patches:
   - path: release-config.yaml
