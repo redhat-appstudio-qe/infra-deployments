@@ -8,8 +8,8 @@ resources:
 - testplatform-provider-config.yaml
 - testplatform-cluster-es.yaml
 - environment-config.yaml
-- https://github.com/konflux-ci/crossplane-control-plane/crossplane?ref=d724d09868a3297f8f70672083b3caff5b754bf1
-- https://github.com/konflux-ci/crossplane-control-plane/config?ref=d724d09868a3297f8f70672083b3caff5b754bf1
+- https://github.com/konflux-ci/crossplane-control-plane/crossplane?ref=9b34e42abc7e3556060203356799cd72e5741b5c
+- https://github.com/konflux-ci/crossplane-control-plane/config?ref=9b34e42abc7e3556060203356799cd72e5741b5c
 
 images:
   - name: quay.io/konflux-ci/task-runner
