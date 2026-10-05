@@ -13,9 +13,3 @@ resources:
 patchesStrategicMerge:
   - delete-legacy-konflux-member-appsets.yaml
 namespace: openshift-gitops
-patches:
-  - path: pipeline-service-operator-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: pipeline-service-rd
