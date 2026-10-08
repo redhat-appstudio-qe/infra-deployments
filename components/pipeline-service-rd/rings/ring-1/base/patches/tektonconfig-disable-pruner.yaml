@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/pruner/disabled
-  value: true
