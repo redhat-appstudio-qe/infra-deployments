@@ -36,6 +36,14 @@ spec:
                   values.clusterDir: kflux-rhel-p01
                 - nameNormalized: stone-prd-rh01
                   values.clusterDir: stone-prd-rh01
+      selector:
+        matchExpressions:
+          - key: nameNormalized
+            operator: NotIn
+            values:
+              - lightwell-dev
+              - stone-stage-p01
+              - stone-stg-rh01
   template:
     metadata:
       name: squid-{{nameNormalized}}

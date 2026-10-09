@@ -113,8 +113,9 @@
     - '{__name__="kube_deployment_status_replicas_available", namespace="konflux-support-ops"}'
     - '{__name__="kube_deployment_spec_replicas", namespace="konflux-support-ops"}'
 
-    # Namespace: caching
+    # Namespaces: caching proxies
     - '{__name__="squid_up", namespace="caching"}'
+    - '{__name__="squid_up", namespace="container-image-proxy"}'
 
     # Namespace: image-rbac-proxy
     - '{__name__="kube_deployment_spec_replicas", namespace="image-rbac-proxy"}'
