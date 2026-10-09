@@ -4,28 +4,26 @@ metadata:
   name: trust-manager
 name: trust-manager
 repo: https://charts.jetstack.io
-version: 0.19.0
+version: v0.25.0
 namespace: cert-manager
 releaseName: trust-manager
 valuesInline:
-  # Leader election is disabled, so replicas must remain 1 to avoid
-  # multiple active controllers running concurrently.
   replicaCount: 1
   app:
     leaderElection:
       enabled: false
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 25m
+      memory: 64Mi
     limits:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 25m
+      memory: 64Mi
   defaultPackage:
     resources:
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 25m
+        memory: 64Mi
       limits:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 25m
+        memory: 64Mi
