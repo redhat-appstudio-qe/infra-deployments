@@ -20,8 +20,10 @@ resources:
   - lumino
   - multi-platform-controller
   - notification-controller
+  - pipeline-service
   - policies
   - project-controller
+  - pulp-access-controller
   - repository-validator
   - smee-client
   - trust-manager
