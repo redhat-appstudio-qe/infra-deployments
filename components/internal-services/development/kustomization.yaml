@@ -3,4 +3,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/konflux-ci/internal-services/config/crd?ref=0c8b5498fbfa24383af20a6eb8b0b6c8e68ad4b9
+  - https://github.com/konflux-ci/internal-services/config/crd?ref=d0fdafaa9389a79a5c5884b398bba513a9914b69
