@@ -26,6 +26,12 @@ metadata:
   name: konflux-verifications-rd
 $patch: delete
 ---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vector-kubearchive-log-collector
+$patch: delete
+---
 # Deleting this ApplicationSet cascades to its Applications and managed cluster resources.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
