@@ -10,13 +10,6 @@ patches:
       group: external-secrets.io
       version: v1
       kind: ExternalSecret
-  - patch: |-
-      $patch: delete
-      apiVersion: v1
-      kind: Secret
-      metadata:
-        name: kite-database-credentials
-        namespace: konflux-kite
 
 configMapGenerator:
   - name: kite-config

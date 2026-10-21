@@ -27,6 +27,8 @@ spec:
   template:
     metadata:
       name: konflux-kite-{{nameNormalized}}
+      labels:
+        app.kubernetes.io/part-of: konflux-kite
     spec:
       ignoreDifferences:
         - kind: ConfigMap
