@@ -1,0 +1,101 @@
+---
+- op: add
+  path: /spec/template/spec/initContainers
+  value:
+    - name: prepare-ca-bundle
+      image: registry.access.redhat.com/ubi9/ubi-minimal:9.5
+      imagePullPolicy: IfNotPresent
+      command:
+        - /bin/sh
+        - -c
+        - |
+          set -e
+          echo "Creating CA bundle directory structure"
+          mkdir -p /ca-bundle/certs
+
+          echo "Combining CA certificates"
+          echo "Using CLOUDABILITY_FORCE_KUBE_PROXY mode - kubelet CA not required"
+
+          if [ -f /trusted-ca-bundle/ca-bundle.crt ]; then
+            cat /trusted-ca-bundle/ca-bundle.crt > /ca-bundle/certs/ca-bundle.crt
+            echo "Added OpenShift trusted CA bundle"
+          else
+            echo "Warning: trusted CA bundle not found, creating empty bundle"
+            touch /ca-bundle/certs/ca-bundle.crt
+          fi
+
+          if [ -f /var/run/secrets/kubernetes.io/serviceaccount/ca.crt ]; then
+            echo "" >> /ca-bundle/certs/ca-bundle.crt
+            cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt >> /ca-bundle/certs/ca-bundle.crt
+            echo "Added service account CA for API server via kube-proxy"
+          fi
+
+          chmod 644 /ca-bundle/certs/ca-bundle.crt
+
+          CERT_COUNT=$(grep -c "BEGIN CERTIFICATE" /ca-bundle/certs/ca-bundle.crt || echo "0")
+          echo "CA bundle prepared successfully"
+          echo "Total certificates: $CERT_COUNT"
+          ls -lh /ca-bundle/certs/ca-bundle.crt
+      securityContext:
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+      volumeMounts:
+        - name: trusted-ca-bundle
+          mountPath: /trusted-ca-bundle
+          readOnly: true
+        - name: ca-bundle
+          mountPath: /ca-bundle
+      resources: {}
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SSL_CERT_FILE
+    value: /ca-bundle/certs/ca-bundle.crt
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: SSL_CERT_DIR
+    value: /ca-bundle/certs
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    name: ca-bundle
+    mountPath: /ca-bundle
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    name: ca-bundle
+    mountPath: /etc/ssl/certs/ca-certificates.crt
+    subPath: certs/ca-bundle.crt
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    name: ca-bundle
+    mountPath: /etc/pki/tls/certs/ca-bundle.crt
+    subPath: certs/ca-bundle.crt
+    readOnly: true
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    name: ca-bundle
+    mountPath: /etc/ssl/cert.pem
+    subPath: certs/ca-bundle.crt
+    readOnly: true
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: trusted-ca-bundle
+    configMap:
+      name: trusted-ca-bundle
+      defaultMode: 420
+      optional: true
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: ca-bundle
+    emptyDir: {}
