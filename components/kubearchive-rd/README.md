@@ -22,15 +22,23 @@ Deleted Releases are archived in KubeArchive and can still be accessed through t
 
 ## Upgrading
 
-To upgrade start by upgrading development, which also upgrades staging:
+To upgrade start with ring-0 (development). The operator manifest lives
+under `rings/ring-0/base/kubearchive-operator/` as ring-authored content, so
+Kargo does not promote it automatically the way it does Tier 1 `base/`
+changes — once ring-0 is validated, repeat the same steps against ring-1
+(staging) in a separate PR:
 
-1. Replace `development/kubearchive.yaml` with the manifest from the new release.
-2. Update the vacuum image tags in `development/kustomization.yaml`.
+1. Replace each file under `rings/ring-0/base/kubearchive-operator/` with the
+   matching resource from the new release's manifest (same `kind`/`name`,
+   same file). The `upgrade.sh` script below automates this split.
+2. Update the vacuum image tags in `rings/ring-0/base/patches/*vacuum*-image-patch.yaml`.
 3. If the new release includes a schema change:
-   * Bump `MIGRATION_VERSION` in both configmaps in `development/kustomization.yaml`:
+   * Bump `MIGRATION_VERSION` in both configmaps in
+     `rings/ring-0/base/kustomization.yaml`:
      `kubearchive-schema-version` (used by the migration Job) and
      `kubearchive-deployment-schema-version` (used by api-server and sink).
-   * Update the Job name suffix in `development/kustomization.yaml` to match
+   * Update the Job name suffix in
+     `rings/ring-0/base/patches/schema-migration-job-name-patch.yaml` to match
      (e.g. `kubearchive-schema-migration-v14`).
 
 All changes go in a single commit. ArgoCD sync waves handle the ordering:
@@ -56,7 +64,7 @@ There are two configmaps for `MIGRATION_VERSION`:
 A versioned Job name suffix (e.g. `kubearchive-schema-migration-v13`) is used
 so that ArgoCD resyncs do not restart the immutable migration Job. When
 changing `MIGRATION_VERSION`, update the suffix in
-`development/kustomization.yaml` to match.
+`rings/ring-0/base/patches/schema-migration-job-name-patch.yaml` to match.
 
 ### Production
 
@@ -70,21 +78,23 @@ There is a simple bash script you can use to upgrade, run it as follows:
 
 ```
 cd infra-deployments/
-bash components/kubearchive/upgrade.sh <current-version> <new-version> [<new-migration-version>]
+bash components/kubearchive-rd/upgrade.sh <current-version> <new-version> [<new-migration-version>]
 ```
 
 Examples:
 
 ```bash
 # No schema change:
-bash components/kubearchive/upgrade.sh v1.21.3 v1.21.4
+bash components/kubearchive-rd/upgrade.sh v1.21.3 v1.21.4
 
 # With schema change (migration version bumps to 14):
-bash components/kubearchive/upgrade.sh v1.21.4 v1.22.0 14
+bash components/kubearchive-rd/upgrade.sh v1.21.4 v1.22.0 14
 ```
 
-The script downloads the new manifests from the GitHub repository
-and replaces the `<current-version>` string with the `<new-version>`
-string on all `kustomization.yaml` files. When `<new-migration-version>`
-is provided, it also updates `MIGRATION_VERSION` in both configmaps and
-the Job name suffix in `development/kustomization.yaml`.
+The script downloads the new manifest from the GitHub repository, splits it
+by resource, and overwrites each existing file under
+`rings/ring-0/base/kubearchive-operator/` by matching on `kind`/`name`. It
+also updates the vacuum image tags in `rings/ring-0/base/patches/`. When
+`<new-migration-version>` is provided, it also updates `MIGRATION_VERSION`
+in both configmaps in `rings/ring-0/base/kustomization.yaml` and the Job
+name suffix in `rings/ring-0/base/patches/schema-migration-job-name-patch.yaml`.
