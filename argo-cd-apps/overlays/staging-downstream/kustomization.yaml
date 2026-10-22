@@ -132,3 +132,10 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: release
+patches:
+  # Disable legacy Kubearchive auto-sync while rd-staging owns staging.
+  - path: kubearchive-remove-auto-sync-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: kubearchive
