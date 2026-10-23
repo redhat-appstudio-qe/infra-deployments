@@ -4,7 +4,7 @@
 
 KubeArchive is configured to automatically delete Releases based on their retention period. The retention period can be customized using the `gracePeriodDays` field in the Release spec. KubeArchive is an exception to the typical [component layout standard](../../docs/ring-deployments/directory-layout.md) because it's resources are released as a single YAML manifest named `kubearchive.yaml`. 
 
-### How it works
+### How It Works
 
 - **Default behavior**: If a Release does not have `gracePeriodDays` specified, it will be deleted 5 days after creation.
 - **Custom retention**: If a Release has `spec.gracePeriodDays` set, that value will be used instead.
@@ -20,38 +20,52 @@ KubeArchive is configured to automatically delete Releases based on their retent
 
 > Deleted Releases are archived in KubeArchive and can still be accessed through the KubeArchive API. The deletion from the cluster is automatic, but the historical data is preserved.
 
-> Because `kubearchive.yaml` is an upstream release artifact, it is located in the `base/` directory of the component and copied to each ring's `base/base-snapshot/` directory. Resources in it must be patched and not modified as an upgrade will overwrite any modifications with a new file.
+> Because `kubearchive.yaml` is an upstream release artifact, it is located in the `base/` directory of the component and copied to each ring's `base/base-snapshot/` directory. Resources in it **must** be patched and not modified directly as a new upgrade will overwrite any modifications with a brand new file.
 
-## Upgrading
+## Promoting Changes
 
-Kargo *should* take care of promoting upgrades across rings. To start the upgrade promotion process, delete the current `base/kubearchive.yaml` file and run `curl -Lo components/kubearchive-rd/base/kubearchive.yaml https://github.com/kubearchive/kubearchive/releases/download/<NEW_VERSION>/kubearchive.yaml` with the <NEW_VERSION>. Make sure to review the changes inside this file before committing and merging this change.
+*This section is meant to be referenced once the component's migration is complete and it is onboarded to Kargo*
 
-If Kargo *is not* functioning properly:
+Kargo takes care of promoting upgrades across rings by watching for changes to the `components/kubearchive/base/` directory and promoting the changes to each ring's `base/base-snapshot/` directory starting with ring 0 (development). In other words, to trigger any promotions across rings, **a PR with changes to the `components/kubearchive/base/` directory must be created and merged.**
+
+### Upgrading
+
+> These steps must be executed, regardless of Kargo's functionality status.
+
+1. Checkout a new branch of infra-deployments. 
+2. Delete the current `base/kubearchive.yaml` file and run `curl -Lo components/kubearchive/base/kubearchive.yaml https://github.com/kubearchive/kubearchive/releases/download/<NEW_VERSION>/kubearchive.yaml`. 
+
+> Make sure to review the changes inside this new file before committing and merging this change.
+
+If Kargo **is not** functioning properly, a user will need to **manually execute** Kargo's workflow to promote the changes across the rings. Start with the **lowest** ring possible.
 
 1. Checkout a new branch of infra-deployments.
-2. Delete the current `rings/ring-#/base/base-snapshot/kubearchive.yaml` file and run `curl -Lo components/kubearchive-rd/rings/ring-#/base/base-snapshot/kubearchive.yaml https://github.com/kubearchive/kubearchive/releases/download/<NEW_VERSION>/kubearchive.yaml` with the <NEW_VERSION>.
+2. Delete the current `rings/ring-#/base/base-snapshot/kubearchive.yaml` file and run `curl -Lo components/kubearchive/rings/ring-#/base/base-snapshot/kubearchive.yaml https://github.com/kubearchive/kubearchive/releases/download/<NEW_VERSION>/kubearchive.yaml`.
 3. Change the vacuum image versions in the `CronJob` resource files in the `rings/ring-#/base/vacuum/` folder.
 4. Update the `Job` name suffix in the `rings/ring-#/base/patches/schema-migration-job-name-patch.yaml` file to match the release (e.g. `kubearchive-schema-migration-v14-v1.23.0`).
 
 If the upgrade *requires a schema migration:*
-
-Bump `MIGRATION_VERSION` in both `ConfigMap`s in `rings/ring-#/base/kustomization.yaml`:
-* kubearchive-schema-version (used by the schema migration `Job`)
-* kubearchive-deployment-schema-version (used by api-server and sink)
-
+5. Bump `MIGRATION_VERSION` in both `ConfigMap`s in `rings/ring-#/base/kustomization.yaml`:
+  * kubearchive-schema-version (used by the schema migration `Job`)
+  * kubearchive-deployment-schema-version (used by api-server and sink)
+6. Commit these changes and open a PR.
+6. Once the PR is merged, repeat these steps for the next ring..
 
 ArgoCD sync waves handle the ordering: the migration Job (wave -1) runs before deployments (wave 0) pick up the new version.
 
-### Schema version configmaps
+### Schema Version ConfigMaps
 
 There are two `ConfigMap`s for `MIGRATION_VERSION`:
 
-* `kubearchive-schema-version` (sync-wave -2) — used by the schema migration Job.
-* `kubearchive-deployment-schema-version` (no sync-wave) — used by api-server
+* **kubearchive-schema-version** (sync-wave -2) — used by the schema migration Job.
+* **kubearchive-deployment-schema-version** (no sync-wave) — used by api-server
   and sink deployments. Protects running deployments from restarting during
   migration if the `ConfigMap` hash changes.
 
-### Versioned Job name
+If the release introduces a breaking schema change that requires deployments
+to be upgraded between two migration phases, split the work into two promotions:
+the first bumping the 'kubearchive-schema-version' and Job name suffix, the second bumping the 'kubearchive-deployment-schema-version'.
 
-A versioned Job name suffix (e.g. `kubearchive-schema-migration-v13-v1.20.0`) is used
-so that ArgoCD resyncs do not restart the immutable migration Job. When changing `MIGRATION_VERSION`, update the suffix in the `rings/ring-#/base/patches/schema-migration-job-name-patch.yaml` file to match.
+### Versioned Job Name
+
+A versioned Job name suffix, `kubearchive-schema-migration-v<MIGRATION_VERSION>-v<KUBEARCHIVE_VERSION>`, is used so that ArgoCD resyncs do not restart the immutable migration Job. When changing either version, update the value in the `rings/ring-#/base/patches/schema-migration-job-name-patch.yaml` file to match.
