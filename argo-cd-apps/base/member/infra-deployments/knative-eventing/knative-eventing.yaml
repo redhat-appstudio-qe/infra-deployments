@@ -24,6 +24,8 @@ spec:
                   values.clusterDir: lightwell-dev
                 - nameNormalized: kflux-stg-p02
                   values.clusterDir: kflux-stg-p02
+                - nameNormalized: kflux-hub-stg-01
+                  values.clusterDir: kflux-hub-stg-01
                 - nameNormalized: kflux-prd-rh02
                   values.clusterDir: kflux-prd-rh02
         # Exclude stone-stage-p01 and stone-stg-rh01 from all ArgoCD instances,
