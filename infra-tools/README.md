@@ -12,6 +12,13 @@ Detects which environments and clusters a PR affects by building ArgoCD
 ApplicationSet overlays, resolving kustomize dependency trees, and matching
 changed files. Used in CI to auto-label PRs.
 
+It also flags changed files under `components/` or `configs/` that no
+ApplicationSet references with the managed `infra/unreferenced-changes` label
+and a job-summary warning. Deleted files, documentation/ownership files,
+chainsaw tests, component CI tooling and a small allowlist of known
+non-kustomize files are excluded. Other non-kustomize files under those trees
+may still be reported.
+
 ```bash
 # Dry-run (prints affected environments/clusters without calling GitHub)
 go run ./cmd/env-detector --repo-root /path/to/infra-deployments --dry-run
@@ -138,7 +145,8 @@ make lint
 
 # Audit the real repo's ApplicationSets against the parser
 # (needs a full repo checkout; catches ApplicationSet shapes the parser
-# silently ignores, which would otherwise degrade to "environment/none")
+# drops or cannot fully resolve — tracked only by a static prefix or as
+# MatchAll)
 make audit
 
 # Fix lint issues automatically
