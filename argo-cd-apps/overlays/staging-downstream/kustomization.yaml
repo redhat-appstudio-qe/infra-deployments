@@ -132,3 +132,9 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: kubearchive
+  # Remove automated sync from mintmaker for staging migration
+  - path: mintmaker-remove-auto-sync-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: mintmaker
