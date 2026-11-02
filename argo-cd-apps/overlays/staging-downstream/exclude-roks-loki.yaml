@@ -1,0 +1,12 @@
+---
+# Exclude staging ROKS clusters for Loki deployment as they are not ready until
+# we have the S3-compatible object storage buckets ready for them.
+- op: add
+  path: /spec/generators/0/selector
+  value:
+    matchExpressions:
+      - key: nameNormalized
+        operator: NotIn
+        values:
+          - lightwell-dev
+          - kflux-stg-p02
