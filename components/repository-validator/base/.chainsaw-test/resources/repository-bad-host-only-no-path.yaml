@@ -1,0 +1,9 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: test-bad-host-only-no-path
+spec:
+  # Has a host but no path segment — not a cloneable repository URL.
+  # (Also happens to equal a host-level allowlist entry, so this proves the
+  # structural check runs independently of the allowlist match.)
+  url: "https://gitlab.cee.redhat.com"

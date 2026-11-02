@@ -1,0 +1,7 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: test-bad-scheme-only-http-slash
+spec:
+  # Malformed absolute-looking string that is not a usable repository URL.
+  url: "http:/"

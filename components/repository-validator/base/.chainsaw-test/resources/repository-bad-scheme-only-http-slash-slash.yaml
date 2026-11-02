@@ -1,0 +1,7 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: test-bad-scheme-only-http-slash-slash
+spec:
+  # Scheme with empty authority — no host and no path.
+  url: "http://"

@@ -1,0 +1,8 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: test-bad-structure-under-wildcard
+spec:
+  # Even with allowlist "*", a scheme-only URL must still be denied by the
+  # structural check.
+  url: "http://"
