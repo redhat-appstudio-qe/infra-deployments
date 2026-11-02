@@ -25,11 +25,23 @@ spec:
       expression: |
         size(variables.allowedPrefixes) == 1 &&
         variables.allowedPrefixes[0] == "*"
+    # Normalize prefixes to always end with "/" so startsWith() below enforces
+    # an org/path boundary instead of a raw character-prefix match. Without
+    # this, an allowed prefix like "https://github.com/rhtap-perf-test" would
+    # also match "https://github.com/rhtap-perf-test_attacker/..." or
+    # "https://gitlab.cee.redhat.com.attacker.com/...".
+    - name: normalizedPrefixes
+      expression: |
+        variables.allowedPrefixes.filter(p, p != "").
+        map(p, p.endsWith('/') ? p : p + '/')
   validations:
     - expression: |
         variables.allowAll ||
         variables.allowedPrefixes.exists(prefix,
-          prefix != "" && object.spec.url.startsWith(prefix)
+          prefix != "" && object.spec.url == prefix
+        ) ||
+        variables.normalizedPrefixes.exists(prefix,
+          object.spec.url.startsWith(prefix)
         )
       messageExpression: |
         'Repository URL "' + object.spec.url +
