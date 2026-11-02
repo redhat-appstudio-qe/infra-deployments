@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: repository-validator
+  labels:
+    app.kubernetes.io/name: repository-validator
+data:
+  # Mirrors the real config format: quoted entries, no trailing slash, and a
+  # trailing blank line (so split('\n') yields an empty-string prefix that
+  # must be filtered out, not treated as "match everything").
+  config: |
+    "https://gitlab.cee.redhat.com"
+    "https://github.com/rhtap-perf-test"
+    "https://github.com/redhat-appstudio/tekton-tools"
