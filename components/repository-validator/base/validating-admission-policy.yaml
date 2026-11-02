@@ -25,11 +25,36 @@ spec:
       expression: |
         size(variables.allowedPrefixes) == 1 &&
         variables.allowedPrefixes[0] == "*"
+    # Structural shape of a repository URL: absolute URL with a non-empty
+    # host and at least one non-empty path segment.
+    - name: hasValidRepoURLStructure
+      expression: |
+        isURL(object.spec.url) &&
+        url(object.spec.url).getHostname() != '' &&
+        size(url(object.spec.url).getEscapedPath().split('/').filter(p, p != '')) >= 1
   validations:
+    # Always enforce URL structure, including under the "*" allow-all
+    # sentinel — a wildcard allowlist must not admit "http://" etc.
+    - expression: |
+        variables.hasValidRepoURLStructure
+      messageExpression: |
+        'Repository URL "' + object.spec.url +
+        '" is not a valid repository URL. It must be an absolute URL with a host and at least one path segment.'
+      reason: Forbidden
+    # Per prefix, require a real boundary right after it:
+    #   1. nothing more (exact match).
+    #   2. a ".git" clone-URL suffix (exact match).
+    #   3. or a "/" ending path (any repo under that org; if the prefix
+    #      itself already ends in "/", reuse it as-is so the check doesn't
+    #      require a double slash).
     - expression: |
         variables.allowAll ||
         variables.allowedPrefixes.exists(prefix,
-          prefix != "" && object.spec.url.startsWith(prefix)
+          prefix != "" && (
+            object.spec.url == prefix ||
+            object.spec.url == prefix + '.git' ||
+            object.spec.url.startsWith(prefix.endsWith('/') ? prefix : prefix + '/')
+          )
         )
       messageExpression: |
         'Repository URL "' + object.spec.url +
