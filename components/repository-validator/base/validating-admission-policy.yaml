@@ -26,10 +26,21 @@ spec:
         size(variables.allowedPrefixes) == 1 &&
         variables.allowedPrefixes[0] == "*"
   validations:
+    # Per prefix, require a real boundary right after it: nothing more (exact
+    # match), a ".git" clone-URL suffix (exact match, so e.g. a prefix of
+    # "rh-forge" cannot be bypassed by "rh-forge.gitattacker.com"), or a "/"
+    # starting a path (any repo under that org/host). A plain startsWith(prefix)
+    # has no boundary awareness, so "https://github.com/rhtap-perf-test" would
+    # also match "https://github.com/rhtap-perf-test_attacker/..." or
+    # "https://gitlab.cee.redhat.com.attacker.com/...".
     - expression: |
         variables.allowAll ||
         variables.allowedPrefixes.exists(prefix,
-          prefix != "" && object.spec.url.startsWith(prefix)
+          prefix != "" && (
+            object.spec.url == prefix ||
+            object.spec.url == prefix + '.git' ||
+            object.spec.url.startsWith(prefix + '/')
+          )
         )
       messageExpression: |
         'Repository URL "' + object.spec.url +
