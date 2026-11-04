@@ -16,6 +16,7 @@ resources:
   - etcd-shield
   - etcd-defrag
   - external-secrets-operator
+  - image-rbac-proxy
   - konflux-operator
   - konflux-verifications-rd
   - kubearchive
