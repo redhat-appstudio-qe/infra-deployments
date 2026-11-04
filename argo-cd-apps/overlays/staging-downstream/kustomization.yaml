@@ -134,3 +134,10 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: konflux-kite
+  # Remove automated sync from image-rbac-proxy for staging migration; this
+  # AppSet is shared with production, so the base syncPolicy is left untouched
+  - path: image-rbac-proxy-remove-auto-sync-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: image-rbac-proxy
