@@ -9,6 +9,16 @@ resources:
   - konflux-kite-api-route.yaml
   - konflux-kite-hpa.yaml
 
+# cert-manager/ and external-secrets/ live here as the single source of
+# truth, but are intentionally NOT referenced above: Kargo's manifest-wh
+# promotion copies this whole base/ directory into every ring's
+# base-snapshot/ regardless of what this file's resources: list includes,
+# so each ring's own kustomization.yaml opts in by referencing
+# base-snapshot/cert-manager and/or base-snapshot/external-secrets
+# directly (see rings/ring-0/base and rings/ring-1/base). This keeps every
+# ring's copy in sync automatically when files change here, without
+# maintaining per-ring delete patches. Same pattern as mintmaker-rd.
+
 namespace: konflux-kite
 
 configMapGenerator:
