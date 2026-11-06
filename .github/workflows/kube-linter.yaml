@@ -38,6 +38,8 @@ jobs:
             ! -path 'components/*/chainsaw/*' \
             ! -path 'components/etcd-shield/base/*' \
             ! -path 'components/kueue/base/*' \
+            ! -path 'components/kubearchive/rings/*/base/vacuum/*' \
+            ! -path 'components/kubearchive/base/*' \
             ! -path 'components/kube-shard/base/*' \
             ! -path 'components/*/rings/*/base/base-snapshot/*' \
             | \
