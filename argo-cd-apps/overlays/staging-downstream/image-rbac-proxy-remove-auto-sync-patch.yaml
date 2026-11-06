@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: konflux-kite
+  name: image-rbac-proxy
 spec:
   template:
     spec:
