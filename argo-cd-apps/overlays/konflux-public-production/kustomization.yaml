@@ -11,23 +11,12 @@ namespace: konflux-public-production
 
 patchesStrategicMerge:
   - delete-applications.yaml
-
 patches:
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1
       name: build-service
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: build-templates
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: has
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -68,11 +57,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: backup
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: integration
   - path: production-tracing-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -195,16 +179,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: build-service
-  - path: exclude-operator-owned-clusters.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: integration
-  - path: preserve-resources-on-deletion.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: integration
   - path: exclude-operator-owned-clusters.yaml
     target:
       kind: ApplicationSet
