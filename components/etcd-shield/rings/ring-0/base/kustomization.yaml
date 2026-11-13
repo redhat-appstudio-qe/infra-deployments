@@ -4,4 +4,4 @@ resources:
 - base-snapshot
 images:
 - name: quay.io/konflux-ci/etcd-shield
-  newTag: 16a7fc03e36164c231280914e57a30c24b586af9
+  newTag: 15544a3bdb0cf6ced79757b5b1ddbe8d6fb68b95
