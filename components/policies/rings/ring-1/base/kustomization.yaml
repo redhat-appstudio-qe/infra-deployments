@@ -5,3 +5,4 @@ resources:
 - image-controller/
 - konflux-rbac/
 - cost-management/
+- inject-cluster-param/

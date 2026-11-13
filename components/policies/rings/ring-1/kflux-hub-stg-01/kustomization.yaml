@@ -12,3 +12,13 @@ patches:
       kind: ClusterPolicy
       name: konflux-rbac-bootstrap-tenant-namespace-rbcm
     path: disable-konflux-rbac-bootstrap-on-roks.yaml
+  - target:
+      group: policies.kyverno.io
+      version: v1
+      kind: NamespacedMutatingPolicy
+      name: inject-repository-cluster-param
+    patch: |-
+      - op: replace
+        path: /spec/variables/0/expression
+        value: '"kflux-hub-stg-01"'
+

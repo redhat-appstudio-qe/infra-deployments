@@ -12,3 +12,13 @@ patches:
       metadata:
         name: deny-unallowed-annotations
         namespace: tekton-kueue
+  - target:
+      group: policies.kyverno.io
+      version: v1
+      kind: NamespacedMutatingPolicy
+      name: inject-repository-cluster-param
+    patch: |-
+      - op: replace
+        path: /spec/variables/0/expression
+        value: '"stone-stage-p01"'
+
