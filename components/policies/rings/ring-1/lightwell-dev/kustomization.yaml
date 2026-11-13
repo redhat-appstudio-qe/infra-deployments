@@ -7,3 +7,15 @@ resources:
 - buildah-roks-scc.yaml
 - buildah-roks-scc-clusterrole.yaml
 - buildah-roks-scc-clusterrolebinding.yaml
+
+patches:
+  - target:
+      group: policies.kyverno.io
+      version: v1
+      kind: NamespacedMutatingPolicy
+      name: inject-repository-cluster-param
+    patch: |-
+      - op: replace
+        path: /spec/variables/0/expression
+        value: '"lightwell-dev"'
+
