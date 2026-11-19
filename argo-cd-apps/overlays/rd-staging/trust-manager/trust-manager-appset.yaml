@@ -41,7 +41,9 @@ spec:
         namespace: cert-manager
         server: '{{server}}'
       syncPolicy:
-        # Keep automated sync disabled until the ownership handoff is verified.
+        automated:
+          prune: false
+          selfHeal: true
         syncOptions:
         - CreateNamespace=true
         retry:
