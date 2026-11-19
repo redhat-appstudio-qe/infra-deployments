@@ -5,6 +5,8 @@ metadata:
   labels:
     appstudio.redhat.com/deployment-clusters: "tenant"
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:
@@ -39,9 +41,7 @@ spec:
         namespace: cert-manager
         server: '{{server}}'
       syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+        # Keep automated sync disabled until the ownership handoff is verified.
         syncOptions:
         - CreateNamespace=true
         retry:
