@@ -9,3 +9,13 @@ images:
 - name: quay.io/konflux-ci/image-rbac-proxy
   newName: quay.io/konflux-ci/image-rbac-proxy
   newTag: a5ed45a171cdd7df17aa8553758eb8e3c733ddc0
+vars:
+- name: DEX_DEPLOYMENT_NAME
+  objref:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dex
+  fieldref:
+    fieldpath: metadata.name
+configurations:
+- role-var-reference.yaml
