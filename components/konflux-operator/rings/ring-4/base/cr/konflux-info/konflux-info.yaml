@@ -34,5 +34,5 @@ spec:
                   url: "https://bombino.api.redhat.com/v1/sbom/quay/push"
       banner:
         items:
-          - summary: "Want to **display important updates** here? [See how to create a banner](https://github.com/redhat-appstudio/infra-deployments/blob/main/components/konflux-info/README.md)."
+          - summary: "Want to **display important updates** here? See the konflux-operator konflux-info ring docs for banner updates."
             type: info
